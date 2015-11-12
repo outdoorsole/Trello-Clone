@@ -31,6 +31,11 @@
           <span class="input-group-btn">
             <button class="btn btn-info" ng-click="updateList(list._id, list.list_name)" aria-label="Edit">Edit</button>
           </span>
+
+          <!-- View one list -->
+          <span class="input-group-btn">
+            <a href="/#/items?list_title={{list.list_title}}&list_id={{list._id}}" class="btn btn-info" ng-click="ViewOneList(list._id)" aria-label="View">View List</a>
+          </span>
         </p>
       </div>
     </div>

@@ -26,7 +26,7 @@
      expect(scope.items).toEqual('Item 1');
     });
 
-    it ('should remove an item', function() {
+    it('should remove an item', function() {
         scope.removeTodo(1);
         expect(scope.item_list).toEqual([]);
     });
