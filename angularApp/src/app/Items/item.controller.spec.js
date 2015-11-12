@@ -17,7 +17,7 @@
 
     // Define Tests
     it('initializes default item_list', function() {
-     expect(scope.items).toEqual(['Item 1', 'Item 2', 'Item 3']);
+     expect(scope.items).toEqual([]);
     });
 
     // it('add an item to the todo list', function() {
