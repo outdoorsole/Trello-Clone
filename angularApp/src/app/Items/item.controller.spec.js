@@ -20,15 +20,15 @@
      expect(scope.items).toEqual([]);
     });
 
-    // it('add an item to the todo list', function() {
-    //  scope.item = 'Item 4';
-    //  scope.createItem();
-    //  expect(scope.item_list).toEqual(['Item 1', 'Item 2', 'Item 3', 'Item 4']);
-    // });
+    it('add an item to the todo list', function() {
+     scope.items = 'Item 1';
+     scope.createItem();
+     expect(scope.items).toEqual('Item 1');
+    });
 
-    // it ('should remove an item', function() {
-    //     scope.removeTodo(1);
-    //     expect(scope.item_list).toEqual(['Item 1', 'Item 3']);
-    // });
+    it ('should remove an item', function() {
+        scope.removeTodo(1);
+        expect(scope.item_list).toEqual([]);
+    });
   });
 })();
