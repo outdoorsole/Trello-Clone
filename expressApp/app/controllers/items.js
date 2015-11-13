@@ -13,6 +13,7 @@ exports.showItems = function (req, res) {
       res.json(items);
     } else if (error) {
       console.error(error.stack);
+      res.json({status: 400, message: error.message});
     }
   });
 }

@@ -2,15 +2,16 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ListController', function ($scope, $routeParams, $http) {
+  .controller('ListController', function ($routeParams, $http, $log) {
+    var vm = this;
 
     // All of this is happening on load (until methods below)
 
     // This variable stores the form data coming through the front-end
-    $scope.formData = {};
+    vm.formData = {};
 
     // This variable stores the items list from the database
-    $scope.lists = [];
+    vm.lists = [];
 
     // This will capture the information from a list
     // $scope.listId = $routeParams.list_id;
@@ -20,56 +21,56 @@ angular.module('mytodo')
 
   $http.get('/api/lists/')
     .success(function(data) {
-      $scope.title = "List of Todo Lists";
-      console.log('I got the data I requested');
-      console.log('--------------------------');
-      console.log('This is $scope.lists: ', $scope.lists);
-      // $scope.itemslist = ;
-      $scope.lists = data;
-      console.log('--------------------------');
-      console.log('This is $scope.lists: ', $scope.lists);
+      vm.title = "List of Todo Lists";
+      // console.log('I got the data I requested');
+      // console.log('--------------------------');
+      // console.log('This is vm.lists: ', vm.lists);
+      // vm.itemslist = ;
+      vm.lists = data;
+      // console.log('--------------------------');
+      // console.log('This is vm.lists: ', vm.lists);
       // console.log('This is the response in refresh: ', response);
-      // console.log('This is $scope.itemslist: ', $scope.itemslist);
+      // console.log('This is vm.itemslist: ', vm.itemslist);
     })
 
 
-    $scope.createList = function () {
-      console.log('This is inside of createItem: ');
-      console.log('This is formData: ', $scope.formData);
-      $http.post('/api/lists/create', $scope.formData)
+    vm.createList = function () {
+      // console.log('This is inside of createItem: ');
+      // console.log('This is formData: ', vm.formData);
+      $http.post('/api/lists/create', vm.formData)
         .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
+          vm.lists = data;
+          $log.log(data);
         })
         .error(function(data) {
-          console.log('Error: ' + data);
+          $log.log('Error: ' + data);
       });
     };
 
-    $scope.removeList = function (listId) {
-      console.log('This is inside of removeList: ');
-      console.log('This is formData: ', $scope.formData);
+    vm.removeList = function (listId) {
+      // console.log('This is inside of removeList: ');
+      // console.log('This is formData: ', vm.formData);
       $http.post('/api/lists/delete/' + listId)
         .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
+          vm.lists = data;
+          $log.log(data);
         })
         .error(function(data) {
-          console.log('Error: ' + data);
+          $log.log('Error: ' + data);
         });
     };
 
-    $scope.updateList = function (listId, list_name) {
-      console.log('This is inside of updateList: ');
-      console.log('This is the list_name: ', list_name);
-      console.log('This is $scope.formData: ', {list_name: list_name});
+    vm.updateList = function (listId, list_name) {
+      // console.log('This is inside of updateList: ');
+      // console.log('This is the list_name: ', list_name);
+      // console.log('This is vm.formData: ', {list_name: list_name});
       $http.post('/api/lists/update/' + listId, {list_name: list_name})
         .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
+          vm.lists = data;
+          $log.log(data);
         })
         .error(function(data) {
-          console.log('Error: ' + data);
+          $log.log('Error: ' + data);
         });
     };
   })
