@@ -17,17 +17,10 @@ angular.module('mytodo')
     ItemService.get('/api/items')
       .success(function(data) {
         vm.title = "My List of Items";
-        // console.log('I got the data I requested');
-        // console.log('--------------------------');
-        // console.log('This is vm.items: ', vm.items);
         vm.items = data;
-        // console.log('--------------------------');
-        // console.log('This is vm.items: ', vm.items);
       })
 
     vm.createItem = function () {
-      // console.log('This is inside of createItem: ');
-      // console.log('This is formData: ', vm.formData);
       ItemService.post('/api/items/create', vm.formData)
         .success(function(data) {
           vm.items = data;
@@ -39,8 +32,6 @@ angular.module('mytodo')
     };
 
     vm.removeTodo = function (itemId) {
-      // console.log('This is inside of removeTodo: ');
-      // console.log('This is formData: ', vm.formData);
       ItemService.post('/api/items/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
@@ -52,8 +43,6 @@ angular.module('mytodo')
     };
 
     vm.updateTodo = function (itemId, item_name) {
-      // console.log('This is inside of updateTodo: ');
-      // console.log('This is the item_name: ', item_name);
       ItemService.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;

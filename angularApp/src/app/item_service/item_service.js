@@ -3,8 +3,8 @@
 
   angular.module('mytodo')
     .factory('ItemService', function() {
-      var _currentList = 0,
-        service = {};
+      var _currentList = 0;
+      var service = {};
 
       service.getItem = function() {
         return _currentItem;
