@@ -7,7 +7,12 @@
       var service = {};
 
       service.getItem = function() {
-        return _currentItem;
+        service.get('/api/items')
+        .success(function(data) {
+          vm.title = "My List of Items";
+          vm.items = data;
+          return vm.items;
+        })
       }
 
       service.setItem = function(item) {
