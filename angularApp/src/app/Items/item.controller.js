@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', ['ItemService', function (ItemService, $log) {
+  .controller('ItemController', ['ItemService',function (ItemService, $log) {
     var vm = this;
     // All of this is happening on load (until methods below)
 
@@ -14,7 +14,8 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
-    ItemService.get('/api/items')
+
+    $http.get('/api/items')
       .success(function(data) {
         vm.title = "My List of Items";
         vm.items = data;

@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ListController', function ($routeParams, $http, $log) {
+  .controller('ListController', ['$routeParams', 'ListService', function ($routeParams, ListService, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -19,19 +19,11 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
-  $http.get('/api/lists/')
-    .success(function(data) {
-      vm.title = "List of Todo Lists";
-      // console.log('I got the data I requested');
-      // console.log('--------------------------');
-      // console.log('This is vm.lists: ', vm.lists);
-      // vm.itemslist = ;
-      vm.lists = data;
-      // console.log('--------------------------');
-      // console.log('This is vm.lists: ', vm.lists);
-      // console.log('This is the response in refresh: ', response);
-      // console.log('This is vm.itemslist: ', vm.itemslist);
+    ListService.getList(listId)
+    .then(function(data) {
+      vm.lists = data.lists;
     })
+    console.log(vm.lists);
 
 
     vm.createList = function () {
@@ -73,5 +65,5 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  })
+  }])
 })();
