@@ -8,7 +8,7 @@ var itemSchema = new Schema({
   description: { type: String },
   created_at: Date,
   updated_at: Date,
-  _list: [{type: Schema.Types.ObjectId, ref:'List'}]
+  _list: {type: Schema.Types.ObjectId, ref:'List'}
 });
 
 // itemSchema.methods.lists = function() {

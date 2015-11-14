@@ -16,18 +16,10 @@ angular.module('mytodo')
 
     $http.get('/api/items')
       .success(function(data) {
-        $scope.title = "My List of Items";
-        console.log('I got the data I requested');
-        console.log('--------------------------');
-        console.log('This is $scope.items: ', $scope.items);
         $scope.items = data;
-        console.log('--------------------------');
-        console.log('This is $scope.items: ', $scope.items);
       })
 
     $scope.createItem = function () {
-      console.log('This is inside of createItem: ');
-      console.log('This is formData: ', $scope.formData);
       $http.post('/api/items/create', $scope.formData)
         .success(function(data) {
           $scope.items = data;
@@ -39,8 +31,6 @@ angular.module('mytodo')
     };
 
     $scope.removeTodo = function (itemId) {
-      console.log('This is inside of removeTodo: ');
-      console.log('This is formData: ', $scope.formData);
       $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
           $scope.items = data;
@@ -52,8 +42,6 @@ angular.module('mytodo')
     };
 
     $scope.updateTodo = function (itemId, item_name) {
-      console.log('This is inside of updateTodo: ');
-      console.log('This is the item_name: ', item_name);
       $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           $scope.items = data;

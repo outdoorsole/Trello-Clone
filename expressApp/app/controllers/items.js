@@ -22,7 +22,8 @@ exports.showItems = function (req, res) {
 exports.createItem = function (req, res) {
   var item = new Item({
     item_name: req.body.item_name,
-    description: req.body.description
+    description: req.body.description,
+    _list: req.body._list
   });
   console.log('We are inside the createItem action in server: ');
   console.log('This is the item: ', item);
@@ -31,13 +32,9 @@ exports.createItem = function (req, res) {
     console.log('This is an the err: ', err);
     console.log('this is the item: ', item);
     if (item) {
-      Item.find({}, function(error, item) {
-        if (item) {
-          res.json(item)
-        } else if (err) {
-          console.log('Failed to save: ' + err);
-        }
-      })
+      res.json(item)
+    } else if (err) {
+      console.log('Failed to save: ' + err);
     }
   })
 }
