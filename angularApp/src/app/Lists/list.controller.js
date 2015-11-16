@@ -23,7 +23,7 @@ angular.module('mytodo')
     .success(function(data) {
       vm.title = "List of Todo Lists";
       vm.lists = data;
-      console.log('This is data for show lists: ', data);
+      $log.log('This is data for show lists: ', data);
     })
 
 

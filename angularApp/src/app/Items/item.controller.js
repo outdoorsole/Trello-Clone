@@ -5,9 +5,9 @@ angular.module('mytodo')
   .controller('ItemController', function ($routeParams, $http, $log) {
 
     var vm = this;
-    console.log('This is vm: ', vm);
-    console.log('This is $routeParams: ', $routeParams);
-    console.log('This is $http: ', $http);
+    $log.log('This is vm: ', vm);
+    $log.log('This is $routeParams: ', $routeParams);
+    $log.log('This is $http: ', $http);
 
     // All of this is happening on load (until methods below)
 
@@ -19,12 +19,12 @@ angular.module('mytodo')
 
     // Get the list id from the route params
     vm.listId = $routeParams.list_id;
-    console.log('This is listId: ', vm.listId);
+    $log.log('This is listId: ', vm.listId);
 
 
     // get the list name from the route params
     vm.listName = $routeParams.list_title;
-    console.log('This is listName: ', vm.listName);
+    $log.log('This is listName: ', vm.listName);
 
     // when landing on the page, get all todos and show them
 
