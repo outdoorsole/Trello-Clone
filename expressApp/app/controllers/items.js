@@ -5,7 +5,10 @@ var Item = require('../models/item');
 
 //------------------------------------------------------------------------------------//
 
+// need to update to take parameters
+// add them to the angular app
 exports.showItems = function (req, res) {
+  console.log('This is req.params: ', req.params);
   Item.find({}, function(error, items) {
     // console.log('Here are the items: ', items);
     if (items) {

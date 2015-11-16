@@ -2,11 +2,12 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', function ($scope, $routeParams, $http) {
+  .controller('ItemController', function ($routeParams, $http, $log) {
 
-    console.log('This is $scope: ', $scope);
-    console.log('This is $routeParams: ', $routeParams);
-    console.log('This is $http: ', $http);
+    var vm = this;
+    $log.log('This is vm: ', vm);
+    $log.log('This is $routeParams: ', $routeParams);
+    $log.log('This is $http: ', $http);
 
     // All of this is happening on load (until methods below)
 
@@ -17,22 +18,26 @@ angular.module('mytodo')
     vm.items = [];
 
     // Get the list id from the route params
-    $scope.listId = $routeParams.list_id;
+    vm.listId = $routeParams.list_id;
+    $log.log('This is listId: ', vm.listId);
+
 
     // get the list name from the route params
-    $scope.listName = $routeParams.list_title;
+    vm.listName = $routeParams.list_title;
+    $log.log('This is listName: ', vm.listName);
 
     // when landing on the page, get all todos and show them
 
     $http.get('/api/items')
       .success(function(data) {
-        $scope.items = data;
+        vm.title = "List of Items";
+        vm.items = data;
       })
 
-    $scope.createItem = function () {
-      $http.post('/api/items/create', $scope.formData)
+    vm.createItem = function () {
+      $http.post('/api/items/create', vm.formData)
         .success(function(data) {
-          vm.items = data;
+          vm.items.push(data);
           $log.log(data);
         })
         .error(function(data) {
@@ -40,7 +45,7 @@ angular.module('mytodo')
       });
     };
 
-    $scope.removeTodo = function (itemId) {
+    vm.removeTodo = function (itemId) {
       $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
@@ -51,7 +56,7 @@ angular.module('mytodo')
         });
     };
 
-    $scope.updateTodo = function (itemId, item_name) {
+    vm.updateTodo = function (itemId, item_name) {
       $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;
