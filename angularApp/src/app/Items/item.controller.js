@@ -2,7 +2,11 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', function ($scope, $http) {
+  .controller('ItemController', function ($scope, $routeParams, $http) {
+
+    console.log('This is $scope: ', $scope);
+    console.log('This is $routeParams: ', $routeParams);
+    console.log('This is $http: ', $http);
 
     // All of this is happening on load (until methods below)
 
@@ -11,6 +15,12 @@ angular.module('mytodo')
 
     // This variable stores the items list from the database
     $scope.items = [];
+
+    // Get the list id from the route params
+    $scope.listId = $routeParams.list_id;
+
+    // get the list name from the route params
+    $scope.listName = $routeParams.list_title;
 
     // when landing on the page, get all todos and show them
 
