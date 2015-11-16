@@ -18,9 +18,12 @@ angular.module('mytodo')
 
     // Get the list id from the route params
     $scope.listId = $routeParams.list_id;
+    console.log('This is listId: ', $scope.listId);
+
 
     // get the list name from the route params
     $scope.listName = $routeParams.list_title;
+    console.log('This is listName: ', $scope.listName);
 
     // when landing on the page, get all todos and show them
 
@@ -32,7 +35,7 @@ angular.module('mytodo')
     $scope.createItem = function () {
       $http.post('/api/items/create', $scope.formData)
         .success(function(data) {
-          $scope.items = data;
+          vm.items = data;
           $log.log(data);
         })
         .error(function(data) {
@@ -43,7 +46,7 @@ angular.module('mytodo')
     $scope.removeTodo = function (itemId) {
       $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
-          $scope.items = data;
+          vm.items = data;
           $log.log(data);
         })
         .error(function(data) {
@@ -54,7 +57,7 @@ angular.module('mytodo')
     $scope.updateTodo = function (itemId, item_name) {
       $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
-          $scope.items = data;
+          vm.items = data;
           $log.log(data);
         })
         .error(function(data) {
