@@ -11,10 +11,10 @@ angular.module('mytodo')
     // All of this is happening on load (until methods below)
 
     // This variable stores the form data coming through the front-end
-    vm.formData = {};
+    $scope.formData = {};
 
     // This variable stores the items list from the database
-    vm.items = [];
+    $scope.items = [];
 
     // Get the list id from the route params
     $scope.listId = $routeParams.list_id;
@@ -32,7 +32,7 @@ angular.module('mytodo')
     $scope.createItem = function () {
       $http.post('/api/items/create', $scope.formData)
         .success(function(data) {
-          vm.items = data;
+          $scope.items = data;
           $log.log(data);
         })
         .error(function(data) {
@@ -43,7 +43,7 @@ angular.module('mytodo')
     $scope.removeTodo = function (itemId) {
       $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
-          vm.items = data;
+          $scope.items = data;
           $log.log(data);
         })
         .error(function(data) {
@@ -54,7 +54,7 @@ angular.module('mytodo')
     $scope.updateTodo = function (itemId, item_name) {
       $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
-          vm.items = data;
+          $scope.items = data;
           $log.log(data);
         })
         .error(function(data) {
