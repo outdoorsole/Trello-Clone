@@ -6,7 +6,6 @@ var Item = require('../models/item');
 //------------------------------------------------------------------------------------//
 
 exports.showItems = function (req, res) {
-  console.log('This is my list of Item (in showItems): ', Item);
   Item.find({}, function(error, items) {
     // console.log('Here are the items: ', items);
     if (items) {
@@ -22,22 +21,19 @@ exports.showItems = function (req, res) {
 exports.createItem = function (req, res) {
   var item = new Item({
     item_name: req.body.item_name,
-    description: req.body.description
+    description: req.body.description,
+    _list: req.body._list
   });
   console.log('We are inside the createItem action in server: ');
   console.log('This is the item: ', item);
-  item.save(function(err, item) {
+  item.save(function(err, savedItem) {
     console.log('This is after the item is saved: ');
     console.log('This is an the err: ', err);
-    console.log('this is the item: ', item);
-    if (item) {
-      Item.find({}, function(error, item) {
-        if (item) {
-          res.json(item)
-        } else if (err) {
-          console.log('Failed to save: ' + err);
-        }
-      })
+    console.log('this is the savedItem: ', savedItem);
+    if (savedItem) {
+      res.json(savedItem)
+    } else if (err) {
+      console.log('Failed to save: ' + err);
     }
   })
 }

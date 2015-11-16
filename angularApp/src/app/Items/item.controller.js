@@ -2,8 +2,12 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', ['ItemService', function (ItemService, $log) {
-    var vm = this;
+  .controller('ItemController', function ($scope, $routeParams, $http) {
+
+    console.log('This is $scope: ', $scope);
+    console.log('This is $routeParams: ', $routeParams);
+    console.log('This is $http: ', $http);
+
     // All of this is happening on load (until methods below)
 
     // This variable stores the form data coming through the front-end
@@ -12,23 +16,21 @@ angular.module('mytodo')
     // This variable stores the items list from the database
     vm.items = [];
 
+    // Get the list id from the route params
+    $scope.listId = $routeParams.list_id;
+
+    // get the list name from the route params
+    $scope.listName = $routeParams.list_title;
+
     // when landing on the page, get all todos and show them
 
-    ItemService.get('/api/items')
+    $http.get('/api/items')
       .success(function(data) {
-        vm.title = "My List of Items";
-        // console.log('I got the data I requested');
-        // console.log('--------------------------');
-        // console.log('This is vm.items: ', vm.items);
-        vm.items = data;
-        // console.log('--------------------------');
-        // console.log('This is vm.items: ', vm.items);
+        $scope.items = data;
       })
 
-    vm.createItem = function () {
-      // console.log('This is inside of createItem: ');
-      // console.log('This is formData: ', vm.formData);
-      ItemService.post('/api/items/create', vm.formData)
+    $scope.createItem = function () {
+      $http.post('/api/items/create', $scope.formData)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
@@ -38,10 +40,8 @@ angular.module('mytodo')
       });
     };
 
-    vm.removeTodo = function (itemId) {
-      // console.log('This is inside of removeTodo: ');
-      // console.log('This is formData: ', vm.formData);
-      ItemService.post('/api/items/delete/' + itemId)
+    $scope.removeTodo = function (itemId) {
+      $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
@@ -51,10 +51,8 @@ angular.module('mytodo')
         });
     };
 
-    vm.updateTodo = function (itemId, item_name) {
-      // console.log('This is inside of updateTodo: ');
-      // console.log('This is the item_name: ', item_name);
-      ItemService.post('/api/items/update/' + itemId + '?item_name=' + item_name)
+    $scope.updateTodo = function (itemId, item_name) {
+      $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
@@ -63,5 +61,5 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  }])
+  })
 })();
