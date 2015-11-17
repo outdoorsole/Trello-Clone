@@ -4,26 +4,26 @@ var app = require('../../app').app;
 // Models
 var Item = require('../../app/models/item');
 
-// Checks the database to see if there are no items
-// describe('Items', function() {
-//   describe('with no data', function() {
-//     it('should return an empty list', function(done) {
-//       console.log('In the items test');
-//       request(app).get('/api/items')
-//       .expect('Content-Type', /json/)
-//       .expect(200)
-//       .end(function(err, res) {
-//         console.log('In the end callback');
-//         if (err) {
-//           done.fail(err);
-//         } else {
-//           expect(res.body).toEqual([]);
-//           done();
-//         }
-//       });
-//     });
-//   });
-// })
+// Test 1 - checks the database to see if there are no items in the database
+describe('ItemsController', function() {
+  describe('with no data', function() {
+    it('should return an empty list of items', function(done) {
+      console.log('In the items test');
+      request(app).get('/api/items')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        console.log('In the end callback');
+        if (err) {
+          done.fail(err);
+        } else {
+          expect(res.body).toEqual([]);
+          done();
+        }
+      });
+    });
+  });
+})
 
 //.end triggers the function for you
 // if there is not an error
