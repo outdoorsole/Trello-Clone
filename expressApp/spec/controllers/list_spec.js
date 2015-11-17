@@ -19,8 +19,41 @@ describe('ListController', function () {
         }
       });
     });
+  });
 
-    // Test 2 - check if createList can create an entry in the database
+  describe('with data', function() {
+    var testList;
+
+    beforeEach(function(done) {
+      List.create({ list_name: 'test list' }, function(err, newList) {
+        if (err) {
+          done.fail(err);
+        } else {
+          testList = newList;
+          done();
+        }
+      });
+    });
+
+    // Test 2 - check if showList returns data when there is information in the database
+    it('should return a list', function(done) {
+      request(app).get('/api/lists')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        if (err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(1);
+          returnedList = res.body[0];
+          expect(returnedList).toBeDefined();
+          expect(returnedList.list_name).toEqual(testList.list_name);
+          done();
+        }
+      });
+    });
+
+    // Test 3 - check if createList can create an entry in the database
     it('should create a list', function(done) {
       request(app).post('/api/lists/create')
       .send({list_name: 'test List', description: 'Test 3'})
@@ -45,37 +78,22 @@ describe('ListController', function () {
         }
       });
     });
-  });
 
-// Test 3 - check if showList returns data when there is information in the database
-  describe('with data', function() {
-    var testList;
-
-    beforeEach(function(done) {
-      List.create({ list_name: 'test list' }, function(err, newList) {
-        if (err) {
-          done.fail(err);
-        } else {
-          testList = newList;
-          done();
-        }
-      });
-    });
-
-    it('should return a list', function(done) {
-      request(app).get('/api/lists')
+    // Test 4 - check if showList returns data when there is information in the database
+    it('should remove a list', function(done) {
+      request(app).post('/api/lists/delete/' + testList._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
-        if (err) {
-          done.fail(err);
-        } else {
-          expect(res.body.length).toEqual(1);
-          returnedList = res.body[0];
-          expect(returnedList).toBeDefined();
-          expect(returnedList.list_name).toEqual(testList.list_name);
-          done();
-        }
+        List.findOne({_id: testList._id}, function (err, list) {
+          expect(list === null)
+          if (!list) {
+            done();
+          } else if (err) {
+            console.log('Failed to remove list: ', err);
+            done();
+          }
+        })
       });
     });
 

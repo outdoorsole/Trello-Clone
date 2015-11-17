@@ -39,17 +39,14 @@ exports.removeList = function (req, res) {
   var list = new List ({ _id: req.params.list_id})
   list.remove(function (error, deletedList) {
     if (deletedList) {
-      List.find({}, function (error, allLists) {
-        if (allLists) {
-          res.json(allLists);
-        } else if (error) {
-          console.log(error.stack);
-          res.redirect('/error');
-        }
-      })
+      res.json(deletedList);
+    } else if (error) {
+      console.log(error.stack);
+      res.redirect('/error');
     }
   })
 }
+
 
 exports.updateList = function (req, res) {
   var list = { _id: req.params.list_id};
