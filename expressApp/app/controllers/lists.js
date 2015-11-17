@@ -21,11 +21,11 @@ exports.createList = function (req, res) {
     list_name: req.body.list_name,
     description: req.body.description
   });
-  list.save(function(err, list) {
-    if (list) {
-      List.find({}, function(error, list) {
-        if (list) {
-          res.json(list)
+  list.save(function(err, savedList) {
+    if (savedList) {
+      List.find({ list_name: req.body.list_name}, function(error, returnedList) {
+        if (returnedList) {
+          res.json(returnedList)
         } else if (err) {
           console.log('Failed to save: ' + err);
         }
