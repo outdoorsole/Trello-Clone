@@ -19,9 +19,35 @@ describe('ListController', function () {
         }
       });
     });
+
+    // Test 2 - check if createList can create an entry in the database
+    it('should create a list', function(done) {
+      request(app).post('/api/lists/create')
+      .send({list_name: 'test List', description: 'Test 3'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        console.log('This is res.body: ', res.body);
+        if (err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(1);
+          returnedList = res.body[0];
+          expect(returnedList).toBeDefined();
+          expect(returnedList.list_name).toEqual('test List')
+          console.log('This is the returnedListid: ', returnedList._id)
+          List.remove({_id: returnedList._id} , function (err) {
+            if (err) {
+              console.log('Failed to remove: ' + err);
+            }
+          })
+          done();
+        }
+      });
+    });
   });
 
-// Test 2 - check if showList returns data when there is information in the database
+// Test 3 - check if showList returns data when there is information in the database
   describe('with data', function() {
     var testList;
 
@@ -63,24 +89,4 @@ describe('ListController', function () {
       });
     });
   });
-
-  // Test 3 - check if createList can create an entry in the database
-    it('should create a list', function(done) {
-      request(app).post('/api/lists/create')
-      .send({list_name: 'test List', description: 'Test 3'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res){
-        console.log('This is res.body: ', res.body);
-        if (err) {
-          done.fail(err);
-        } else {
-          expect(res.body.length).toEqual(1);
-          returnedList = res.body[0];
-          expect(returnedList).toBeDefined();
-          expect(returnedList.list_name).toEqual('test List');
-          done();
-        }
-      });
-    });
 });
