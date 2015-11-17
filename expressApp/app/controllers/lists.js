@@ -50,7 +50,6 @@ exports.removeList = function (req, res) {
 
 exports.updateList = function (req, res) {
   var list = { _id: req.params.list_id};
-  console.log('This is req.body.list_name: ', req.body.list_name);
   List.update(list, {list_name: req.body.list_name}, function (error, updatedList) {
     if (updatedList) {
       List.findOne({_id: updatedList._id}, function (error, returnedList) {
