@@ -79,7 +79,7 @@ describe('ListController', function () {
       });
     });
 
-    // Test 4 - check if showList returns data when there is information in the database
+    // Test 4 - check if removeList deletes data when there is information in the database
     it('should remove a list', function(done) {
       request(app).post('/api/lists/delete/' + testList._id)
       .expect('Content-Type', /json/)
@@ -94,6 +94,24 @@ describe('ListController', function () {
             done();
           }
         })
+      });
+    });
+
+    // Test 5 - check if updateList will update the documents in the database
+    it('should update a list', function(done) {
+      request(app).post('/api/lists/update/' + testList._id)
+      .send({list_name: 'updated list name'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        List.findOne({_id: testList._id}, function (err, list) {
+          expect(list.list_name).toEqual("updated list name");
+          done();
+        })
+        if (err) {
+          console.log('Failed to remove list: ', err);
+          done();
+        }
       });
     });
 

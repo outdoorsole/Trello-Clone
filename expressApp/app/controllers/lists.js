@@ -53,8 +53,8 @@ exports.updateList = function (req, res) {
   console.log('This is req.body.list_name: ', req.body.list_name);
   List.update(list, {list_name: req.body.list_name}, function (error, updatedList) {
     if (updatedList) {
-      List.find({}, function (error, allLists) {
-        res.json(allLists)
+      List.findOne({_id: updatedList._id}, function (error, returnedList) {
+        res.json(returnedList)
       })
     } else if (error) {
       console.log(error.stack);
