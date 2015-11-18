@@ -26,19 +26,7 @@ exports.createItem = function (req, res) {
     description: req.body.description,
     _list: req.body._list
   });
-  console.log('We are inside the createItem action in server: ');
-  console.log('-----------------------------');
-
-  console.log('This is the item: ', item);
-  console.log('-----------------------------');
-
   item.save(function(err, savedItem) {
-    console.log('This is after the item is saved (savedItem): ', savedItem);
-    console.log('-----------------------------');
-
-    console.log('This is an the err: ', err);
-    console.log('-----------------------------');
-
     if (savedItem) {
       res.json(savedItem)
     } else if (err) {
