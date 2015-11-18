@@ -71,6 +71,7 @@ describe('ItemsController', function() {
       .expect(200)
       .end(function(err, res){
         console.log('This is res.body: ', res.body);
+        console.log('-----------------------------');
         if (err) {
           done.fail(err);
         } else {
@@ -79,17 +80,25 @@ describe('ItemsController', function() {
           var returnedItem = res.body;
           expect(returnedItem).toBeDefined();
           console.log('This is the returnedItem: ', returnedItem);
+          console.log('-----------------------------');
 
           expect(returnedItem.item_name).toEqual('test 3 item')
           console.log('This is the returnedItemId: ', returnedItem._id)
+          console.log('-----------------------------');
 
           console.log('This is res.body._id: ', res.body._id);
+          console.log('-----------------------------');
 
           Item.find({_id: returnedItem._id}, function (err, foundItem) {
             console.log('This is err inside of createItem: ', err);
+            console.log('-----------------------------');
             if (foundItem) {
               console.log('This is the foundItem: ', foundItem);
-              expect(foundItem[0]).toEqual(returnedItem);
+              console.log('-----------------------------');
+
+              console.log('This is the foundItem[0]: ', foundItem[0]);
+              console.log('-----------------------------');
+              expect(foundItem[0]).toEqual(jasmine.objectContaining({item_name: returnedItem.item_name}));
 
               Item.remove({_id: returnedItem._id} , function (err) {
                 if (err) {
@@ -102,6 +111,7 @@ describe('ItemsController', function() {
             }
           })
           console.log('This is outside of the database query');
+          console.log('-----------------------------');
         }
       });
     });
