@@ -18,11 +18,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
+// app.set('superSecret', thisismySecret); //secret variable
 
 // Controllers
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
+// var AuthenticationController
 
 //--------------------------------------------------------------
 //Routes for Items
