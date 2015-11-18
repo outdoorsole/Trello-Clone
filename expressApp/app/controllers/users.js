@@ -44,3 +44,15 @@ exports.removeUser = function (req, res) {
   })
 }
 
+exports.updateUser = function (req, res) {
+  var User = { _id: req.params.user_id};
+  User.update(user, {user_name: req.body.user_name}, function (error, updatedUser) {
+    if (updatedUser) {
+      User.findOne({_id: updatedUser.id}, function (error, returnedUser) {
+        res.json(returnedUser)
+      })
+    } else if (error) {
+      console.log(error.stack);
+    }
+  })
+}
