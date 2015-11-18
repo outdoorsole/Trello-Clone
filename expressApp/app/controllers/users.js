@@ -32,3 +32,15 @@ exports.createUser = function (req, res) {
     }
   })
 }
+
+exports.removeUser = function (req, res) {
+  var User = new User ({ _id: req.params.user_id})
+  user.remove(function (error, deletedUser) {
+    if (deletedUser) {
+      res.json (deletedUser);
+    } else if (error) {
+      console.log(error.stack);
+    }
+  })
+}
+
