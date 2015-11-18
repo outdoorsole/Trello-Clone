@@ -55,13 +55,13 @@ app.post('/api/lists/update/:list_id', ListsController.updateList);
 
 //--------------------------------------------------------------
 //Routes for Users
-app.get('/api/users', UsersController.showLists);
+// app.get('/api/users', UsersController.showLists);
 
-app.post('/api/users/create', UsersController.createList);
+// app.post('/api/users/create', UsersController.createList);
 
-app.post('/api/users/delete/:user_id', UsersController.removeList);
+// app.post('/api/users/delete/:user_id', UsersController.removeList);
 
-app.post('/api/users/update/:user_id', UsersController.updateList);
+// app.post('/api/users/update/:user_id', UsersController.updateList);
 
 //--------------------------------------------------------------
 app.listen(3000);
