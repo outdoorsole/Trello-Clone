@@ -22,6 +22,7 @@ mongoose.connect('mongodb://localhost/angulartodo');
 // Controllers
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
+var UsersController = require('./app/controllers/users');
 
 //--------------------------------------------------------------
 //Routes for Items
@@ -49,6 +50,18 @@ app.post('/api/lists/delete/:list_id', ListsController.removeList);
 
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
+
+//--------------------------------------------------------------
+//Routes for Users
+app.get('/api/users', UsersController.showLists);
+
+app.post('/api/users/create', UsersController.createList);
+
+app.post('/api/users/delete/:user_id', UsersController.removeList);
+
+app.post('/api/users/update/:user_id', UsersController.updateList);
+
+//--------------------------------------------------------------
 app.listen(3000);
 console.log('Connected to port 3000');
 
