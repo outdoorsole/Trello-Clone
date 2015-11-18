@@ -101,7 +101,7 @@ describe('ItemsController', function() {
               done.fail(err);
             }
           })
-            console.log('This is outside of the database query');
+          console.log('This is outside of the database query');
         }
       });
     });
