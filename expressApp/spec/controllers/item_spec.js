@@ -80,7 +80,7 @@ describe('ItemsController', function() {
           expect(returnedItem.item_name).toEqual('test 3 item');
 
           Item.find({_id: returnedItem._id}, function (err, foundItem) {
-            if (foundItem) {;
+            if (foundItem) {
               expect(foundItem[0]).toEqual(jasmine.objectContaining({item_name: returnedItem.item_name}));
               expect(foundItem[0]).toEqual(jasmine.objectContaining({description: returnedItem.description}));
 
@@ -97,6 +97,26 @@ describe('ItemsController', function() {
         }
       });
     });
+
+
+    // Test 4 - check if removeItem can remove an entry for an item in the database
+    it('should remove an item', function(done) {
+      request(app).post('/api/items/delete/' + testItem._id)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        Item.findOne({_id: testItem._id}, function (err, foundItem) {
+          expect(foundItem === null)
+          if (!foundItem) {
+            done();
+          } else if(err) {
+            console.log('Failed to remove item: ', err);
+            done.fail(err);
+          }
+        })
+      });
+    });
+
 
     afterEach(function(done) {
       testItem.remove(function(err, removedItem) {

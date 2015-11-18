@@ -38,16 +38,12 @@ exports.createItem = function (req, res) {
 
 exports.removeItem = function (req, res) {
   var item = new Item ({ _id: req.params.id})
-  item.remove(function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        if (item) {
-          res.json(item)
-        } else if (error) {
-          console.log(error.stack);
-          res.redirect('/error');
-        }
-      })
+  item.remove(function (error, deletedItem) {
+    if (deletedItem) {
+      res.json(deletedItem)
+    } else if (error) {
+      console.log(error.stack);
+      res.redirect('/error');
     }
   })
 }

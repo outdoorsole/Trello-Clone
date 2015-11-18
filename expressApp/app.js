@@ -70,4 +70,4 @@ console.log('Connected to port 3000');
 // Changing the way we are testing
 // do not need to have the node server running this way when we export it
 //
-exports.app = app;
+module.exports.app = app;
