@@ -26,8 +26,10 @@ var ListsController = require('./app/controllers/lists');
 //--------------------------------------------------------------
 //Routes for Items
 
-// show/create items
+// show items
 app.get('/api/items', ItemsController.showItems);
+
+// /create items
 app.post('/api/items/create', ItemsController.createItem);
 
 // delete item

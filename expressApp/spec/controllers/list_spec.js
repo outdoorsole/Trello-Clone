@@ -60,7 +60,6 @@ describe('ListController', function () {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
-        console.log('This is res.body: ', res.body);
         if (err) {
           done.fail(err);
         } else {
@@ -68,7 +67,6 @@ describe('ListController', function () {
           returnedList = res.body[0];
           expect(returnedList).toBeDefined();
           expect(returnedList.list_name).toEqual('test List')
-          console.log('This is the returnedListid: ', returnedList._id)
           List.remove({_id: returnedList._id} , function (err) {
             if (err) {
               console.log('Failed to remove: ' + err);
