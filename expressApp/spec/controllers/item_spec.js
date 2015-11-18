@@ -62,6 +62,50 @@ describe('ItemsController', function() {
       });
     });
 
+    // Test 3 - check if createItem can create an entry in the database
+    it('should create an item', function(done) {
+      var createItem = {item_name: 'test 3 item', description: 'Test 3 create action'};
+      request(app).post('/api/items/create')
+      .send(createItem)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        console.log('This is res.body: ', res.body);
+        if (err) {
+          done.fail(err);
+        } else {
+          expect(res.body).toEqual(jasmine.objectContaining(createItem));
+
+          var returnedItem = res.body;
+          expect(returnedItem).toBeDefined();
+          console.log('This is the returnedItem: ', returnedItem);
+
+          expect(returnedItem.item_name).toEqual('test 3 item')
+          console.log('This is the returnedItemId: ', returnedItem._id)
+
+          console.log('This is res.body._id: ', res.body._id);
+
+          Item.find({_id: returnedItem._id}, function (err, foundItem) {
+            console.log('This is err inside of createItem: ', err);
+            if (foundItem) {
+              console.log('This is the foundItem: ', foundItem);
+              expect(foundItem[0]).toEqual(returnedItem);
+
+              Item.remove({_id: returnedItem._id} , function (err) {
+                if (err) {
+                  console.log('Failed to remove: ' + err);
+                }
+                done();
+              })
+            } else if(err) {
+              done.fail(err);
+            }
+          })
+            console.log('This is outside of the database query');
+        }
+      });
+    });
+
     afterEach(function(done) {
       testItem.remove(function(err, removedItem) {
         if (err) {
