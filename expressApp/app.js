@@ -33,13 +33,13 @@ var UsersController = require('./app/controllers/users');
 app.get('/api/items', ItemsController.showItems);
 
 // /create items
-app.post('/api/items/create', ItemsController.createItem);
+app.post('/api/item/create', ItemsController.createItem);
 
 // delete item
-app.post('/api/items/delete/:id', ItemsController.removeItem);
+app.post('/api/item/delete/:id', ItemsController.removeItem);
 
 // update item
-app.post('/api/items/update/:id', ItemsController.updateItem);
+app.post('/api/item/update/:id', ItemsController.updateItem);
 
 
 //--------------------------------------------------------------
@@ -70,4 +70,4 @@ console.log('Connected to port 3000');
 // Changing the way we are testing
 // do not need to have the node server running this way when we export it
 //
-exports.app = app;
+module.exports.app = app;
