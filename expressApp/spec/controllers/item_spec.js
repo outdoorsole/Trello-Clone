@@ -65,7 +65,7 @@ describe('ItemsController', function() {
     // Test 3 - check if createItem can create an entry in the database
     it('should create an item', function(done) {
       var createItem = {item_name: 'test 3 item', description: 'Test 3 create action'};
-      request(app).post('/api/items/create')
+      request(app).post('/api/item/create')
       .send(createItem)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -101,7 +101,7 @@ describe('ItemsController', function() {
 
     // Test 4 - check if removeItem can remove an entry for an item in the database
     it('should remove an item', function(done) {
-      request(app).post('/api/items/delete/' + testItem._id)
+      request(app).post('/api/item/delete/' + testItem._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
