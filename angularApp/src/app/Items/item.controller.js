@@ -45,7 +45,7 @@ angular.module('mytodo')
       });
     };
 
-    vm.removeTodo = function (itemId) {
+    vm.removeItem = function (itemId) {
       $http.post('/api/items/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
@@ -56,7 +56,7 @@ angular.module('mytodo')
         });
     };
 
-    vm.updateTodo = function (itemId, item_name) {
+    vm.updateItem = function (itemId, item_name) {
       $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;

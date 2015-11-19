@@ -39,7 +39,7 @@ app.post('/api/items/create', ItemsController.createItem);
 app.post('/api/items/delete/:id', ItemsController.removeItem);
 
 // update item
-app.post('/api/items/update/:id', ItemsController.updateItem);
+app.post('/api/item/update/:id', ItemsController.updateItem);
 
 
 //--------------------------------------------------------------

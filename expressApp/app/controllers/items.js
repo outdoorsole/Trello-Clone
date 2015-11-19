@@ -48,13 +48,14 @@ exports.removeItem = function (req, res) {
   })
 }
 
+
 exports.updateItem = function (req, res) {
   var item = { _id: req.params.id};
   console.log('this is req.query.item_name: ', req.query.item_name);
-  Item.update(item, {item_name: req.query.item_name}, function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        res.json(item)
+  Item.update(item, {item_name: req.query.item_name}, function (error, updatedItem) {
+    if (updatedItem) {
+      Item.findOne({item_name: updatedItem.item_name}, function (error, foundItem) {
+        res.json(foundItem)
       })
     } else if (error) {
       console.log(error.stack);

@@ -118,6 +118,26 @@ describe('ItemsController', function() {
     });
 
 
+    // Test 5 - check if updateItem can update an entry for an item in the database
+    it('should update an item', function(done) {
+      console.log('This is testItem: ', testItem);
+      request(app).post('/api/item/update/' + testItem._id + '?item_name=updated item name')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        Item.findOne({_id: testItem._id}, function (err, foundItem) {
+          console.log('This is foundItem: ', foundItem);
+          expect(foundItem.item_name).toEqual('updated item name');
+          done();
+        })
+        if (err) {
+          console.log('Failed to update item: ', err);
+          done();
+        }
+      })
+    });
+
+
     afterEach(function(done) {
       testItem.remove(function(err, removedItem) {
         if (err) {
@@ -129,31 +149,3 @@ describe('ItemsController', function() {
     });
   });
 });
-
-
-// Checks the database to see if there are no items
-// describe('Items', function() {
-//   describe('with no data', function() {
-//     it('should create an item and assign it to a list', function(done) {
-//       console.log('In the items test');
-//       request(app).post('/api/items/create')
-//       .send({item_name: 'mac book pro', description: 'computer', _list: '5642300a4e7bd69d9102d39a'})
-//       .expect('Content-Type', /json/)
-//       .end(function(err, res) {
-//         console.log('In the end callback');
-//         if (err) {
-//           done.fail(err);
-//         } else {
-//           console.log('This is res.body: ', res.body);
-//           expect(res.body.item_name).toEqual('mac book pro');
-//           expect(res.body.description).toEqual('computer');
-//           expect(res.body._list).toEqual('5642300a4e7bd69d9102d39a');
-//           Item.remove({ _id: res.body._id }, function(err, numAffected) {
-//             done();
-//           })
-//         }
-//       });
-//     });
-//   });
-// })
-
