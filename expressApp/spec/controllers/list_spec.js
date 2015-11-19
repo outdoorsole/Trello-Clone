@@ -107,7 +107,7 @@ describe('ListController', function () {
           done();
         })
         if (err) {
-          console.log('Failed to remove list: ', err);
+          console.log('Failed to update list: ', err);
           done();
         }
       });

@@ -26,12 +26,7 @@ exports.createItem = function (req, res) {
     description: req.body.description,
     _list: req.body._list
   });
-  console.log('We are inside the createItem action in server: ');
-  console.log('This is the item: ', item);
   item.save(function(err, savedItem) {
-    console.log('This is after the item is saved: ');
-    console.log('This is an the err: ', err);
-    console.log('this is the savedItem: ', savedItem);
     if (savedItem) {
       res.json(savedItem)
     } else if (err) {
@@ -43,27 +38,23 @@ exports.createItem = function (req, res) {
 
 exports.removeItem = function (req, res) {
   var item = new Item ({ _id: req.params.id})
-  item.remove(function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        if (item) {
-          res.json(item)
-        } else if (error) {
-          console.log(error.stack);
-          res.redirect('/error');
-        }
-      })
+  item.remove(function (error, deletedItem) {
+    if (deletedItem) {
+      res.json(deletedItem)
+    } else if (error) {
+      console.log(error.stack);
+      res.redirect('/error');
     }
   })
 }
 
+
 exports.updateItem = function (req, res) {
   var item = { _id: req.params.id};
-  console.log('this is req.query.item_name: ', req.query.item_name);
-  Item.update(item, {item_name: req.query.item_name}, function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        res.json(item)
+  Item.update(item, {item_name: req.query.item_name}, function (error, updatedItem) {
+    if (updatedItem) {
+      Item.findOne({item_name: updatedItem.item_name}, function (error, foundItem) {
+        res.json(foundItem)
       })
     } else if (error) {
       console.log(error.stack);
