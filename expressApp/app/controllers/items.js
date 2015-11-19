@@ -2,16 +2,16 @@ var bodyParser = require('body-parser');
 //------------------------------------------------------------------------------------//
 // Models
 var Item = require('../models/item');
+var List = require('../models/list');
 
 //------------------------------------------------------------------------------------//
 
 // need to update to take parameters
 // add them to the angular app
 exports.showItems = function (req, res) {
-  Item.find({}, function(error, items) {
-    // console.log('Here are the items: ', items);
-    if (items) {
-      res.json(items);
+  Item.find({ _list: req.params.list_id}, function(error, foundItems) {
+    if (foundItems) {
+      res.json(foundItems);
     } else if (error) {
       console.error(error.stack);
       res.json({status: 400, message: error.message});
@@ -21,10 +21,13 @@ exports.showItems = function (req, res) {
 
 
 exports.createItem = function (req, res) {
+  console.log('This is req: ', req);
+  console.log('----------------------------------------------');
+  console.log('This is req.params.list_id: ', req.params.list_id);
   var item = new Item({
     item_name: req.body.item_name,
     description: req.body.description,
-    _list: req.body._list
+    _list: req.params.list_id
   });
   item.save(function(err, savedItem) {
     if (savedItem) {

@@ -13,7 +13,7 @@
         // knows to go to the main controller
         controller: 'ListController',
         // alias for the controller
-        controllerAs: 'Lists'
+        controllerAs: 'ListController'
       })
       .otherwise({
         redirectTo: '/'
@@ -24,7 +24,7 @@
         templateUrl: 'app/Items/item.html',
         // knows to go to the main controller
         controller: 'ItemController',
-        controllerAs: 'Items'
+        controllerAs: 'ItemController'
       })
       .otherwise({
         redirectTo: '/'

@@ -22,13 +22,6 @@ describe('ItemsController', function() {
     });
   });
 
-//.end triggers the function for you
-// if there is not an error
-// expect the body to be an empty string
-// the response is just json
-// can test what the data should look like
-// can test the data that is coming back from any of our api calls
-
 
   describe('with data', function() {
     var testItem;
@@ -61,6 +54,7 @@ describe('ItemsController', function() {
         }
       });
     });
+
 
     // Test 3 - check if createItem can create an entry in the database
     it('should create an item', function(done) {

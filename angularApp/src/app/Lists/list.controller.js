@@ -30,8 +30,9 @@ angular.module('mytodo')
     vm.createList = function () {
       $http.post('/api/lists/create', vm.formData)
         .success(function(data) {
-          vm.lists = data;
-          $log.log(data);
+          $log.log('This is data[0]:', data[0]);
+          vm.lists.push(data[0]);
+          $log.log('This is vm.lists:', vm.lists);
         })
         .error(function(data) {
           $log.log('Error: ' + data);
