@@ -3,13 +3,8 @@
 
 angular.module('mytodo')
   .controller('ItemController', function ($routeParams, $http, $log) {
-
-    var vm = this;
-    $log.log('This is vm: ', vm);
-    $log.log('This is $routeParams: ', $routeParams);
-    $log.log('This is $http: ', $http);
-
     // All of this is happening on load (until methods below)
+    var vm = this;
 
     // This variable stores the form data coming through the front-end
     vm.formData = {};
@@ -39,7 +34,6 @@ angular.module('mytodo')
         .success(function(data) {
           $log.log('This is the vm.items: ', vm.items);
           vm.items.push(data);
-          console.log('This is vm.items after pushing: ');
           $log.log('This is the data: ', data);
         })
         .error(function(data) {
