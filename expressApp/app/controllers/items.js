@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 //------------------------------------------------------------------------------------//
 // Models
 var Item = require('../models/item');
+var List = require('../models/list');
 
 //------------------------------------------------------------------------------------//
 
@@ -31,6 +32,10 @@ exports.createItem = function (req, res) {
   });
   item.save(function(err, savedItem) {
     if (savedItem) {
+      List.findOne({ _id: req.params.list_id }, function (err, foundList){
+        foundList._items.push(savedItem);
+        foundList.save();
+      });
       res.json(savedItem)
     } else if (err) {
       console.log('Failed to save: ' + err);
