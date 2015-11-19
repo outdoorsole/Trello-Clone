@@ -3,13 +3,8 @@
 
 angular.module('mytodo')
   .controller('ItemController', function ($routeParams, $http, $log) {
-
-    var vm = this;
-    $log.log('This is vm: ', vm);
-    $log.log('This is $routeParams: ', $routeParams);
-    $log.log('This is $http: ', $http);
-
     // All of this is happening on load (until methods below)
+    var vm = this;
 
     // This variable stores the form data coming through the front-end
     vm.formData = {};
@@ -28,17 +23,20 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
-    $http.get('/api/items')
+    $http.get('/api/items/' + vm.listId)
       .success(function(data) {
         vm.title = "List of Items";
         vm.items = data;
       })
 
     vm.createItem = function () {
-      $http.post('/api/items/create', vm.formData)
+      $log.log('This is the vm.listId: ', vm.listId);
+      $http.post('/api/item/create/' + vm.listId, vm.formData)
         .success(function(data) {
+          $log.log('This is the vm.items: ', vm.items);
+          $log.log('This is the vm.formData: ', vm.formData);
           vm.items.push(data);
-          $log.log(data);
+          $log.log('This is the data: ', data);
         })
         .error(function(data) {
           $log.log('Error: ' + data);
@@ -46,7 +44,7 @@ angular.module('mytodo')
     };
 
     vm.removeItem = function (itemId) {
-      $http.post('/api/items/delete/' + itemId)
+      $http.post('/api/item/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
@@ -57,7 +55,7 @@ angular.module('mytodo')
     };
 
     vm.updateItem = function (itemId, item_name) {
-      $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
+      $http.post('/api/item/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;
           $log.log(data);

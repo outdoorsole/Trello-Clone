@@ -30,10 +30,10 @@ var UsersController = require('./app/controllers/users');
 //Routes for Items
 
 // show items
-app.get('/api/items', ItemsController.showItems);
+app.get('/api/items/:list_id', ItemsController.showItems);
 
 // /create items
-app.post('/api/item/create', ItemsController.createItem);
+app.post('/api/item/create/:list_id', ItemsController.createItem);
 
 // delete item
 app.post('/api/item/delete/:id', ItemsController.removeItem);
@@ -44,12 +44,17 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 
 //--------------------------------------------------------------
 //Routes for Lists
+
+// show lists
 app.get('/api/lists', ListsController.showLists);
 
+// create a list
 app.post('/api/lists/create', ListsController.createList);
 
+// delete a list
 app.post('/api/lists/delete/:list_id', ListsController.removeList);
 
+// update a list
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
 
