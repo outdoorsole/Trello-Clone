@@ -30,9 +30,11 @@ angular.module('mytodo')
       })
 
     vm.createItem = function () {
-      $http.post('/api/item/create', vm.formData)
+      $log.log('This is the vm.listId: ', vm.listId);
+      $http.post('/api/item/create/' + vm.listId, vm.formData)
         .success(function(data) {
           $log.log('This is the vm.items: ', vm.items);
+          $log.log('This is the vm.formData: ', vm.formData);
           vm.items.push(data);
           $log.log('This is the data: ', data);
         })
