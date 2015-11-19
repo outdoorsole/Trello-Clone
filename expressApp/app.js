@@ -30,7 +30,7 @@ var UsersController = require('./app/controllers/users');
 //Routes for Items
 
 // show items
-app.get('/api/items', ItemsController.showItems);
+app.get('/api/items/:list_id', ItemsController.showItems);
 
 // /create items
 app.post('/api/item/create/:list_id', ItemsController.createItem);

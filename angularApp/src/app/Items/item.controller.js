@@ -23,7 +23,7 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
-    $http.get('/api/items')
+    $http.get('/api/items/' + vm.listId)
       .success(function(data) {
         vm.title = "List of Items";
         vm.items = data;

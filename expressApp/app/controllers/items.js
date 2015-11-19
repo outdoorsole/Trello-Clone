@@ -9,10 +9,9 @@ var List = require('../models/list');
 // need to update to take parameters
 // add them to the angular app
 exports.showItems = function (req, res) {
-  Item.find({}, function(error, items) {
-    // console.log('Here are the items: ', items);
-    if (items) {
-      res.json(items);
+  Item.find({ _list: req.params.list_id}, function(error, foundItems) {
+    if (foundItems) {
+      res.json(foundItems);
     } else if (error) {
       console.error(error.stack);
       res.json({status: 400, message: error.message});
@@ -32,10 +31,6 @@ exports.createItem = function (req, res) {
   });
   item.save(function(err, savedItem) {
     if (savedItem) {
-      List.findOne({ _id: req.params.list_id }, function (err, foundList){
-        foundList._items.push(savedItem);
-        foundList.save();
-      });
       res.json(savedItem)
     } else if (err) {
       console.log('Failed to save: ' + err);
