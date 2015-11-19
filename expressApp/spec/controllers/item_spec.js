@@ -120,13 +120,11 @@ describe('ItemsController', function() {
 
     // Test 5 - check if updateItem can update an entry for an item in the database
     it('should update an item', function(done) {
-      console.log('This is testItem: ', testItem);
       request(app).post('/api/item/update/' + testItem._id + '?item_name=updated item name')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
         Item.findOne({_id: testItem._id}, function (err, foundItem) {
-          console.log('This is foundItem: ', foundItem);
           expect(foundItem.item_name).toEqual('updated item name');
           done();
         })
