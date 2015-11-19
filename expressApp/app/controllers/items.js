@@ -24,7 +24,7 @@ exports.createItem = function (req, res) {
   var item = new Item({
     item_name: req.body.item_name,
     description: req.body.description,
-    _list: req.body._list
+    _list: req.query.list_id
   });
   item.save(function(err, savedItem) {
     if (savedItem) {

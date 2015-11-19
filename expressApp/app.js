@@ -44,12 +44,17 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 
 //--------------------------------------------------------------
 //Routes for Lists
+
+// show lists
 app.get('/api/lists', ListsController.showLists);
 
+// create a list
 app.post('/api/lists/create', ListsController.createList);
 
+// delete a list
 app.post('/api/lists/delete/:list_id', ListsController.removeList);
 
+// update a list
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
 

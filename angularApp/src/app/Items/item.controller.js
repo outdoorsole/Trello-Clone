@@ -35,10 +35,12 @@ angular.module('mytodo')
       })
 
     vm.createItem = function () {
-      $http.post('/api/items/create', vm.formData)
+      $http.post('/api/item/create', vm.formData)
         .success(function(data) {
+          $log.log('This is the vm.items: ', vm.items);
           vm.items.push(data);
-          $log.log(data);
+          console.log('This is vm.items after pushing: ');
+          $log.log('This is the data: ', data);
         })
         .error(function(data) {
           $log.log('Error: ' + data);
@@ -46,7 +48,7 @@ angular.module('mytodo')
     };
 
     vm.removeItem = function (itemId) {
-      $http.post('/api/items/delete/' + itemId)
+      $http.post('/api/item/delete/' + itemId)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
@@ -57,7 +59,7 @@ angular.module('mytodo')
     };
 
     vm.updateItem = function (itemId, item_name) {
-      $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
+      $http.post('/api/item/update/' + itemId + '?item_name=' + item_name)
         .success(function(data) {
           vm.items = data;
           $log.log(data);
