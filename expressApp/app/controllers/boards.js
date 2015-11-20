@@ -59,14 +59,10 @@ exports.removeBoard = function (req, res) {
 
 exports.updateBoard = function (req, res) {
   var board = { _id: req.params.board_id};
-  Board.update(board, {board_name: req.body.board_name}, function (error, updatedBoard) {
-    console.log('This is inside the callback for update');
+  Board.findOne(board, function (error, updatedBoard) {
     if (updatedBoard) {
-      console.log('This is updatedBoard: ', updatedBoard);
-      Board.find({}, function (error, allBoards) {
-        console.log('This is allBoards: ', allBoards);
-        res.json(allBoards)
-      })
+      updatedBoard.board_name = req.body.board_name;
+      updatedBoard.save();
     } else if (error) {
       console.log(error.stack);
       res.redirect('/error');
