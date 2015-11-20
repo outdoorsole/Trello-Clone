@@ -7,6 +7,7 @@ var path = require('path');
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
+var Board = require('./app/models/board');
 
 // Database
 var mongoose = require('mongoose');
@@ -24,6 +25,7 @@ mongoose.connect('mongodb://localhost/angulartodo');
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
+var BoardsController = require('./app/controllers/boards');
 // var AuthenticationController
 
 //--------------------------------------------------------------

@@ -17,14 +17,13 @@ exports.showBoard = function (req, res) {
 
 exports.createBoard = function (req, res) {
   var board = new Board({
-    board_name: req.body.board_name,
-    description: req.body.description
+    board_name: req.body.board_name
   });
   board.save(function(err, savedBoard) {
     if (savedBoard) {
       Board.find({ board_name: req.body.board_name}, function(error, returnedBoard) {
         if (returnedBoard) {
-          res.json(returnedBoard)
+          res.json(returnedBoard);
         } else if (err) {
           console.log('Failed to save: ' + err);
         }
