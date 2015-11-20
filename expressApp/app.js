@@ -32,7 +32,7 @@ var UsersController = require('./app/controllers/users');
 // show items
 app.get('/api/items/:list_id', ItemsController.showItems);
 
-// /create items
+// create items
 app.post('/api/item/create/:list_id', ItemsController.createItem);
 
 // delete item
