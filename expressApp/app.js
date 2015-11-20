@@ -57,7 +57,22 @@ app.post('/api/lists/delete/:list_id', ListsController.removeList);
 // update a list
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
+//--------------------------------------------------------------
+//Routes for Boards
 
+// show boards
+app.get('/api/boards', BoardsController.showBoard);
+
+// create a board
+app.post('/api/boards/create', BoardsController.createBoard);
+
+// delete a board
+app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
+
+// update a board
+app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
+
+//--------------------------------------------------------------
 //Routes for Users
 // app.get('/api/users', UsersController.showLists);
 
