@@ -26,7 +26,6 @@ exports.showOneBoard = function (req, res) {
 }
 
 exports.createBoard = function (req, res) {
-  console.log('This is req.body: ', req.body);
   var board = new Board({
     board_name: req.body.board_name
   });
@@ -59,10 +58,11 @@ exports.removeBoard = function (req, res) {
 
 exports.updateBoard = function (req, res) {
   var board = { _id: req.params.board_id};
-  Board.findOne(board, function (error, updatedBoard) {
+  Board.update(board, {board_name: req.body.board_name}, function (error, updatedBoard) {
     if (updatedBoard) {
-      updatedBoard.board_name = req.body.board_name;
-      updatedBoard.save();
+      Board.find({}, function (error, allBoards) {
+        res.json(allBoards)
+      })
     } else if (error) {
       console.log(error.stack);
       res.redirect('/error');
