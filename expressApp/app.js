@@ -7,6 +7,7 @@ var path = require('path');
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
+var Board = require('./app/models/board');
 
 // Database
 var mongoose = require('mongoose');
@@ -24,6 +25,7 @@ mongoose.connect('mongodb://localhost/angulartodo');
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
+var BoardsController = require('./app/controllers/boards');
 // var AuthenticationController
 
 //--------------------------------------------------------------
@@ -57,7 +59,25 @@ app.post('/api/lists/delete/:list_id', ListsController.removeList);
 // update a list
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
+//--------------------------------------------------------------
+//Routes for Boards
 
+// show boards
+app.get('/api/boards', BoardsController.showMultipleBoards);
+
+// show one board
+app.get('/api/:board_id', BoardsController.showOneBoard);
+
+// create a board
+app.post('/api/boards/create', BoardsController.createBoard);
+
+// delete a board
+app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
+
+// update a board
+app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
+
+//--------------------------------------------------------------
 //Routes for Users
 // app.get('/api/users', UsersController.showLists);
 

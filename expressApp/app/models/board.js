@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // Board Schema
 var boardSchema = new Schema({
-  title: { type: String, required: true },
+  board_name: { type: String, required: true },
   created_at: Date,
   updated_at: Date,
   _lists: [{ type: mongoose.Schema.Types.ObjectId, ref:'List' }]
