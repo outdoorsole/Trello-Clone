@@ -58,7 +58,6 @@ app.post('/api/lists/delete/:list_id', ListsController.removeList);
 app.post('/api/lists/update/:list_id', ListsController.updateList);
 
 
-//--------------------------------------------------------------
 //Routes for Users
 // app.get('/api/users', UsersController.showLists);
 
