@@ -63,7 +63,10 @@ app.post('/api/lists/update/:list_id', ListsController.updateList);
 //Routes for Boards
 
 // show boards
-app.get('/api/boards', BoardsController.showBoard);
+app.get('/api/boards', BoardsController.showMultipleBoards);
+
+// show one board
+app.get('/api/:board_id', BoardsController.showOneBoard);
 
 // create a board
 app.post('/api/boards/create', BoardsController.createBoard);

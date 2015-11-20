@@ -5,7 +5,17 @@ var Board = require('../models/board');
 
 //------------------------------------------------------------------------------------//
 
-exports.showBoard = function (req, res) {
+exports.showMultipleBoards = function (req, res) {
+  Board.find({}, function(error, foundBoards) {
+    if (foundBoards) {
+      res.json(foundBoards);
+    } else if (error) {
+      console.error(error.stack);
+    }
+  });
+}
+
+exports.showOneBoard = function (req, res) {
   Board.find({}, function(error, foundBoard) {
     if (foundBoard) {
       res.json(foundBoard);
@@ -16,6 +26,7 @@ exports.showBoard = function (req, res) {
 }
 
 exports.createBoard = function (req, res) {
+  console.log('This is req.body: ', req.body);
   var board = new Board({
     board_name: req.body.board_name
   });
