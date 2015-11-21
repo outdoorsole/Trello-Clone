@@ -2,13 +2,16 @@ var bodyParser = require('body-parser');
 //------------------------------------------------------//
 
 // Models
-var User = require('../models/list');
+var User = require('../models/user');
 
 //------------------------------------------------------//
 
 exports.showUsers = function (req, res) {
-  User.find({}, function(error, lists) {
+  console.log('We are in the showUsers action');
+  User.find({}, function(error, users) {
+    console.log('method fired');
     if (users) {
+      console.log('Users: ', users);
       res.json(users);
     } else if (error) {
       console.error(error.stack);

@@ -1,13 +1,12 @@
 var express = require('express');
 var app = express();
-var router = express.Router();
 var bodyParser = require('body-parser');
-var path = require('path');
 
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
 var Board = require('./app/models/board');
+var User = require('./app/models/user');
 
 // Database
 var mongoose = require('mongoose');
@@ -15,7 +14,10 @@ var mongoose = require('mongoose');
 // body-parser middleware for handling request variables (forms)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(function(req, res, next) {
+  console.log(req.path);
+  next();
+});
 
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
@@ -65,33 +67,38 @@ app.post('/api/lists/update/:list_id', ListsController.updateList);
 // show boards
 app.get('/api/boards', BoardsController.showMultipleBoards);
 
-// show one board
-app.get('/api/:board_id', BoardsController.showOneBoard);
+// // show one board
+app.get('/api/boards/:board_id', BoardsController.showOneBoard);
 
-// create a board
+// // create a board
 app.post('/api/boards/create', BoardsController.createBoard);
 
-// delete a board
+// // delete a board
 app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
 
-// update a board
+// // update a board
 app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
 
 //--------------------------------------------------------------
-//Routes for Users
-// app.get('/api/users', UsersController.showLists);
+// Routes for Users
 
-// app.post('/api/users/create', UsersController.createList);
+// show users
+app.get('/api/users', UsersController.showUsers);
 
-// app.post('/api/users/delete/:user_id', UsersController.removeList);
+// create a user
+app.post('/api/user/create', UsersController.createUser);
 
-// app.post('/api/users/update/:user_id', UsersController.updateList);
+// delete a user
+app.post('/api/user/delete/:user_id', UsersController.removeUser);
 
-//--------------------------------------------------------------
+// update a user
+app.post('/api/user/update/:user_id', UsersController.updateUser);
+
+// --------------------------------------------------------------
 app.listen(3000);
-console.log('Connected to port 3000');
+console.log('Connected to port 3000.');
 
 // Changing the way we are testing
 // do not need to have the node server running this way when we export it
 //
-module.exports.app = app;
+// module.exports.app = app;
