@@ -7,7 +7,7 @@ var listSchema = new Schema({
   description: { type: String },
   created_at: Date,
   updated_at: Date,
-  _items: [{type: mongoose.Schema.Types.ObjectId, ref:'Item'}]
+  _board: {type: mongoose.Schema.Types.ObjectId, ref:'Board'}
 });
 
 var List = mongoose.model('List', listSchema);

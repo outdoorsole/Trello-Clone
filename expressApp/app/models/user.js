@@ -5,8 +5,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   user_name: { type: String, required: true },
   created_at: Date,
-  updated_at: Date,
-  _boards: [{type: mongoose.Schema.Types.ObjectId, ref: 'Board'}]
+  updated_at: Date
 });
 
 var User = mongoose.model('User', userSchema);

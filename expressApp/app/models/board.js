@@ -6,7 +6,7 @@ var boardSchema = new Schema({
   board_name: { type: String, required: true },
   created_at: Date,
   updated_at: Date,
-  _lists: [{ type: mongoose.Schema.Types.ObjectId, ref:'List' }]
+  _user: { type: mongoose.Schema.Types.ObjectId, ref:'User' }
 });
 
 var Board = mongoose.model('Board', boardSchema);

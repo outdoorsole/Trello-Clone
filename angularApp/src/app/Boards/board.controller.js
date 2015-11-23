@@ -19,7 +19,7 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
-    $http.get('/api/boards/')
+    $http.get('/api/boards/' + userId)
     .success(function(data) {
       vm.title = "Boards for User";
       vm.boards = data;
