@@ -40,6 +40,18 @@
       .otherwise({
         redirectTo: '/'
       });
+
+    $routeProvider
+      .when('/users', {
+        templateUrl: 'app/Users/user.html',
+        // knows to go to the main controller
+        controller: 'UserController',
+        // alias for the controller
+        controllerAs: 'UserController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
   }
 
 })();

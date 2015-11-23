@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('BoardController', function ($routeParams, $http, $log) {
+  .controller('UserController', function ($routeParams, $http, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -51,7 +51,7 @@ angular.module('mytodo')
     };
 
     vm.updateUser = function (userId, user_name) {
-      $http.post('/api/user/update/' + userId, {user_name: board_name})
+      $http.post('/api/user/update/' + userId, {user_name: user_name})
         .success(function(data) {
           vm.users = data;
           $log.log(data);
