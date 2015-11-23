@@ -47,7 +47,7 @@ app.post('/api/user/update/:user_id', UsersController.updateUser);
 //Routes for Boards
 
 // show boards
-app.get('/api/boards', BoardsController.showMultipleBoards);
+app.get('/api/boards/:user_id', BoardsController.showMultipleBoards);
 
 // // show one board
 app.get('/api/boards/:board_id', BoardsController.showOneBoard);
@@ -95,8 +95,6 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 
 
 //--------------------------------------------------------------
-
-
 
 app.listen(3000);
 console.log('Connected to port 3000');

@@ -7,9 +7,8 @@ var Board = require('../models/board');
 
 // Show multiple boards for one user
 exports.showMultipleBoards = function (req, res) {
-  console.log('This is req.params: ', req.params);
   var userId = req.params.user_id;
-  Board.find({}, function(error, foundBoards) {
+  Board.find({ _id: userId }, function(error, foundBoards) {
     if (foundBoards) {
       res.json(foundBoards);
     } else if (error) {
@@ -29,8 +28,10 @@ exports.showOneBoard = function (req, res) {
 }
 
 exports.createBoard = function (req, res) {
+  var userId = req.params.user_id;
   var board = new Board({
-    board_name: req.body.board_name
+    board_name: req.body.board_name,
+    _id: userId
   });
   board.save(function(err, savedBoard) {
     if (savedBoard) {
