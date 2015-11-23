@@ -6,7 +6,6 @@ var List = require('../models/list');
 //------------------------------------------------------------------------------------//
 
 exports.showLists = function (req, res) {
-  console.log('In ListController.showLists');
   List.find({}, function(error, lists) {
     if (lists) {
       res.json(lists);

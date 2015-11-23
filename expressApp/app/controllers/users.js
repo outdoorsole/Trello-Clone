@@ -7,11 +7,8 @@ var User = require('../models/user');
 //------------------------------------------------------//
 
 exports.showUsers = function (req, res) {
-  console.log('We are in the showUsers action');
   User.find({}, function(error, users) {
-    console.log('method fired');
     if (users) {
-      console.log('Users: ', users);
       res.json(users);
     } else if (error) {
       console.error(error.stack);
@@ -37,7 +34,7 @@ exports.createUser = function (req, res) {
 }
 
 exports.removeUser = function (req, res) {
-  var User = new User ({ _id: req.params.user_id})
+  var user = new User ({ _id: req.params.user_id})
   user.remove(function (error, deletedUser) {
     if (deletedUser) {
       res.json (deletedUser);
@@ -48,7 +45,7 @@ exports.removeUser = function (req, res) {
 }
 
 exports.updateUser = function (req, res) {
-  var User = { _id: req.params.user_id};
+  var user = { _id: req.params.user_id};
   User.update(user, {user_name: req.body.user_name}, function (error, updatedUser) {
     if (updatedUser) {
       User.findOne({_id: updatedUser.id}, function (error, returnedUser) {

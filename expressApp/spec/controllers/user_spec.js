@@ -24,13 +24,12 @@ describe('UserController', function () {
   describe('with data', function() {
     var testUser;
 
-    beforeEach(function(done) {
+    beforeAll(function(done) {
       User.create({ user_name: 'test user' }, function(err, newUser) {
         if (err) {
           done.fail(err);
         } else {
           testUser = newUser;
-          console.log('This is testUser from the beforeEach: ', testUser);
           done();
         }
       });
@@ -45,12 +44,10 @@ describe('UserController', function () {
         if (err) {
           done.fail(err);
         } else {
-          console.log('This is res.body: ', res.body);
           expect(res.body.length).toEqual(1);
           returnedUser = res.body[0];
-          console.log('This is returnedUser: ', returnedUser);
-          //expect(returnedUser).toBeDefined();
-          //expect(returnedUser.user_name).toEqual(testUser.user_name);
+          expect(returnedUser).toBeDefined();
+          expect(returnedUser.user_name).toEqual(testUser.user_name);
           done();
         }
       });
@@ -59,7 +56,7 @@ describe('UserController', function () {
     // Test 3 - check if createUser can create an entry in the database
     it('should create a user', function(done) {
       request(app).post('/api/user/create')
-      .send({user_name: 'test User', description: 'Test 3'})
+      .send({user_name: 'test User'})
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
@@ -80,7 +77,26 @@ describe('UserController', function () {
       });
     });
 
-    // Test 4 - check if removeUser deletes data when there is information in the database
+    // Test 4 - check if updateBoard will update the documents in the database
+    it('should update a user', function(done) {
+      request(app).post('/api/user/update/' + testUser._id)
+      .send({user_name: 'updated username'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        User.findOne({_id: testUser._id}, function (err, user) {
+          expect(user.user_name).toEqual("updated username");
+          done();
+        })
+        if (err) {
+          console.log('Failed to update user: ', err);
+          done();
+        }
+      });
+    });
+
+
+    // Test 5 - check if removeUser deletes data when there is information in the database
     it('should remove a user', function(done) {
       request(app).post('/api/user/delete/' + testUser._id)
       .expect('Content-Type', /json/)
@@ -98,25 +114,7 @@ describe('UserController', function () {
       });
     });
 
-    // Test 5 - check if updateBoard will update the documents in the database
-    it('should update a user', function(done) {
-      request(app).post('/api/user/update/' + testUser._id)
-      .send({board_name: 'updated username'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res){
-        User.findOne({_id: testUser._id}, function (err, user) {
-          expect(user.user_name).toEqual("updated username");
-          done();
-        })
-        if (err) {
-          console.log('Failed to update user: ', err);
-          done();
-        }
-      });
-    });
-
-    afterEach(function(done) {
+    afterAll(function(done) {
       testUser.remove(function(err, removedUser) {
         if (err) {
           done.fail(err);
