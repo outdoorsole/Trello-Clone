@@ -25,6 +25,14 @@
         <p class="input-group" ng-repeat="list in ListController.lists" style="padding:5px 10px; cursor: move;">
           <input type="text" ng-model="list.list_name" class="form-control">
 
+        <!--
+        ng-controller = ItemController
+        ng-model = ItemController.item
+
+          ng-repeat=item in ItemController.items
+
+         -->
+
           <!-- View one list -->
           <span class="input-group-btn">
             <a href="/#/items?list_name={{list.list_name}}&list_id={{list._id}}" class="btn btn-info" aria-label="View">View List Items</a>

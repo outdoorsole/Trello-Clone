@@ -21,7 +21,7 @@ angular.module('mytodo')
 
     $http.get('/api/boards/')
     .success(function(data) {
-      vm.title = "Board";
+      vm.title = "Boards for User";
       vm.boards = data;
       $log.log('This is data for show boards: ', data);
     })

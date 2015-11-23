@@ -9,10 +9,11 @@
 
     $routeProvider
       .when('/', {
-        templateUrl: 'app/Boards/board.html',
+        templateUrl: 'app/Users/user.html',
         // knows to go to the main controller
-        controller: 'BoardController',
-        controllerAs: 'BoardController'
+        controller: 'UserController',
+        // alias for the controller
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
@@ -42,12 +43,11 @@
       });
 
     $routeProvider
-      .when('/users', {
-        templateUrl: 'app/Users/user.html',
+      .when('/boards', {
+        templateUrl: 'app/Boards/board.html',
         // knows to go to the main controller
-        controller: 'UserController',
-        // alias for the controller
-        controllerAs: 'UserController'
+        controller: 'BoardController',
+        controllerAs: 'BoardController'
       })
       .otherwise({
         redirectTo: '/'

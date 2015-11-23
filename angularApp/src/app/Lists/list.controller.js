@@ -19,9 +19,10 @@ angular.module('mytodo')
 
     // when landing on the page, get all todos and show them
 
+    // ** Fix so that it's just one board; board id and board name**
     $http.get('/api/lists/')
     .success(function(data) {
-      vm.title = "List of Todo Lists";
+      vm.title = "Boardname";
       vm.lists = data;
       $log.log('This is data for show lists: ', data);
     })
