@@ -53,7 +53,7 @@ app.get('/api/boards/:user_id', BoardsController.showMultipleBoards);
 app.get('/api/boards/:board_id', BoardsController.showOneBoard);
 
 // // create a board
-app.post('/api/boards/create', BoardsController.createBoard);
+app.post('/api/boards/create/:user_id', BoardsController.createBoard);
 
 // // delete a board
 app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);

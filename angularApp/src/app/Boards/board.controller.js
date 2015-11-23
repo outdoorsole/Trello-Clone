@@ -32,7 +32,7 @@ angular.module('mytodo')
 
 
     vm.createBoard = function () {
-      $http.post('/api/boards/create', vm.formData)
+      $http.post('/api/boards/create/' + vm.userId, vm.formData)
         .success(function(data) {
           $log.log('This is data[0]:', data[0]);
           vm.boards.push(data[0]);
