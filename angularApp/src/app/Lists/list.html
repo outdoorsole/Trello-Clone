@@ -5,13 +5,14 @@
   </head>
   <body>
     <div class="container">
-      <h2 ng-model="title">{{title}}</h2>
+      <!-- refer to something in the list controller, need to use the alias -->
+      <h2 ng-model="title">{{ListController.title}}</h2>
 
       <!-- Create list input -->
-      <form role="form" ng-submit="createList()">
+      <form role="form" ng-submit="ListController.createList()">
         <div class="row">
           <div class="input-group">
-            <input type="text" ng-model="formData.list_name" placeholder="What needs to be done?" class="form-control">
+            <input type="text" ng-model="ListController.formData.list_name" placeholder="What needs to be done?" class="form-control">
             <span class="input-group-btn">
               <input type="submit" class="btn btn-primary" value="Add">
             </span>
@@ -20,23 +21,36 @@
       </form>
 
       <!-- List input -->
-      <div ui-sortable ng-model="list">
-        <p class="input-group" ng-repeat="list in lists" style="padding:5px 10px; cursor: move;">
+      <div ui-sortable ng-model="ListController.list">
+        <p class="input-group" ng-repeat="list in ListController.lists" style="padding:5px 10px; cursor: move;">
           <input type="text" ng-model="list.list_name" class="form-control">
+
+        <!-- <div ui-sortable ng-controller="ItemControllers">
+          <p class='input-group' ng-repeat="item in ItemController.items" style="padding:5px 10px; cursor: move;">
+          <input type="text" ng-model="item.item_name" class="form control">
+        </div> -->
+
+        <!--
+        ng-controller = ItemController
+        ng-model = ItemController.item
+
+          ng-repeat=item in ItemController.items
+
+         -->
 
           <!-- View one list -->
           <span class="input-group-btn">
-            <a href="/#/items?list_title={{list.list_name}}&list_id={{list._id}}" class="btn btn-info" ng-click="ViewOneList(list._id)" aria-label="View">View List</a>
+            <a href="/#/items?list_name={{list.list_name}}&list_id={{list._id}}" class="btn btn-info" aria-label="View">View List Items</a>
           </span>
 
           <!-- Edit list -->
           <span class="input-group-btn">
-            <button class="btn btn-info" ng-click="updateList(list._id, list.list_name)" aria-label="Edit">Edit</button>
+            <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit</button>
           </span>
 
           <!-- Remove list -->
           <span class="input-group-btn">
-            <button class="btn btn-danger" ng-click="removeList(list._id)" aria-label="Remove">X</button>
+            <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
           </span>
 
         </p>

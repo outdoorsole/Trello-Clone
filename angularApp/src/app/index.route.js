@@ -9,10 +9,11 @@
 
     $routeProvider
       .when('/', {
-        templateUrl: 'app/Lists/list.html',
+        templateUrl: 'app/Users/user.html',
         // knows to go to the main controller
-        controller: 'ListController',
-        controllerAs: 'list'
+        controller: 'UserController',
+        // alias for the controller
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
@@ -23,7 +24,30 @@
         templateUrl: 'app/Items/item.html',
         // knows to go to the main controller
         controller: 'ItemController',
-        controllerAs: 'item'
+        controllerAs: 'ItemController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
+      .when('/lists', {
+        templateUrl: 'app/Lists/list.html',
+        // knows to go to the main controller
+        controller: 'ListController',
+        // alias for the controller
+        controllerAs: 'ListController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
+      .when('/boards', {
+        templateUrl: 'app/Boards/board.html',
+        // knows to go to the main controller
+        controller: 'BoardController',
+        controllerAs: 'BoardController'
       })
       .otherwise({
         redirectTo: '/'
