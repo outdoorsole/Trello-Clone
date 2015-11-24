@@ -66,10 +66,10 @@ app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
 //Routes for Lists
 
 // show lists
-app.get('/api/lists', ListsController.showLists);
+app.get('/api/lists/:board_id', ListsController.showLists);
 
 // create a list
-app.post('/api/lists/create', ListsController.createList);
+app.post('/api/lists/create/:board_id', ListsController.createList);
 
 // delete a list
 app.post('/api/lists/delete/:list_id', ListsController.removeList);

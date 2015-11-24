@@ -6,7 +6,8 @@ var List = require('../models/list');
 //------------------------------------------------------------------------------------//
 
 exports.showLists = function (req, res) {
-  List.find({}, function(error, lists) {
+  console.log('This is req.params: ', req.params);
+  List.find({ _board: req.params.board_id }, function(error, lists) {
     if (lists) {
       res.json(lists);
     } else if (error) {
@@ -17,9 +18,11 @@ exports.showLists = function (req, res) {
 
 
 exports.createList = function (req, res) {
+  console.log('This is req.params: ', req.params);
   var list = new List({
     list_name: req.body.list_name,
-    description: req.body.description
+    description: req.body.description,
+    _board: req.params.board_id
   });
   list.save(function(err, savedList) {
     if (savedList) {

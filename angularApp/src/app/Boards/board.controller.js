@@ -17,6 +17,10 @@ angular.module('mytodo')
     vm.userId = $routeParams.user_id;
     $log.log('This is userId: ', vm.userId);
 
+    // Get the user name
+    vm.username = $routeParams.user_name;
+    $log.log('This is the username: ', vm.username);
+
     // This will capture the information from a list
     // $scope.listId = $routeParams.list_id;
     // $scope.list_name = $routeParams.list_name;
@@ -25,7 +29,7 @@ angular.module('mytodo')
 
     $http.get('/api/boards/' + vm.userId)
     .success(function(data) {
-      vm.title = "My Boards";
+      vm.title = 'My Boards: ' + vm.username;
       vm.boards = data;
       $log.log('This is data for show boards: ', data);
     })
