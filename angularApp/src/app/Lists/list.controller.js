@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ListController', ['$routeParams', 'ListService', function ($routeParams, ListService, $log) {
+  .controller('ListController', function ($routeParams, $http, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -70,5 +70,5 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  }])
+  })
 })();
