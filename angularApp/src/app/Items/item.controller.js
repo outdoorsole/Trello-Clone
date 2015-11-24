@@ -24,32 +24,14 @@ angular.module('mytodo')
     // when landing on the page, get all todos and show them
     ItemService.getItems(vm.listId)
     .then(function(listItems) {
-      console.log('-------------------------------------------');
-      console.log('These are the items in ItemService: ', listItems);
-      console.log('-------------------------------------------');
       vm.title = vm.listName;
-      console.log('This is the vm.title: ', vm.title);
-      console.log('-------------------------------------------');
       for (var i = 0; i < listItems.length; i++) {
         vm.items.push(listItems[i].item_name);
-        console.log('This is the vm.items: ', vm.items);
-        console.log('-------------------------------------------');
       }
-      console.log('This is vm.items after the loop: ', vm.items);
     })
     .catch(function(err) {
       $log.error('Error fetching items: ', err);
     });
-
-    // vm.getItems = function () {
-    //   $http.get('/api/items/' + vm.listId)
-    //     .success(function(data) {
-    //       vm.title = vm.listName;
-    //       vm.items = data;
-    //     })
-    // }
-
-    // vm.getItems();
 
     vm.createItem = function () {
       $log.log('This is the vm.listId: ', vm.listId);
