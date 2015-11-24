@@ -22,12 +22,15 @@ angular.module('mytodo')
     $log.log('This is listName: ', vm.listName);
 
     // when landing on the page, get all todos and show them
+    vm.getItems = function () {
+      $http.get('/api/items/' + vm.listId)
+        .success(function(data) {
+          vm.title = vm.listName;
+          vm.items = data;
+        })
+    }
 
-    $http.get('/api/items/' + vm.listId)
-      .success(function(data) {
-        vm.title = vm.listName;
-        vm.items = data;
-      })
+    vm.getItems();
 
     vm.createItem = function () {
       $log.log('This is the vm.listId: ', vm.listId);
