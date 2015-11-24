@@ -20,7 +20,7 @@ angular.module('mytodo')
     // when landing on the page, get all the usernames and display them
     $http.get('/api/users/')
     .success(function(data) {
-      vm.title = "Users";
+      vm.title = "Registered Users";
       vm.users = data;
       $log.log('This is data for show users: ', data);
     })

@@ -18,14 +18,14 @@ angular.module('mytodo')
 
 
     // get the list name from the route params
-    vm.listName = $routeParams.list_title;
+    vm.listName = $routeParams.list_name;
     $log.log('This is listName: ', vm.listName);
 
     // when landing on the page, get all todos and show them
 
     $http.get('/api/items/' + vm.listId)
       .success(function(data) {
-        vm.title = "List of Items";
+        vm.title = vm.listName;
         vm.items = data;
       })
 
