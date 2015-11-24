@@ -13,22 +13,31 @@ angular.module('mytodo')
     // This variable stores the items list from the database
     vm.lists = [];
 
+    // Get the board id from the route params
+    vm.boardId = $routeParams.board_id;
+    $log.log('This is boardId: ', vm.boardId);
+
+    // Get the board name from the route params
+    vm.boardName = $routeParams.board_name;
+    $log.log('This is boardName: ', vm.boardName);
+
     // This will capture the information from a list
     // $scope.listId = $routeParams.list_id;
     // $scope.list_name = $routeParams.list_name;
 
     // when landing on the page, get all todos and show them
 
-    $http.get('/api/lists/')
+    // ** Fix so that it's just one board; board id and board name**
+    $http.get('/api/lists/' + vm.boardId)
     .success(function(data) {
-      vm.title = "List of Todo Lists";
+      vm.title = vm.boardName;
       vm.lists = data;
       $log.log('This is data for show lists: ', data);
     })
 
 
     vm.createList = function () {
-      $http.post('/api/lists/create', vm.formData)
+      $http.post('/api/lists/create/' + vm.boardId, vm.formData)
         .success(function(data) {
           $log.log('This is data[0]:', data[0]);
           vm.lists.push(data[0]);

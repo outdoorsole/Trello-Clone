@@ -26,6 +26,58 @@ var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 // var AuthenticationController
 
+
+//--------------------------------------------------------------
+// Routes for Users
+
+// show users
+app.get('/api/users', UsersController.showUsers);
+
+// create a user
+app.post('/api/user/create', UsersController.createUser);
+
+// delete a user
+app.post('/api/user/delete/:user_id', UsersController.removeUser);
+
+// update a user
+app.post('/api/user/update/:user_id', UsersController.updateUser);
+
+
+// --------------------------------------------------------------
+//Routes for Boards
+
+// show boards
+app.get('/api/boards/:user_id', BoardsController.showMultipleBoards);
+
+// // show one board
+app.get('/api/boards/:board_id', BoardsController.showOneBoard);
+
+// // create a board
+app.post('/api/boards/create/:user_id', BoardsController.createBoard);
+
+// // delete a board
+app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
+
+// // update a board
+app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
+
+
+//--------------------------------------------------------------
+//Routes for Lists
+
+// show lists
+app.get('/api/lists/:board_id', ListsController.showLists);
+
+// create a list
+app.post('/api/lists/create/:board_id', ListsController.createList);
+
+// delete a list
+app.post('/api/lists/delete/:list_id', ListsController.removeList);
+
+// update a list
+app.post('/api/lists/update/:list_id', ListsController.updateList);
+
+
 //--------------------------------------------------------------
 //Routes for Items
 
@@ -43,54 +95,7 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 
 
 //--------------------------------------------------------------
-//Routes for Lists
 
-// show lists
-app.get('/api/lists', ListsController.showLists);
-
-// create a list
-app.post('/api/lists/create', ListsController.createList);
-
-// delete a list
-app.post('/api/lists/delete/:list_id', ListsController.removeList);
-
-// update a list
-app.post('/api/lists/update/:list_id', ListsController.updateList);
-
-//--------------------------------------------------------------
-//Routes for Boards
-
-// show boards
-app.get('/api/boards', BoardsController.showMultipleBoards);
-
-// // show one board
-app.get('/api/boards/:board_id', BoardsController.showOneBoard);
-
-// // create a board
-app.post('/api/boards/create', BoardsController.createBoard);
-
-// // delete a board
-app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
-
-// // update a board
-app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
-
-//--------------------------------------------------------------
-// Routes for Users
-
-// show users
-app.get('/api/users', UsersController.showUsers);
-
-// create a user
-app.post('/api/user/create', UsersController.createUser);
-
-// delete a user
-app.post('/api/user/delete/:user_id', UsersController.removeUser);
-
-// update a user
-app.post('/api/user/update/:user_id', UsersController.updateUser);
-
-// --------------------------------------------------------------
 app.listen(3000);
 console.log('Connected to port 3000');
 

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="mytodo">
+  <head>
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- This page will render the list of full list of current users stored in the database -->
+
+      <!-- refer to something in the list controller, need to use the alias -->
+      <h2 ng-model="title">{{UserController.title}}</h2>
+
+      <!-- Create User (form field for username) -->
+      <form role="form" ng-submit="UserController.createUser()">
+        <div class="row">
+          <div class="input-group">
+            <input type="text" ng-model="UserController.formData.user_name" placeholder="Enter your name" class="form-control">
+
+            <!-- Add button -->
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary" value="Create account">
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <!-- Current user name display and edit (form field) -->
+      <div ui-sortable ng-model="UserController.user">
+        <p class="input-group" ng-repeat="user in UserController.users" style="padding:5px 10px; cursor: move;">
+          <input type="text" ng-model="user.user_name" class="form-control">
+
+          <!-- View one user's boards -->
+          <span class="input-group-btn">
+            <a href="/#/boards?user_name={{user.user_name}}&user_id={{user._id}}" class="btn btn-info" aria-label="View">View Boards</a>
+          </span>
+
+          <!-- Edit a user name -->
+          <span class="input-group-btn">
+            <button class="btn btn-info" ng-click="UserController.updateUser(user._id, user.user_name)" aria-label="Edit">Edit</button>
+          </span>
+
+          <!-- Remove a user from the list of users -->
+          <span class="input-group-btn">
+            <button class="btn btn-danger" ng-click="UserController.removeUser(user._id)" aria-label="Remove">X</button>
+          </span>
+
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
