@@ -25,6 +25,11 @@
         <p class="input-group" ng-repeat="list in ListController.lists" style="padding:5px 10px; cursor: move;">
           <input type="text" ng-model="list.list_name" class="form-control">
 
+        <!-- <div ui-sortable ng-controller="ItemControllers">
+          <p class='input-group' ng-repeat="item in ItemController.items" style="padding:5px 10px; cursor: move;">
+          <input type="text" ng-model="item.item_name" class="form control">
+        </div> -->
+
         <!--
         ng-controller = ItemController
         ng-model = ItemController.item
