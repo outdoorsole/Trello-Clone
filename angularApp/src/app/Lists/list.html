@@ -9,7 +9,7 @@
       <h2 ng-model="title">{{ListController.title}}</h2>
 
       <!-- Create list input -->
-      <form role="form" ng-submit="ListController.createList()">
+      <form role="form" ng-submit="ListController.createList(ListController.formData)">
         <div class="row">
           <div class="input-group">
             <input type="text" ng-model="ListController.formData.list_name" placeholder="What needs to be done?" class="form-control">
