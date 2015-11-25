@@ -32,17 +32,16 @@ angular.module('mytodo')
       $log.log('This is the vm.boards: ', vm.boards);
     })
 
-    vm.createBoard = function () {
-      $http.post('/api/boards/create/' + vm.userId, vm.formData)
-        .success(function(data) {
-          $log.log('This is data[0]:', data[0]);
-          vm.boards.push(data[0]);
-          $log.log('This is vm.boards:', vm.boards);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-      });
-    };
+    // Create a new board
+    vm.createBoard = function (formData) {
+      BoardService.createBoard(vm.userId, formData)
+      .then(function (board) {
+        vm.boards.push(board);
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
     vm.removeBoard = function (boardId) {
       $http.post('/api/boards/delete/' + boardId)

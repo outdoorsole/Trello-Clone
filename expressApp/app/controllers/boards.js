@@ -28,14 +28,13 @@ exports.showOneBoard = function (req, res) {
 }
 
 exports.createBoard = function (req, res) {
-  var userId = req.params.user_id;
   var board = new Board({
     board_name: req.body.board_name,
-    _user: userId
+    _user: req.params.user_id
   });
   board.save(function(err, savedBoard) {
     if (savedBoard) {
-      Board.find({ board_name: req.body.board_name}, function(error, returnedBoard) {
+      Board.findOne({ board_name: req.body.board_name}, function(error, returnedBoard) {
         if (returnedBoard) {
           res.json(returnedBoard);
         } else if (err) {
