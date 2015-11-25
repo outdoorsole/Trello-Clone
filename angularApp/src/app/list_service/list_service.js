@@ -49,12 +49,9 @@
     }
 
     function updateList (listId, listName) {
-      $log.log('This is the listId in the list service (angular): ', listId);
-      $log.log('This is the listName in the list service (angular): ', listName);
       var deferred = $q.defer();
       $http.post('/api/lists/update/' + listId + '?list_name=' + listName)
         .success(function(data) {
-          $log.log('This is the data in the list service (angular): ', data);
           deferred.resolve(data);
         })
         .error(function(data) {

@@ -145,6 +145,8 @@ describe('ItemsController', function() {
     // Test 5 - check if removeItem can remove an entry for an item in the database
     it('should remove an item', function(done) {
       request(app).post('/api/item/delete/' + testItem._id)
+
+
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){

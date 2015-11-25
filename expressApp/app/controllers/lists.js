@@ -15,7 +15,6 @@ exports.showLists = function (req, res) {
   });
 }
 
-
 exports.createList = function (req, res) {
   var list = new List({
     list_name: req.body.list_name,
