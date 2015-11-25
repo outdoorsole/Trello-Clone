@@ -54,11 +54,13 @@ exports.removeItem = function (req, res) {
 
 
 exports.updateItem = function (req, res) {
-  Item.findOne({ _id: req.params.id }, function (err, foundItem){
-    console.log('This is the foundItem in items controller (Express App): ', foundItem);
-    foundItem.item_name = req.query.item_name;
-    foundItem.save();
-    console.log('This is the foundItem in items controller (Express App) after the update: ', foundItem);
-    res.json(foundItem);
+  Item.findOne({ _id: req.params.id }, function (err, foundItem) {
+    if (foundItem) {
+      foundItem.item_name = req.query.item_name;
+      foundItem.save();
+      res.json(foundItem);
+    } else if (err) {
+      console.log('Failed to find and update item: ', err);
+    }
   });
 }
