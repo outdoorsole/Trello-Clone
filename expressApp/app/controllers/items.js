@@ -37,7 +37,7 @@ exports.createItem = function (req, res) {
 
 
 exports.removeItem = function (req, res) {
-  var queriedItem = Item.findById({ _id: req.params.id}, function (err, foundItem) {
+  Item.findById({ _id: req.params.id}, function (err, foundItem) {
     if (foundItem) {
       foundItem.remove(function (error, deletedItem) {
         if (deletedItem) {
