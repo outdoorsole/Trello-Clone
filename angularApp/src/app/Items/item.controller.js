@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', ['$log', 'ItemService', '$routeParams', '$http', function ($log, ItemService, $routeParams, $http) {
+  .controller('ItemController', ['$log', 'ItemService', '$routeParams', function ($log, ItemService, $routeParams) {
     // All of this is happening on load (until methods below)
     var vm = this;
 

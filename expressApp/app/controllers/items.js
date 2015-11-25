@@ -6,8 +6,6 @@ var List = require('../models/list');
 
 //------------------------------------------------------------------------------------//
 
-// need to update to take parameters
-// add them to the angular app
 exports.showItems = function (req, res) {
   Item.find({ _list: req.params.list_id}, function(error, foundItems) {
     if (foundItems) {

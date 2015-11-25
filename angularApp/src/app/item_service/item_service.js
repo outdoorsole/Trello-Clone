@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('mytodo')
-    .factory('ItemService', ['$http', '$q', function($http, $q) {
+    .factory('ItemService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
         getItems: getItems,
         createItem: createItem,
@@ -20,7 +20,7 @@
         })
         .error(function (data){
           deferred.reject('Error: ', data);
-          console.log('Error: ', data);
+          $log.log('Error: ', data);
         });
         return deferred.promise;
       }
@@ -33,7 +33,7 @@
         })
         .error(function (data){
           deferred.reject('Error: ', data);
-          console.log('Error: ', data);
+          $log.log('Error: ', data);
         });
         return deferred.promise;
     }
@@ -45,27 +45,24 @@
           deferred.resolve(data);
         })
         .error(function(data) {
-          console.log('Error: ' + data);
+          $log.log('Error: ' + data);
         });
         return deferred.promise;
-    };
+    }
 
     function updateItem (itemId, itemName) {
       var deferred = $q.defer();
-      console.log('This is the itemId: ', itemId);
-      console.log('This is the itemName: ', itemName);
       $http.post('/api/item/update/' + itemId + '?item_name=' + itemName)
         .success(function(data) {
-          console.log('This is the data after update item in items service: ', data);
           deferred.resolve(data);
         })
         .error(function(data) {
-          console.log('Error: ' + data);
+          $log.log('Error: ' + data);
         });
         return deferred.promise;
-    };
+    }
 
     return service;
-  }])
+  }]);
 })();
 
