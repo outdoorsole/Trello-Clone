@@ -14,11 +14,9 @@ angular.module('mytodo')
 
     // Get the list id from the route params
     vm.listId = $routeParams.list_id;
-    $log.log('This is listId: ', vm.listId);
 
     // get the list name from the route params
     vm.listName = $routeParams.list_name;
-    $log.log('This is listName: ', vm.listName);
 
     // when landing on the page, get all todos and show them
     ItemService.getItems(vm.listId)
@@ -27,7 +25,6 @@ angular.module('mytodo')
       for (var i = 0; i < listItems.length; i++) {
         vm.items.push(listItems[i]);
       }
-      $log.log('These are the list items: ', vm.items);
     })
     .catch(function(err) {
       $log.error('Error fetching items: ', err);
