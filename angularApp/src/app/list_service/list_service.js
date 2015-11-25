@@ -36,7 +36,7 @@
         return deferred.promise;
     }
 
-    function removeList (boardId) {
+    function removeList (listId) {
       var deferred = $q.defer();
       $http.post('/api/lists/delete/' + listId)
         .success(function(data) {

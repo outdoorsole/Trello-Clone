@@ -45,7 +45,7 @@ angular.module('mytodo')
     }
 
     vm.removeList = function (listId) {
-      ListService.removeList(boardId)
+      ListService.removeList(listId)
       .then(function(deletedList) {
         for (var i = 0; i < vm.lists.length; i++) {
           if (vm.lists[i]._id === deletedList._id) {

@@ -43,7 +43,6 @@ exports.removeList = function (req, res) {
       res.json(deletedList);
     } else if (error) {
       console.log(error.stack);
-      res.redirect('/error');
     }
   })
 }
