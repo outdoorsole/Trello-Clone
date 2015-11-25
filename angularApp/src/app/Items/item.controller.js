@@ -45,11 +45,8 @@ angular.module('mytodo')
     }
 
     vm.removeItem = function (itemId) {
-      console.log('This is the itemId in removeItem In Items Controller: ', itemId);
       ItemService.removeItem(itemId)
         .then(function(deletedItem) {
-          console.log('This is the deletedItem from Items Controller: ', deletedItem);
-          console.log('This is the vm.items array: ', vm.items);
           for (var i = 0; i < vm.items.length; i++) {
             if (vm.items[i]._id === deletedItem._id) {
               vm.items.splice(i, 1);

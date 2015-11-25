@@ -25,11 +25,6 @@
         return deferred.promise;
       }
 
-    // function setItem () {
-    //   _currentItem = item;
-    //   return this.getItem();
-    // }
-
     function createItem(listId, formData) {
       var deferred = $q.defer();
       $http.post('/api/item/create/' + listId, formData)
@@ -45,10 +40,8 @@
 
     function removeItem (itemId) {
       var deferred = $q.defer();
-      console.log('This is itemId in item service: ', itemId);
       $http.post('/api/item/delete/' + itemId)
         .success(function(data) {
-          console.log('This is the data in item_service: ', data);
           deferred.resolve(data);
         })
         .error(function(data) {
