@@ -21,6 +21,8 @@ exports.showItems = function (req, res) {
 
 
 exports.createItem = function (req, res) {
+  console.log('This is req.body: ', req.body);
+  console.log('This is the req.params: ', req.params);
   var item = new Item({
     item_name: req.body.item_name,
     description: req.body.description,

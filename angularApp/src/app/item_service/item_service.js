@@ -5,17 +5,13 @@
     .factory('ItemService', ['$http', '$q', function($http, $q) {
       var _currentItem = 0;
       var service = {
-        getItems: getItems
+        getItems: getItems,
+        createItem: createItem
       };
 
     // Check code: return only the data
     // Set the title and item in the controller
     function getItems (listId) {
-      // $http.get('/api/items/' + listId)
-      // .success(function(response) {
-      //   console.log('This is the response: ', response);
-      //   return response;
-      // })
       var deferred = $q.defer();
       $http.get('api/items/' + listId)
         .success(function (returnedItems){
@@ -29,10 +25,38 @@
         return deferred.promise;
       }
 
-    // service.setItem = function () {
+    // function setItem () {
     //   _currentItem = item;
     //   return this.getItem();
     // }
+
+    function createItem(listId, formData) {
+      var deferred = $q.defer();
+      console.log('This is the listId: ', listId);
+      console.log('This is the formData: ', formData)
+      $http.post('/api/item/create/' + listId, formData)
+        .success(function(createdItem) {
+          console.log('This is the createdItem: ', createItem);
+          console.log('This is the formData after being created: ', formData);
+          deferred.resolve(createdItem.item_name);
+        })
+        .error(function (data){
+          deferred.reject('Error: ', data);
+          console.log('Error: ', data);
+        });
+        return deferred.promise;
+    }
+
+    // function removeItem (itemId) {
+    //   $http.post('/api/item/delete/' + itemId)
+    //     .success(function(data) {
+    //       vm.items = data;
+    //       $log.log(data);
+    //     })
+    //     .error(function(data) {
+    //       $log.log('Error: ' + data);
+    //     });
+    // };
 
     return service;
   }])

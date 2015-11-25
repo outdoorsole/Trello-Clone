@@ -33,19 +33,19 @@ angular.module('mytodo')
       $log.error('Error fetching items: ', err);
     });
 
-    vm.createItem = function () {
-      $log.log('This is the vm.listId: ', vm.listId);
-      $http.post('/api/item/create/' + vm.listId, vm.formData)
-        .success(function(data) {
-          $log.log('This is the vm.items: ', vm.items);
+    // create a new item
+    vm.createItem = function(formData) {
+      ItemService.createItem(vm.listId, formData)
+        .then(function(itemName) {
+          $log.log('This is the itemName: ', itemName);
           $log.log('This is the vm.formData: ', vm.formData);
-          vm.items.push(data);
-          $log.log('This is the data: ', data);
+          vm.items.push(itemName);
+          $log.log('This is vm.items: ', vm.items);
         })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-      });
-    };
+        .catch(function(err) {
+          $log.error('Error fetching items: ', err);
+        });
+    }
 
     vm.removeItem = function (itemId) {
       $http.post('/api/item/delete/' + itemId)
