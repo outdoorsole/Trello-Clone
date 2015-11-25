@@ -6,7 +6,8 @@
       var service = {
         getBoards: getBoards,
         createBoard: createBoard,
-        removeBoard: removeBoard
+        removeBoard: removeBoard,
+        updateBoard: updateBoard
       }
 
       function getBoards (userId) {
@@ -38,6 +39,18 @@
       function removeBoard (boardId) {
         var deferred = $q.defer();
         $http.post('/api/boards/delete/' + boardId)
+        .success(function(data) {
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          $log.log('Error: ' + data);
+        });
+        return deferred.promise;
+      }
+
+      function updateBoard(boardId, boardName) {
+        var deferred = $q.defer();
+        $http.post('/api/boards/update/' + boardId + '?board_name=' + boardName)
         .success(function(data) {
           deferred.resolve(data);
         })

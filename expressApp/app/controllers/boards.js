@@ -58,17 +58,14 @@ exports.removeBoard = function (req, res) {
   })
 }
 
-
 exports.updateBoard = function (req, res) {
-  var board = { _id: req.params.board_id};
-  Board.update(board, {board_name: req.body.board_name}, function (error, updatedBoard) {
-    if (updatedBoard) {
-      Board.find({}, function (error, allBoards) {
-        res.json(allBoards)
-      })
-    } else if (error) {
-      console.log(error.stack);
-      res.redirect('/error');
+  Board.findOne({ _id: req.params.board_id }, function (err, foundBoard) {
+    if (foundBoard) {
+      foundBoard.board_name = req.query.board_name;
+      foundBoard.save();
+      res.json(foundBoard);
+    } else if (err) {
+      console.log('Failed to find and update board: ', err);
     }
-  })
+  });
 }

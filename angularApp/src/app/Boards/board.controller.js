@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('BoardController', ['$http', '$log', 'BoardService', '$routeParams', function ($http, $log, BoardService, $routeParams) {
+  .controller('BoardController', ['$log', 'BoardService', '$routeParams', function ($log, BoardService, $routeParams) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -57,15 +57,18 @@ angular.module('mytodo')
       })
     }
 
-    vm.updateBoard = function (boardId, board_name) {
-      $http.post('/api/boards/update/' + boardId, {board_name: board_name})
-        .success(function(data) {
-          vm.boards = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+    vm.updateBoard = function (boardId, boardName) {
+      BoardService.updateBoard(boardId, boardName)
+      .then(function(data) {
+        for (var i = 0; i < vm.boards.length; i++) {
+          if (vm.boards[i].id === boardId) {
+            vm.boards[i] = data;
+          }
+        }
+      })
+      .catch(function(data) {
+        $log.log('Error: ', + data);
+      })
+    }
   }])
 })();
