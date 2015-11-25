@@ -27,7 +27,6 @@
       var deferred = $q.defer();
       $http.post('/api/lists/create/' + boardId, formData)
         .success(function(createdList) {
-          $log.log('This is the createdList in the ListService: ', createdList);
           deferred.resolve(createdList);
         })
         .error(function (data){

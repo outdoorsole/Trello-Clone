@@ -24,17 +24,15 @@ exports.createList = function (req, res) {
   });
   list.save(function(err, savedList) {
     if (savedList) {
-      console.log('This is the savedList in the createList (Express App): ', savedList);
       List.findOne({ list_name: req.body.list_name}, function(error, returnedList) {
         if (returnedList) {
-          console.log('This is the returnedList in the createList (Express App): ', returnedList);
           res.json(returnedList)
         } else if (err) {
           console.log('Failed to save: ' + err);
         }
-      })
+      });
     }
-  })
+  });
 }
 
 

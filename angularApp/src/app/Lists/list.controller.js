@@ -31,18 +31,13 @@ angular.module('mytodo')
       for (var i = 0; i < boardLists.length; i++) {
         vm.lists.push(boardLists[i]);
       }
-      $log.log('This is the board lists: ', boardLists);
     })
 
     // Create a new List
     vm.createList = function (formData) {
-      $log.log('This is vm.boardId in the Angular ListController: ', vm.boardId);
-      $log.log('This is formData in the Angular ListController: ', formData );
       ListService.createList(vm.boardId, formData)
       .then(function (list) {
-        $log.log('This is the list that was created (Angular ListController): ', list);
         vm.lists.push(list);
-        $log.log('This is vm.lists (Angular ListController):', vm.lists);
       })
       .catch(function(err) {
         $log.error('Error fetching items: ', err);
