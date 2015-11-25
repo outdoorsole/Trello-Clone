@@ -5,7 +5,8 @@
     .factory('BoardService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
         getBoards: getBoards,
-        createBoard: createBoard
+        createBoard: createBoard,
+        removeBoard: removeBoard
       }
 
       function getBoards (userId) {
@@ -33,6 +34,19 @@
           });
           return deferred.promise;
       }
+
+      function removeBoard (boardId) {
+        var deferred = $q.defer();
+        $http.post('/api/boards/delete/' + boardId)
+        .success(function(data) {
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          $log.log('Error: ' + data);
+        });
+        return deferred.promise;
+      }
+
       return service;
     }]);
 })();

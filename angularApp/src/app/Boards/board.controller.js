@@ -44,15 +44,18 @@ angular.module('mytodo')
     }
 
     vm.removeBoard = function (boardId) {
-      $http.post('/api/boards/delete/' + boardId)
-        .success(function(data) {
-          vm.boards = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+      BoardService.removeBoard(boardId)
+      .then(function(deletedBoard) {
+        for (var i = 0; i < vm.boards.length; i++) {
+          if (vm.boards[i]._id === deletedBoard._id) {
+            vm.boards.splice(i, 1);
+          }
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
     vm.updateBoard = function (boardId, board_name) {
       $http.post('/api/boards/update/' + boardId, {board_name: board_name})
