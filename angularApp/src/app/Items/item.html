@@ -8,12 +8,12 @@
       <h2>{{ItemController.title}}</h2>
 
       <!-- Create items input -->
-      <form role="form" ng-submit="ItemController.createItem()">
+      <form role="form" ng-submit="ItemController.createItem(ItemController.formData)">
         <div class="row">
           <div class="input-group">
             <input type="text" ng-model="ItemController.formData.item_name" placeholder="What needs to be done?" class="form-control">
             <span class="input-group-btn">
-              <input type="submit" class="btn btn-primary" value="Add">
+              <input type="submit" class="btn btn-primary" value="Add New Item">
             </span>
           </div>
         </div>

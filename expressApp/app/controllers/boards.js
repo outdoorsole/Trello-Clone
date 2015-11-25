@@ -18,8 +18,6 @@ exports.showMultipleBoards = function (req, res) {
 }
 
 exports.showOneBoard = function (req, res) {
-  console.log('This is req: ', req);
-  console.log('This is req.params: ', req.params);
   Board.find({}, function(error, foundBoard) {
     if (foundBoard) {
       res.json(foundBoard);

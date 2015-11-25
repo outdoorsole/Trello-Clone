@@ -34,6 +34,7 @@ angular.module('mytodo')
       vm.lists = data;
       $log.log('This is data for show lists: ', data);
     })
+    console.log(vm.lists);
 
 
     vm.createList = function () {

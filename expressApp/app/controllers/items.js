@@ -6,8 +6,6 @@ var List = require('../models/list');
 
 //------------------------------------------------------------------------------------//
 
-// need to update to take parameters
-// add them to the angular app
 exports.showItems = function (req, res) {
   Item.find({ _list: req.params.list_id}, function(error, foundItems) {
     if (foundItems) {
@@ -37,29 +35,30 @@ exports.createItem = function (req, res) {
 
 
 exports.removeItem = function (req, res) {
-  var item = new Item ({ _id: req.params.id})
-  item.remove(function (error, deletedItem) {
-    if (deletedItem) {
-      res.json(deletedItem)
-    } else if (error) {
-      console.log(error.stack);
-      res.redirect('/error');
+  Item.findById({ _id: req.params.id}, function (err, foundItem) {
+    if (foundItem) {
+      foundItem.remove(function (error, deletedItem) {
+        if (deletedItem) {
+          res.json(deletedItem);
+        } else if (error) {
+          console.log('Failed to remove item: ', err);
+        }
+      });
+    } else if (err) {
+      console.log('Failed to find queried item: ', err);
     }
-  })
+  });
 }
 
 
 exports.updateItem = function (req, res) {
-  var item = { _id: req.params.id};
-  Item.update(item, {item_name: req.query.item_name}, function (error, updatedItem) {
-    if (updatedItem) {
-      Item.findOne({item_name: updatedItem.item_name}, function (error, foundItem) {
-        res.json(foundItem)
-      })
-    } else if (error) {
-      console.log(error.stack);
-      //*Update this later**//
-      res.redirect('/error');
+  Item.findOne({ _id: req.params.id }, function (err, foundItem) {
+    if (foundItem) {
+      foundItem.item_name = req.query.item_name;
+      foundItem.save();
+      res.json(foundItem);
+    } else if (err) {
+      console.log('Failed to find and update item: ', err);
     }
-  })
+  });
 }
