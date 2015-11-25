@@ -1,3 +1,4 @@
+// Node Modules
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -17,14 +18,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
-// app.set('superSecret', thisismySecret); //secret variable
+
 
 // Controllers
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
-// var AuthenticationController
 
 
 //--------------------------------------------------------------
@@ -99,7 +99,5 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 app.listen(3000);
 console.log('Connected to port 3000');
 
-// Changing the way we are testing
-// do not need to have the node server running this way when we export it
-//
+//--------------------------------------------------------------
 module.exports.app = app;

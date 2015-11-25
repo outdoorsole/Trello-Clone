@@ -10,8 +10,6 @@
         updateItem: updateItem
       };
 
-    // Check code: return only the data
-    // Set the title and item in the controller
     function getItems (listId) {
       var deferred = $q.defer();
       $http.get('api/items/' + listId)
@@ -23,7 +21,7 @@
           $log.log('Error: ', data);
         });
         return deferred.promise;
-      }
+    }
 
     function createItem(listId, formData) {
       var deferred = $q.defer();
