@@ -21,8 +21,6 @@ exports.showItems = function (req, res) {
 
 
 exports.createItem = function (req, res) {
-  console.log('This is req.body: ', req.body);
-  console.log('This is the req.params: ', req.params);
   var item = new Item({
     item_name: req.body.item_name,
     description: req.body.description,
@@ -39,15 +37,23 @@ exports.createItem = function (req, res) {
 
 
 exports.removeItem = function (req, res) {
-  var item = new Item ({ _id: req.params.id})
-  item.remove(function (error, deletedItem) {
-    if (deletedItem) {
-      res.json(deletedItem)
-    } else if (error) {
-      console.log(error.stack);
-      res.redirect('/error');
+  console.log('This is req.params.id in removeItem in Express App: ', req.params.id);
+  var queriedItem = Item.findById({ _id: req.params.id}, function (err, foundItem) {
+    if (foundItem) {
+      console.log('This is the foundItem in removeItem controller: ', foundItem);
+      var foundItemName = foundItem.item_name;
+      foundItem.remove(function (error, deletedItem) {
+        if (deletedItem) {
+          console.log('This is the deletedItem from the database: ', deletedItem);
+          res.json(deletedItem);
+        } else if (err) {
+          console.log('Failed to remove item: ', err);
+        }
+      });
+    } else if (err) {
+      console.log('Failed to find queried item: ', err);
     }
-  })
+  });
 }
 
 

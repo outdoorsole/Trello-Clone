@@ -6,7 +6,8 @@
       var _currentItem = 0;
       var service = {
         getItems: getItems,
-        createItem: createItem
+        createItem: createItem,
+        removeItem: removeItem
       };
 
     // Check code: return only the data
@@ -15,7 +16,6 @@
       var deferred = $q.defer();
       $http.get('api/items/' + listId)
         .success(function (returnedItems){
-          console.log('These are the returnedItems: ', returnedItems);
           deferred.resolve(returnedItems);
         })
         .error(function (data){
@@ -32,13 +32,9 @@
 
     function createItem(listId, formData) {
       var deferred = $q.defer();
-      console.log('This is the listId: ', listId);
-      console.log('This is the formData: ', formData)
       $http.post('/api/item/create/' + listId, formData)
         .success(function(createdItem) {
-          console.log('This is the createdItem: ', createItem);
-          console.log('This is the formData after being created: ', formData);
-          deferred.resolve(createdItem.item_name);
+          deferred.resolve(createdItem);
         })
         .error(function (data){
           deferred.reject('Error: ', data);
@@ -47,16 +43,19 @@
         return deferred.promise;
     }
 
-    // function removeItem (itemId) {
-    //   $http.post('/api/item/delete/' + itemId)
-    //     .success(function(data) {
-    //       vm.items = data;
-    //       $log.log(data);
-    //     })
-    //     .error(function(data) {
-    //       $log.log('Error: ' + data);
-    //     });
-    // };
+    function removeItem (itemId) {
+      var deferred = $q.defer();
+      console.log('This is itemId in item service: ', itemId);
+      $http.post('/api/item/delete/' + itemId)
+        .success(function(data) {
+          console.log('This is the data in item_service: ', data);
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
+        return deferred.promise;
+    };
 
     return service;
   }])
