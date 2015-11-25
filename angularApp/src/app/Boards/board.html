@@ -9,7 +9,7 @@
       <h2 ng-model="title">{{BoardController.title}}</h2>
 
       <!-- Create list input -->
-      <form role="form" ng-submit="BoardController.createBoard()">
+      <form role="form" ng-submit="BoardController.createBoard(BoardController.formData)">
         <div class="row">
           <div class="input-group">
             <input type="text" ng-model="BoardController.formData.board_name" placeholder="Create new board..." class="form-control">

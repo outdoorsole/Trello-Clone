@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('BoardController', function ($routeParams, $http, $log) {
+  .controller('BoardController', ['$http', '$log', 'BoardService', '$routeParams', function ($http, $log, BoardService, $routeParams) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -21,19 +21,16 @@ angular.module('mytodo')
     vm.username = $routeParams.user_name;
     $log.log('This is the username: ', vm.username);
 
-    // This will capture the information from a list
-    // $scope.listId = $routeParams.list_id;
-    // $scope.list_name = $routeParams.list_name;
+    // when landing on the page, get all boards and show them
 
-    // when landing on the page, get all todos and show them
-
-    $http.get('/api/boards/' + vm.userId)
-    .success(function(data) {
+    BoardService.getBoards(vm.userId)
+    .then(function(userBoards) {
       vm.title = 'My Boards: ' + vm.username;
-      vm.boards = data;
-      $log.log('This is data for show boards: ', data);
+      for (var i = 0; i < userBoards.length; i++) {
+        vm.boards.push(userBoards[i]);
+      }
+      $log.log('This is the vm.boards: ', vm.boards);
     })
-
 
     vm.createBoard = function () {
       $http.post('/api/boards/create/' + vm.userId, vm.formData)
@@ -68,5 +65,5 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  })
+  }])
 })();
