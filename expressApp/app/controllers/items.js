@@ -42,7 +42,7 @@ exports.removeItem = function (req, res) {
       foundItem.remove(function (error, deletedItem) {
         if (deletedItem) {
           res.json(deletedItem);
-        } else if (err) {
+        } else if (error) {
           console.log('Failed to remove item: ', err);
         }
       });
@@ -54,16 +54,11 @@ exports.removeItem = function (req, res) {
 
 
 exports.updateItem = function (req, res) {
-  var item = { _id: req.params.id};
-  Item.update(item, {item_name: req.query.item_name}, function (error, updatedItem) {
-    if (updatedItem) {
-      Item.findOne({item_name: updatedItem.item_name}, function (error, foundItem) {
-        res.json(foundItem)
-      })
-    } else if (error) {
-      console.log(error.stack);
-      //*Update this later**//
-      res.redirect('/error');
-    }
-  })
+  Item.findOne({ _id: req.params.id }, function (err, foundItem){
+    console.log('This is the foundItem in items controller (Express App): ', foundItem);
+    foundItem.item_name = req.query.item_name;
+    foundItem.save();
+    console.log('This is the foundItem in items controller (Express App) after the update: ', foundItem);
+    res.json(foundItem);
+  });
 }

@@ -58,13 +58,16 @@ angular.module('mytodo')
         });
     }
 
-    vm.updateItem = function (itemId, item_name) {
-      $http.post('/api/item/update/' + itemId + '?item_name=' + item_name)
-        .success(function(data) {
-          vm.items = data;
-          $log.log(data);
+    vm.updateItem = function (itemId, itemName) {
+      ItemService.updateItem(itemId, itemName)
+        .then(function(data) {
+          for (var i = 0; i < vm.items.length; i++) {
+            if (vm.items[i].id === itemId) {
+              vm.items[i] = data;
+            }
+          }
         })
-        .error(function(data) {
+        .catch(function(data) {
           $log.log('Error: ' + data);
         });
     };
