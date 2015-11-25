@@ -20,8 +20,6 @@ describe('ListController', function () {
       });
     });
 
-
-
     it('should return an empty list', function (done) {
       request(app).get('/api/lists/' + testBoard._id)
       .expect('Content-Type', /json/)
