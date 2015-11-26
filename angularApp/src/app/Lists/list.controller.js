@@ -59,11 +59,8 @@ angular.module('mytodo')
     }
 
     vm.updateList = function (listId, listName) {
-      $log.log('This is the listId in the list controller (angular): ', listId);
-      $log.log('This is the listName in the list controller (angular): ', listName);
       ListService.updateList(listId, listName)
         .then(function(data) {
-          $log.log('This is the data in the list controller (angular): ', data);
           for (var i = 0; i < vm.lists.length; i++) {
             if (vm.lists[i].id === listId) {
               vm.lists[i] = data;
