@@ -7,8 +7,7 @@ var Board = require('../models/board');
 
 // Show multiple boards for one user
 exports.showMultipleBoards = function (req, res) {
-  var userId = req.params.user_id;
-  Board.find({ _user: userId }, function(error, foundBoards) {
+  Board.find({ _user: req.params.user_id }, function(error, foundBoards) {
     if (foundBoards) {
       res.json(foundBoards);
     } else if (error) {
@@ -18,7 +17,8 @@ exports.showMultipleBoards = function (req, res) {
 }
 
 exports.showOneBoard = function (req, res) {
-  Board.find({}, function(error, foundBoard) {
+  console.log('This is req: ', req);
+  Board.findOne({}, function(error, foundBoard) {
     if (foundBoard) {
       res.json(foundBoard);
     } else if (error) {

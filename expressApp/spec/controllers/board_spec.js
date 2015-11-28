@@ -2,12 +2,26 @@ var request = require('supertest');
 var app = require('../../app').app;
 
 var Board = require('../../app/models/board');
+var User = require('../../app/models/user');
 
 // Test 1 - check if showBoard returns an empty board when there is no data in the database
 describe('BoardController', function () {
   describe('with no data', function () {
+    var testUser;
+
+    beforeAll(function(done) {
+      User.create({ user_name: 'test user' }, function(err, newUser) {
+        if (err) {
+          done.fail(err);
+        } else {
+          testUser = newUser;
+          done();
+        }
+      });
+    });
+
     it('should return an empty board', function (done) {
-      request(app).get('/api/boards')
+      request(app).get('/api/boards/' + testUser._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (err, res) {
@@ -19,7 +33,18 @@ describe('BoardController', function () {
         }
       });
     });
+
+    afterAll(function(done) {
+      testUser.remove(function(err, removedUser) {
+        if (err) {
+          done.fail(err);
+        } else {
+          done();
+        }
+      });
+    });
   });
+
 
   describe('with data', function() {
     var testBoard;
