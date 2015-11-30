@@ -37,15 +37,14 @@ describe('UserController', function () {
 
     // Test 2 - check if showUser returns data when there is information in the database
     it('should return a user', function(done) {
-      request(app).get('/api/users')
+      request(app).get('/api/user/' + testUser._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
         if (err) {
           done.fail(err);
         } else {
-          expect(res.body.length).toEqual(1);
-          returnedUser = res.body[0];
+          returnedUser = res.body;
           expect(returnedUser).toBeDefined();
           expect(returnedUser.user_name).toEqual(testUser.user_name);
           done();
@@ -56,17 +55,16 @@ describe('UserController', function () {
     // Test 3 - check if createUser can create an entry in the database
     it('should create a user', function(done) {
       request(app).post('/api/user/create')
-      .send({user_name: 'test User'})
+      .send({user_name: 'test 3 user'})
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
         if (err) {
           done.fail(err);
         } else {
-          expect(res.body.length).toEqual(1);
-          returnedUser = res.body[0];
+          returnedUser = res.body;
           expect(returnedUser).toBeDefined();
-          expect(returnedUser.user_name).toEqual('test User')
+          expect(returnedUser.user_name).toEqual('test 3 user')
           User.remove({_id: returnedUser._id} , function (err) {
             if (err) {
               console.log('Failed to remove: ' + err);
@@ -79,13 +77,13 @@ describe('UserController', function () {
 
     // Test 4 - check if updateBoard will update the documents in the database
     it('should update a user', function(done) {
-      request(app).post('/api/user/update/' + testUser._id)
-      .send({user_name: 'updated username'})
+      var updatedUserName = 'Updated User Name';
+      request(app).post('/api/user/update/' + testUser._id + '?user_name=' + updatedUserName)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
         User.findOne({_id: testUser._id}, function (err, user) {
-          expect(user.user_name).toEqual("updated username");
+          expect(user.user_name).toEqual('Updated User Name');
           done();
         })
         if (err) {

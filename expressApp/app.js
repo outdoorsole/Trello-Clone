@@ -31,7 +31,10 @@ var BoardsController = require('./app/controllers/boards');
 // Routes for Users
 
 // show users
-app.get('/api/users', UsersController.showUsers);
+app.get('/api/users', UsersController.showMultipleUsers);
+
+// show one user
+app.get('/api/user/:user_id', UsersController.showOneUser);
 
 // create a user
 app.post('/api/user/create', UsersController.createUser);
