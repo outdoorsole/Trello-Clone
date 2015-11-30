@@ -5,10 +5,12 @@
     .factory('UserService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
         getUsers: getUsers,
-        createUsers: createUsers
+        createUser: createUser,
+        removeUser: removeUser,
+        updateUser: updateUser
       }
 
-      function getUser(userId) {
+      function getUsers(userId) {
         var deferred = $q.defer();
         $http.get('api/users')
           .success(function (returnedUsers) {
@@ -25,6 +27,7 @@
         var deferred = $q.defer();
         $http.post('/api/user/create/', formData)
           .success(function(createdUser) {
+            $log.log('This is the createdUser: ', createdUser);
             deferred.resolve(createdUser);
           })
           .error(function(data) {
@@ -32,6 +35,30 @@
             $log.log('Error: ' + data);
           });
           return deferred.promise;
+      }
+
+      function removeUser (userId) {
+        var deferred = $q.defer();
+        $http.post('/api/user/delete/' + userId)
+        .success(function(data) {
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          $log.log('Error: ' + data);
+        });
+        return deferred.promise;
+      }
+
+      function updateUser(userId, userName) {
+        var deferred = $q.defer();
+        $http.post('/api/user/update/' + userId + '?user_name=' + userName)
+        .success(function(data) {
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          $log.log('Error: ' + data);
+        });
+        return deferred.promise;
       }
 
       return service;

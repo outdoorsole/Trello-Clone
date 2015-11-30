@@ -21,6 +21,7 @@ angular.module('mytodo')
     UserService.getUsers()
     .then(function(allUsers) {
       vm.title = "Registered Users";
+      $log.log('These are allUsers: ', allUsers);
       for (var i = 0; i < allUsers.length; i++) {
         vm.users.push(allUsers[i]);
       }
@@ -32,7 +33,7 @@ angular.module('mytodo')
     vm.createUser = function (formData) {
       UserService.createUser(formData)
       .then(function (user) {
-        vm.boards.push(user);
+        vm.users.push(user);
       })
       .catch(function(err) {
         $log.error('Error creating a user: ', err);
@@ -40,25 +41,31 @@ angular.module('mytodo')
     }
 
     vm.removeUser = function (userId) {
-      $http.post('/api/user/delete/' + userId)
-        .success(function(data) {
-          vm.users = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+      UserService.removeUser(userId)
+      .then(function(deletedUser) {
+        for (var i = 0; i < vm.users.length; i++) {
+          if (vm.users[i]._id === deletedUser._id) {
+            vm.users.splice(i, 1);
+          }
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
-    vm.updateUser = function (userId, user_name) {
-      $http.post('/api/user/update/' + userId, {user_name: user_name})
-        .success(function(data) {
-          vm.users = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+    vm.updateUser = function (userId, userName) {
+      UserService.updateUser(userId, userName)
+      .then(function(data) {
+        for (var i = 0; i < vm.users.length; i++) {
+          if (vm.users[i].id === userId) {
+            vm.users[i] = data;
+          }
+        }
+      })
+      .catch(function(data) {
+        $log.log('Error: ', + data);
+      })
+    }
   }])
 })();

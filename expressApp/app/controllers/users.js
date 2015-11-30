@@ -9,6 +9,7 @@ var User = require('../models/user');
 exports.showMultipleUsers = function (req, res) {
   User.find({}, function(error, users) {
     if (users) {
+      console.log('These are the users: ', users);
       res.json(users);
     } else if (error) {
       console.error(error.stack);

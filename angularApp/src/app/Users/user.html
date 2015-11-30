@@ -11,7 +11,7 @@
       <h2 ng-model="title">{{UserController.title}}</h2>
 
       <!-- Create User (form field for username) -->
-      <form role="form" ng-submit="UserController.createUser()">
+      <form role="form" ng-submit="UserController.createUser(UserController.formData)">
         <div class="row">
           <div class="input-group">
             <input type="text" ng-model="UserController.formData.user_name" placeholder="Enter your name" class="form-control">
@@ -31,7 +31,7 @@
 
           <!-- View one user's boards -->
           <span class="input-group-btn">
-            <a href="/#/boards?user_name={{user.user_name}}&user_id={{user._id}}" class="btn btn-info" aria-label="View">View Boards</a>
+            <a href="/#/users?user_name={{user.user_name}}&user_id={{user._id}}" class="btn btn-info" aria-label="View">View Boards</a>
           </span>
 
           <!-- Edit a user name -->
