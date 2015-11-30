@@ -28,18 +28,16 @@ angular.module('mytodo')
     })
 
 
-
-    vm.createUser = function () {
-      $http.post('/api/user/create', vm.formData)
-        .success(function(data) {
-          $log.log('This is data[0]:', data[0]);
-          vm.users.push(data[0]);
-          $log.log('This is vm.users:', vm.users);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-      });
-    };
+    // Create a new user
+    vm.createUser = function (formData) {
+      UserService.createUser(formData)
+      .then(function (user) {
+        vm.boards.push(user);
+      })
+      .catch(function(err) {
+        $log.error('Error creating a user: ', err);
+      })
+    }
 
     vm.removeUser = function (userId) {
       $http.post('/api/user/delete/' + userId)
