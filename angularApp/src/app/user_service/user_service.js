@@ -27,7 +27,6 @@
         var deferred = $q.defer();
         $http.post('/api/user/create/', formData)
           .success(function(createdUser) {
-            $log.log('This is the createdUser: ', createdUser);
             deferred.resolve(createdUser);
           })
           .error(function(data) {

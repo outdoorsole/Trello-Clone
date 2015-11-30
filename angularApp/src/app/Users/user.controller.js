@@ -21,7 +21,6 @@ angular.module('mytodo')
     UserService.getUsers()
     .then(function(allUsers) {
       vm.title = "Registered Users";
-      $log.log('These are allUsers: ', allUsers);
       for (var i = 0; i < allUsers.length; i++) {
         vm.users.push(allUsers[i]);
       }
