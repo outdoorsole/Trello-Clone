@@ -48,13 +48,22 @@ describe('BoardController', function () {
 
   describe('with data', function() {
     var testBoard;
+    var testUser;
 
     beforeEach(function(done) {
-      Board.create({ board_name: 'test board' }, function(err, newBoard) {
+      User.create({ user_name: 'test user' }, function(err, newUser) {
         if (err) {
           done.fail(err);
         } else {
-          testBoard = newBoard;
+          testUser = newUser;
+
+          Board.create({ board_name: 'test board', _user: testUser._id }, function(err, newBoard) {
+            if (err) {
+              done.fail(err);
+            } else {
+              testBoard = newBoard;
+            }
+          });
           done();
         }
       });
@@ -62,7 +71,7 @@ describe('BoardController', function () {
 
     // Test 2 - check if showBoard returns data when there is information in the database
     it('should return a board', function(done) {
-      request(app).get('/api/boards')
+      request(app).get('/api/boards/' + testUser._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
@@ -138,12 +147,18 @@ describe('BoardController', function () {
       });
     });
 
-    afterEach(function(done) {
+    afterAll(function(done) {
       testBoard.remove(function(err, removedBoard) {
         if (err) {
           done.fail(err);
         } else {
-          done();
+          testUser.remove(function(err, removedUser) {
+            if (err) {
+              done.fail(err);
+            } else {
+              done();
+            }
+          });
         }
       });
     });
