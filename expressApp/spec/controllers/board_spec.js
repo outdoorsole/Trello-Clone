@@ -50,7 +50,7 @@ describe('BoardController', function () {
     var testBoard;
     var testUser;
 
-    beforeEach(function(done) {
+    beforeAll(function(done) {
       User.create({ user_name: 'test user' }, function(err, newUser) {
         if (err) {
           done.fail(err);
@@ -110,7 +110,25 @@ describe('BoardController', function () {
       });
     });
 
-    // Test 4 - check if removeBoard deletes data when there is information in the database
+    // Test 4 - check if updateBoard will update the documents in the database
+    it('should update a board', function(done) {
+      var updatedBoardName = 'Updated Board Name';
+      request(app).post('/api/boards/update/' + testBoard._id + '?board_name=' + updatedBoardName)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        Board.findOne({_id: testBoard._id}, function (err, board) {
+          expect(board.board_name).toEqual('Updated Board Name');
+          done();
+        })
+        if (err) {
+          console.log('Failed to update board: ', err);
+          done();
+        }
+      });
+    });
+
+    // Test 5 - check if removeBoard deletes data when there is information in the database
     it('should remove a board', function(done) {
       request(app).post('/api/boards/delete/' + testBoard._id)
       .expect('Content-Type', /json/)
@@ -125,24 +143,6 @@ describe('BoardController', function () {
             done();
           }
         })
-      });
-    });
-
-    // Test 5 - check if updateBoard will update the documents in the database
-    it('should update a board', function(done) {
-      request(app).post('/api/boards/update/' + testBoard._id)
-      .send({board_name: 'updated board name'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res){
-        Board.findOne({_id: testBoard._id}, function (err, board) {
-          expect(board.board_name).toEqual("updated board name");
-          done();
-        })
-        if (err) {
-          console.log('Failed to update board: ', err);
-          done();
-        }
       });
     });
 

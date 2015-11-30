@@ -111,7 +111,7 @@ describe('ListController', function () {
 
     // Test 4 - check if updateList will update the documents in the database
     it('should update a list', function(done) {
-      var updatedListName = 'Updated List Name'
+      var updatedListName = 'Updated List Name';
       request(app).post('/api/lists/update/' + testList._id + '?list_name=' + updatedListName)
       .expect('Content-Type', /json/)
       .expect(200)
