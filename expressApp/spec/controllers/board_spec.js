@@ -89,16 +89,15 @@ describe('BoardController', function () {
 
     // Test 3 - check if createBoard can create an entry in the database
     it('should create a board', function(done) {
-      request(app).post('/api/boards/create')
-      .send({board_name: 'test Board', description: 'Test 3'})
+      request(app).post('/api/boards/create/' + testUser._id)
+      .send({board_name: 'test Board'})
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
         if (err) {
           done.fail(err);
         } else {
-          expect(res.body.length).toEqual(1);
-          returnedBoard = res.body[0];
+          var returnedBoard = res.body;
           expect(returnedBoard).toBeDefined();
           expect(returnedBoard.board_name).toEqual('test Board')
           Board.remove({_id: returnedBoard._id} , function (err) {
