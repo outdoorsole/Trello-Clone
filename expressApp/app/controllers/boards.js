@@ -18,7 +18,7 @@ exports.showMultipleBoards = function (req, res) {
 
 exports.showOneBoard = function (req, res) {
   console.log('This is req: ', req);
-  Board.findOne({}, function(error, foundBoard) {
+  Board.findOne({ _id: req.params.board_id }, function(error, foundBoard) {
     if (foundBoard) {
       res.json(foundBoard);
     } else if (error) {
@@ -50,13 +50,12 @@ exports.createBoard = function (req, res) {
 
 
 exports.removeBoard = function (req, res) {
-  var board = new Board ({ _id: req.params.board_id})
+  var board = new Board ({ _id: req.params.board_id});
   board.remove(function (error, deletedBoard) {
     if (deletedBoard) {
       res.json(deletedBoard);
     } else if (error) {
       console.log(error.stack);
-      res.redirect('/error');
     }
   })
 }
