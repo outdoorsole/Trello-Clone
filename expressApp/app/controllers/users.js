@@ -47,7 +47,7 @@ exports.removeUser = function (req, res) {
   var user = new User ({ _id: req.params.user_id});
   user.remove(function (error, deletedUser) {
     if (deletedUser) {
-      res.json (deletedUser);
+      res.json(deletedUser);
     } else if (error) {
       console.log(error.stack);
     }
@@ -55,13 +55,13 @@ exports.removeUser = function (req, res) {
 }
 
 exports.updateUser = function (req, res) {
-  User.findOne({ _id: req.body.user_id }, function (error, foundUser) {
+  User.findOne({ _id: req.params.user_id }, function (error, foundUser) {
     if (foundUser) {
       foundUser.user_name = req.query.user_name;
-      foundBoard.save();
-      res.json(foundBoard);
+      foundUser.save();
+      res.json(foundUser);
     } else if (error) {
-      console.log(error.stack);
+      console.log('Failed to find and update user: ', error);
     }
   });
 }

@@ -55,7 +55,7 @@ describe('UserController', function () {
     // Test 3 - check if createUser can create an entry in the database
     it('should create a user', function(done) {
       request(app).post('/api/user/create')
-      .send({user_name: 'test User'})
+      .send({user_name: 'test 3 user'})
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
@@ -64,7 +64,7 @@ describe('UserController', function () {
         } else {
           returnedUser = res.body;
           expect(returnedUser).toBeDefined();
-          expect(returnedUser.user_name).toEqual('test User')
+          expect(returnedUser.user_name).toEqual('test 3 user')
           User.remove({_id: returnedUser._id} , function (err) {
             if (err) {
               console.log('Failed to remove: ' + err);
