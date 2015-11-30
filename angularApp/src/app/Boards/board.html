@@ -8,7 +8,7 @@
       <!-- refer to something in the list controller, need to use the alias -->
       <h2 ng-model="title">{{BoardController.title}}</h2>
 
-      <!-- Create list input -->
+      <!-- Create board input -->
       <form role="form" ng-submit="BoardController.createBoard(BoardController.formData)">
         <div class="row">
           <div class="input-group">
@@ -20,22 +20,22 @@
         </div>
       </form>
 
-      <!-- List input -->
+      <!-- Board input -->
       <div ui-sortable ng-model="BoardController.board">
         <p class="input-group" ng-repeat="board in BoardController.boards" style="padding:5px 10px; cursor: move;">
           <input type="text" ng-model="board.board_name" class="form-control">
 
-          <!-- View one list -->
+          <!-- View one board -->
           <span class="input-group-btn">
             <a href="/#/lists?board_name={{board.board_name}}&board_id={{board._id}}" class="btn btn-info" aria-label="View">View Board Lists</a>
           </span>
 
-          <!-- Edit list -->
+          <!-- Edit board -->
           <span class="input-group-btn">
             <button class="btn btn-info" ng-click="BoardController.updateBoard(board._id, board.board_name)" aria-label="Edit">Edit</button>
           </span>
 
-          <!-- Remove list -->
+          <!-- Remove board -->
           <span class="input-group-btn">
             <button class="btn btn-danger" ng-click="BoardController.removeBoard(board._id)" aria-label="Remove">X</button>
           </span>
