@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('UserController', function ($routeParams, $http, $log) {
+  .controller('UserController', ['$log', 'UserService', '$routeParams', function ($log, UserService, $routeParams) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -18,46 +18,53 @@ angular.module('mytodo')
     // $scope.list_name = $routeParams.list_name;
 
     // when landing on the page, get all the usernames and display them
-    $http.get('/api/users/')
-    .success(function(data) {
+    UserService.getUsers()
+    .then(function(allUsers) {
       vm.title = "Registered Users";
-      vm.users = data;
-      $log.log('This is data for show users: ', data);
+      for (var i = 0; i < allUsers.length; i++) {
+        vm.users.push(allUsers[i]);
+      }
+      $log.log('This is data for vm.users: ', vm.users);
     })
 
 
-    vm.createUser = function () {
-      $http.post('/api/user/create', vm.formData)
-        .success(function(data) {
-          $log.log('This is data[0]:', data[0]);
-          vm.users.push(data[0]);
-          $log.log('This is vm.users:', vm.users);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-      });
-    };
+    // Create a new user
+    vm.createUser = function (formData) {
+      UserService.createUser(formData)
+      .then(function (user) {
+        vm.users.push(user);
+      })
+      .catch(function(err) {
+        $log.error('Error creating a user: ', err);
+      })
+    }
 
     vm.removeUser = function (userId) {
-      $http.post('/api/user/delete/' + userId)
-        .success(function(data) {
-          vm.users = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+      UserService.removeUser(userId)
+      .then(function(deletedUser) {
+        for (var i = 0; i < vm.users.length; i++) {
+          if (vm.users[i]._id === deletedUser._id) {
+            vm.users.splice(i, 1);
+          }
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
-    vm.updateUser = function (userId, user_name) {
-      $http.post('/api/user/update/' + userId, {user_name: user_name})
-        .success(function(data) {
-          vm.users = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
-  })
+    vm.updateUser = function (userId, userName) {
+      UserService.updateUser(userId, userName)
+      .then(function(data) {
+        for (var i = 0; i < vm.users.length; i++) {
+          if (vm.users[i].id === userId) {
+            vm.users[i] = data;
+          }
+        }
+      })
+      .catch(function(data) {
+        $log.log('Error: ', + data);
+      })
+    }
+  }])
 })();

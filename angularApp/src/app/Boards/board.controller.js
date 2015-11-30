@@ -39,7 +39,7 @@ angular.module('mytodo')
         vm.boards.push(board);
       })
       .catch(function(err) {
-        $log.error('Error fetching items: ', err);
+        $log.error('Error creating a board: ', err);
       })
     }
 
