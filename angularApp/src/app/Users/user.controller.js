@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('UserController', function ($routeParams, $http, $log) {
+  .controller('UserController', ['$log', 'UserService', '$routeParams', function ($log, UserService, $routeParams) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -18,12 +18,15 @@ angular.module('mytodo')
     // $scope.list_name = $routeParams.list_name;
 
     // when landing on the page, get all the usernames and display them
-    $http.get('/api/users/')
-    .success(function(data) {
+    UserService.getUsers()
+    .then(function(allUsers) {
       vm.title = "Registered Users";
-      vm.users = data;
-      $log.log('This is data for show users: ', data);
+      for (var i = 0; i < allUsers.length; i++) {
+        vm.users.push(allUsers[i]);
+      }
+      $log.log('This is data for vm.users: ', vm.users);
     })
+
 
 
     vm.createUser = function () {
@@ -59,5 +62,5 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  })
+  }])
 })();
