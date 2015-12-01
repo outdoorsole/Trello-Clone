@@ -24,7 +24,6 @@ angular.module('mytodo')
       for (var i = 0; i < allUsers.length; i++) {
         vm.users.push(allUsers[i]);
       }
-      $log.log('This is data for vm.users: ', vm.users);
     })
 
 

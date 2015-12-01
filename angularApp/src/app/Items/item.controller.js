@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', ['$log', 'ItemService', '$routeParams', function ($log, ItemService, $routeParams) {
+  .controller('ItemController', ['$log', 'ItemService', function ($log, ItemService) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -13,7 +13,6 @@ angular.module('mytodo')
     vm.items = [];
 
     vm.getItems = function(listId) {
-      console.log('This is the listId: ', listId);
       ItemService.getItems(listId)
       .then(function(listItems) {
         for (var i = 0; i < listItems.length; i++) {
