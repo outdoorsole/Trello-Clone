@@ -1,7 +1,7 @@
 #Trello Clone
 
 ## Original Source:
-![Trello.com](https://www.trello.com/)
+![Trello.com](https://trello.com/home)
 
 This is an application that allows people to organize lists and tasks.
 
