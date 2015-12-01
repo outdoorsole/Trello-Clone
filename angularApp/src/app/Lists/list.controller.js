@@ -15,16 +15,12 @@ angular.module('mytodo')
 
     // Get the board id from the route params
     vm.boardId = $routeParams.board_id;
-    $log.log('This is boardId: ', vm.boardId);
 
     // Get the board name from the route params
     vm.boardName = $routeParams.board_name;
-    $log.log('This is boardName: ', vm.boardName);
 
 
     // when landing on the page, get all lists and show them
-
-    // ** Fix so that it's just one board; board id and board name**
     ListService.getLists(vm.boardId)
     .then(function(boardLists) {
       vm.title = vm.boardName;
