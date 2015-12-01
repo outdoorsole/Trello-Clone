@@ -10,7 +10,7 @@
         updateUser: updateUser
       }
 
-      function getUsers(userId) {
+      function getUsers() {
         var deferred = $q.defer();
         $http.get('api/users')
           .success(function (returnedUsers) {

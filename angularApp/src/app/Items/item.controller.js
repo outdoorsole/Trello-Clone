@@ -12,27 +12,22 @@ angular.module('mytodo')
     // This variable stores the items list from the database
     vm.items = [];
 
-    // Get the list id from the route params
-    vm.listId = $routeParams.list_id;
-
-    // get the list name from the route params
-    vm.listName = $routeParams.list_name;
-
-    // when landing on the page, get all todos and show them
-    ItemService.getItems(vm.listId)
-    .then(function(listItems) {
-      vm.title = vm.listName;
-      for (var i = 0; i < listItems.length; i++) {
-        vm.items.push(listItems[i]);
-      }
-    })
-    .catch(function(err) {
-      $log.error('Error fetching items: ', err);
-    });
+    vm.getItems = function(listId) {
+      console.log('This is the listId: ', listId);
+      ItemService.getItems(listId)
+      .then(function(listItems) {
+        for (var i = 0; i < listItems.length; i++) {
+          vm.items.push(listItems[i]);
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      });
+    }
 
     // create a new item
-    vm.createItem = function(formData) {
-      ItemService.createItem(vm.listId, formData)
+    vm.createItem = function(listId, formData) {
+      ItemService.createItem(listId, formData)
         .then(function(item) {
           vm.items.push(item);
         })
