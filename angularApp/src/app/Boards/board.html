@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="mytodo">
+  <head>
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- This page will render the list of boards stored in the database for the current user that was selected -->
+
+      <!-- refer to something in the list controller, need to use the alias -->
+      <h2 ng-model="title">{{BoardController.title}}</h2>
+
+      <!-- Create board input -->
+      <form role="form" ng-submit="BoardController.createBoard(BoardController.formData)">
+        <div class="row">
+          <div class="input-group">
+            <input type="text" ng-model="BoardController.formData.board_name" placeholder="Create new board..." class="form-control">
+
+            <!-- Add button -->
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary" value="Create Board">
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <!-- Board input -->
+      <div ui-sortable ng-model="BoardController.board">
+        <p class="input-group" ng-repeat="board in BoardController.boards" style="padding:5px 10px; cursor: move;">
+          <input type="text" ng-model="board.board_name" class="form-control">
+
+          <!-- View one board -->
+          <span class="input-group-btn">
+            <a href="/#/lists?board_name={{board.board_name}}&board_id={{board._id}}" class="btn btn-info" aria-label="View">View Board Lists</a>
+          </span>
+
+          <!-- Edit board -->
+          <span class="input-group-btn">
+            <button class="btn btn-info" ng-click="BoardController.updateBoard(board._id, board.board_name)" aria-label="Edit">Edit</button>
+          </span>
+
+          <!-- Remove board -->
+          <span class="input-group-btn">
+            <button class="btn btn-danger" ng-click="BoardController.removeBoard(board._id)" aria-label="Remove">X</button>
+          </span>
+
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -2,75 +2,70 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ListController', function ($scope, $routeParams, $http) {
+  .controller('ListController', ['$log', 'ListService', '$routeParams', function ($log, ListService, $routeParams) {
+    var vm = this;
 
     // All of this is happening on load (until methods below)
 
     // This variable stores the form data coming through the front-end
-    $scope.formData = {};
+    vm.formData = {};
 
     // This variable stores the items list from the database
-    $scope.lists = [];
+    vm.lists = [];
 
-    // This will capture the information from a list
-    // $scope.listId = $routeParams.list_id;
-    // $scope.list_name = $routeParams.list_name;
+    // Get the board id from the route params
+    vm.boardId = $routeParams.board_id;
 
-    // when landing on the page, get all todos and show them
+    // Get the board name from the route params
+    vm.boardName = $routeParams.board_name;
 
-  $http.get('/api/lists/')
-    .success(function(data) {
-      $scope.title = "List of Todo Lists";
-      console.log('I got the data I requested');
-      console.log('--------------------------');
-      console.log('This is $scope.lists: ', $scope.lists);
-      // $scope.itemslist = ;
-      $scope.lists = data;
-      console.log('--------------------------');
-      console.log('This is $scope.lists: ', $scope.lists);
-      // console.log('This is the response in refresh: ', response);
-      // console.log('This is $scope.itemslist: ', $scope.itemslist);
+
+    // when landing on the page, get all lists and show them
+    ListService.getLists(vm.boardId)
+    .then(function(boardLists) {
+      vm.title = vm.boardName;
+      for (var i = 0; i < boardLists.length; i++) {
+        vm.lists.push(boardLists[i]);
+      }
     })
 
+    // Create a new List
+    vm.createList = function (formData) {
+      ListService.createList(vm.boardId, formData)
+      .then(function (list) {
+        vm.lists.push(list);
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
-    $scope.createList = function () {
-      console.log('This is inside of createItem: ');
-      console.log('This is formData: ', $scope.formData);
-      $http.post('/api/lists/create', $scope.formData)
-        .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
-        })
-        .error(function(data) {
-          console.log('Error: ' + data);
-      });
-    };
+    vm.removeList = function (listId) {
+      ListService.removeList(listId)
+      .then(function(deletedList) {
+        for (var i = 0; i < vm.lists.length; i++) {
+          if (vm.lists[i]._id === deletedList._id) {
+            vm.lists.splice(i, 1);
+          }
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
-    $scope.removeList = function (listId) {
-      console.log('This is inside of removeList: ');
-      console.log('This is formData: ', $scope.formData);
-      $http.post('/api/lists/delete/' + listId)
-        .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
+    vm.updateList = function (listId, listName) {
+      ListService.updateList(listId, listName)
+        .then(function(data) {
+          for (var i = 0; i < vm.lists.length; i++) {
+            if (vm.lists[i].id === listId) {
+              vm.lists[i] = data;
+            }
+          }
         })
-        .error(function(data) {
-          console.log('Error: ' + data);
-        });
-    };
-
-    $scope.updateList = function (listId, list_name) {
-      console.log('This is inside of updateList: ');
-      console.log('This is the list_name: ', list_name);
-      console.log('This is $scope.formData: ', {list_name: list_name});
-      $http.post('/api/lists/update/' + listId, {list_name: list_name})
-        .success(function(data) {
-          $scope.lists = data;
-          console.log(data);
+        .catch(function(data) {
+          $log.log('Error: ' + data);
         })
-        .error(function(data) {
-          console.log('Error: ' + data);
-        });
-    };
-  })
+      }
+  }])
 })();

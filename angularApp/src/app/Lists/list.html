@@ -5,33 +5,75 @@
   </head>
   <body>
     <div class="container">
-      <h2 ng-model="title">{{title}}</h2>
+      <!-- refer to something in the list controller, need to use the alias -->
+      <h2 ng-model="title">{{ListController.title}}</h2>
 
       <!-- Create list input -->
-      <form role="form" ng-submit="createList()">
+      <form role="form" ng-submit="ListController.createList(ListController.formData)">
         <div class="row">
           <div class="input-group">
-            <input type="text" ng-model="formData.list_name" placeholder="What needs to be done?" class="form-control">
+            <input type="text" ng-model="ListController.formData.list_name" placeholder="New List" class="form-control">
             <span class="input-group-btn">
-              <input type="submit" class="btn btn-primary" value="Add">
+              <input type="submit" class="btn btn-primary" value="Create A New List">
             </span>
           </div>
         </div>
       </form>
 
-      <!-- Remove list input -->
-      <div ui-sortable ng-model="list">
-        <p class="input-group" ng-repeat="list in lists" style="padding:5px 10px; cursor: move;">
-          <input type="text" ng-model="list.list_name" class="form-control">
-          <span class="input-group-btn">
-            <button class="btn btn-danger" ng-click="removeList(list._id)" aria-label="Remove">X</button>
-          </span>
+      <!-- List input -->
+      <div ui-sortable ng-model="ListController.list">
+        <div class="row">
+          <div ng-repeat="list in ListController.lists">
 
-          <!-- Edit list input -->
-          <span class="input-group-btn">
-            <button class="btn btn-info" ng-click="updateList(list._id, list.list_name)" aria-label="Edit">Edit</button>
-          </span>
-        </p>
+            <div class="col-md-3">
+              <input type="text" ng-model="list.list_name" class="form-control">
+
+              <!-- Nesting for Items into Lists -->
+              <div ng-controller="ItemController as Items">
+                <div ng-init="Items.getItems(list._id)">
+
+                  <!-- Create items input -->
+                  <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
+                    <div class="row">
+                      <div class="input-group">
+                        <input type="text" ng-model="Items.formData.item_name" placeholder="Type a New Item Here" class="form-control">
+                        <span class="input-group-btn">
+                          <input type="submit" class="btn btn-primary" value="Add New Item">
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- iterating through items -->
+                  <div class='list-items input-group' ng-repeat="item in Items.items">
+
+                    <!-- items list -->
+                    <input type="text" ng-model="item.item_name" class="form control">
+
+                    <!-- Edit items button -->
+                    <span class="input-group-btn">
+                      <button class="btn btn-info" ng-click="ItemController.updateItem(item._id, item.item_name)" aria-label="Edit">Edit Item</button>
+                    </span>
+
+                    <!-- Remove items button -->
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger" ng-click="ItemController.removeItem(item._id)" aria-label="Remove">X</button>
+                    </span>
+                  </div>
+                </div> <!-- closes the items controller -->
+
+                <div class="list-buttons">
+                  <span class="input-group-btn">
+                    <!-- Edit list button -->
+                    <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit List</button>
+                    <!-- Remove list button -->
+                    <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

@@ -2,66 +2,65 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ItemController', function ($scope, $http) {
-
+  .controller('ItemController', ['$log', 'ItemService', function ($log, ItemService) {
     // All of this is happening on load (until methods below)
+    var vm = this;
 
     // This variable stores the form data coming through the front-end
-    $scope.formData = {};
+    vm.formData = {};
 
     // This variable stores the items list from the database
-    $scope.items = [];
+    vm.items = [];
 
-    // when landing on the page, get all todos and show them
-
-    $http.get('/api/items')
-      .success(function(data) {
-        $scope.title = "My List of Items";
-        console.log('I got the data I requested');
-        console.log('--------------------------');
-        console.log('This is $scope.items: ', $scope.items);
-        $scope.items = data;
-        console.log('--------------------------');
-        console.log('This is $scope.items: ', $scope.items);
+    vm.getItems = function(listId) {
+      ItemService.getItems(listId)
+      .then(function(listItems) {
+        for (var i = 0; i < listItems.length; i++) {
+          vm.items.push(listItems[i]);
+        }
       })
-
-    $scope.createItem = function () {
-      console.log('This is inside of createItem: ');
-      console.log('This is formData: ', $scope.formData);
-      $http.post('/api/items/create', $scope.formData)
-        .success(function(data) {
-          $scope.items = data;
-          console.log(data);
-        })
-        .error(function(data) {
-          console.log('Error: ' + data);
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
       });
-    };
+    }
 
-    $scope.removeTodo = function (itemId) {
-      console.log('This is inside of removeTodo: ');
-      console.log('This is formData: ', $scope.formData);
-      $http.post('/api/items/delete/' + itemId)
-        .success(function(data) {
-          $scope.items = data;
-          console.log(data);
+    // create a new item
+    vm.createItem = function(listId, formData) {
+      ItemService.createItem(listId, formData)
+        .then(function(item) {
+          vm.items.push(item);
         })
-        .error(function(data) {
-          console.log('Error: ' + data);
+        .catch(function(err) {
+          $log.error('Error fetching items: ', err);
+        });
+    }
+
+    vm.removeItem = function (itemId) {
+      ItemService.removeItem(itemId)
+        .then(function(deletedItem) {
+          for (var i = 0; i < vm.items.length; i++) {
+            if (vm.items[i]._id === deletedItem._id) {
+              vm.items.splice(i, 1);
+            }
+          }
+        })
+        .catch(function(err) {
+          $log.error('Error fetching items: ', err);
+        });
+    }
+
+    vm.updateItem = function (itemId, itemName) {
+      ItemService.updateItem(itemId, itemName)
+        .then(function(data) {
+          for (var i = 0; i < vm.items.length; i++) {
+            if (vm.items[i].id === itemId) {
+              vm.items[i] = data;
+            }
+          }
+        })
+        .catch(function(data) {
+          $log.log('Error: ' + data);
         });
     };
-
-    $scope.updateTodo = function (itemId, item_name) {
-      console.log('This is inside of updateTodo: ');
-      console.log('This is the item_name: ', item_name);
-      $http.post('/api/items/update/' + itemId + '?item_name=' + item_name)
-        .success(function(data) {
-          $scope.items = data;
-          console.log(data);
-        })
-        .error(function(data) {
-          console.log('Error: ' + data);
-        });
-    };
-  })
+  }])
 })();
