@@ -13,10 +13,6 @@ angular.module('mytodo')
     // This variable stores the users list from the database
     vm.users = [];
 
-    // This will capture the information from a list
-    // $scope.listId = $routeParams.list_id;
-    // $scope.list_name = $routeParams.list_name;
-
     // when landing on the page, get all the usernames and display them
     UserService.getUsers()
     .then(function(allUsers) {
@@ -24,7 +20,6 @@ angular.module('mytodo')
       for (var i = 0; i < allUsers.length; i++) {
         vm.users.push(allUsers[i]);
       }
-      $log.log('This is data for vm.users: ', vm.users);
     })
 
 

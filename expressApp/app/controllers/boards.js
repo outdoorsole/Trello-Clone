@@ -27,9 +27,6 @@ exports.showOneBoard = function (req, res) {
   });
 }
 
-// Optimize error handling
-// Don't do the find (line 39)
-// leave it as just the save
 exports.createBoard = function (req, res) {
   var board = new Board({
     board_name: req.body.board_name,
@@ -43,9 +40,9 @@ exports.createBoard = function (req, res) {
         } else if (err) {
           console.log('Failed to find: ' + err);
         }
-      })
+      });
     }
-  })
+  });
 }
 
 
@@ -57,7 +54,7 @@ exports.removeBoard = function (req, res) {
     } else if (error) {
       console.log(error.stack);
     }
-  })
+  });
 }
 
 exports.updateBoard = function (req, res) {
