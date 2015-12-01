@@ -15,21 +15,17 @@ angular.module('mytodo')
 
     // Get the user id from the route params
     vm.userId = $routeParams.user_id;
-    $log.log('This is userId: ', vm.userId);
 
     // Get the user name
     vm.username = $routeParams.user_name;
-    $log.log('This is the username: ', vm.username);
 
-    // when landing on the page, get all boards and show them
-
+    // when landing on the page, get all boards for a user and display
     BoardService.getBoards(vm.userId)
     .then(function(userBoards) {
       vm.title = 'My Boards: ' + vm.username;
       for (var i = 0; i < userBoards.length; i++) {
         vm.boards.push(userBoards[i]);
       }
-      $log.log('This is the vm.boards: ', vm.boards);
     })
 
     // Create a new board
@@ -43,6 +39,7 @@ angular.module('mytodo')
       })
     }
 
+    // Remove a board
     vm.removeBoard = function (boardId) {
       BoardService.removeBoard(boardId)
       .then(function(deletedBoard) {
@@ -57,6 +54,7 @@ angular.module('mytodo')
       })
     }
 
+    // Update a board
     vm.updateBoard = function (boardId, boardName) {
       BoardService.updateBoard(boardId, boardName)
       .then(function(data) {
