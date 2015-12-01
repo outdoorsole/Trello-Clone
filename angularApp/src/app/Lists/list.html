@@ -28,9 +28,9 @@
             <div class="col-md-3">
               <input type="text" ng-model="list.list_name" class="form-control">
 
-                <!-- Nesting for Items into Lists -->
-                <div ng-controller="ItemController as Items">
-                  <div ng-init="Items.getItems(list._id)">
+              <!-- Nesting for Items into Lists -->
+              <div ng-controller="ItemController as Items">
+                <div ng-init="Items.getItems(list._id)">
 
                   <!-- Create items input -->
                   <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
@@ -44,27 +44,32 @@
                     </div>
                   </form>
 
-                    <!-- iterating through items -->
-                    <div class='list-items input-group' ng-repeat="item in Items.items">
-                      <input type="text" ng-model="item.item_name" class="form control">
+                  <!-- iterating through items -->
+                  <div class='list-items input-group' ng-repeat="item in Items.items">
 
-                      <!-- Edit items button -->
-                      <span class="input-group-btn">
-                        <button class="btn btn-info" ng-click="ItemController.updateItem(item._id, item.item_name)" aria-label="Edit">Edit Item</button>
-                      </span>
+                    <!-- items list -->
+                    <input type="text" ng-model="item.item_name" class="form control">
 
-                      <!-- Remove items button -->
-                      <span class="input-group-btn">
-                        <button class="btn btn-danger" ng-click="ItemController.removeItem(item._id)" aria-label="Remove">X</button>
-
-                    </div>
-                  </div>
+                    <!-- Edit items button -->
                     <span class="input-group-btn">
-                      <!-- Edit list button -->
-                      <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit List</button>
-                      <!-- Remove list button -->
-                      <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
+                      <button class="btn btn-info" ng-click="ItemController.updateItem(item._id, item.item_name)" aria-label="Edit">Edit Item</button>
                     </span>
+
+                    <!-- Remove items button -->
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger" ng-click="ItemController.removeItem(item._id)" aria-label="Remove">X</button>
+                    </span>
+                  </div>
+                </div> <!-- closes the items controller -->
+
+                <div class="list-buttons">
+                  <span class="input-group-btn">
+                    <!-- Edit list button -->
+                    <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit List</button>
+                    <!-- Remove list button -->
+                    <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
