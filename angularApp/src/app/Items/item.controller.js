@@ -36,6 +36,7 @@ angular.module('mytodo')
     }
 
     vm.removeItem = function (itemId) {
+      console.log('Here: ', itemId);
       ItemService.removeItem(itemId)
         .then(function(deletedItem) {
           for (var i = 0; i < vm.items.length; i++) {
