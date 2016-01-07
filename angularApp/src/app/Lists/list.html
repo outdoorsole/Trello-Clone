@@ -12,104 +12,103 @@
       <div ui-sortable ng-model="ListController.list">
         <div class="row">
           <div ng-repeat="list in ListController.lists">
-              <div class="col-sm-4">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title" ng-model="list.list_name">{{list.list_name}}</h3>
-                  </div>
-                <div class="panel-body">
-                  <!-- Nesting for Items into Lists -->
-                  <div ng-controller="ItemController as Items">
-                    <div ng-init="Items.getItems(list._id)">
+            <div class="col-sm-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title" ng-model="list.list_name">{{list.list_name}}</h3>
+                </div>
+              <div class="panel-body">
+                <!-- Nesting for Items into Lists -->
+                <div ng-controller="ItemController as Items">
+                  <div ng-init="Items.getItems(list._id)">
 
-                      <form>
-                        <!-- ***Testing segmented buttons*** -->
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <div class="input-group">
-                                <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-secondary">Add Item</button>
-                                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                  </div>
-                                </div>
+                    <form>
+                      <!-- ***Testing segmented buttons*** -->
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="input-group">
+                            <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-secondary">Add Item</button>
+                              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <!-- ***Testing segmented buttons*** -->
-                      </form>
-
-                      <!-- Create items input -->
-                      <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
-                        <div class="row">
-                          <div class="input-group input-group-sm">
-                            <input type="text"  class="form-control" placeholder="Add an item...">
-                            <span class="input-group-btn">
-                              <input type="submit" class="btn btn-primary" value="Add New Item">
-                            </span>
-                          </div>
-                        </div>
-                      </form>
-
-                      <!-- iterating through items -->
-                      <div class='list-items input-group' ng-repeat="item in Items.items">
-
-                        <!-- items list -->
-                        <input type="text" ng-model="item.item_name" class="form control">
-
-                        <!-- Edit items button -->
-                        <span class="input-group-btn">
-                          <button class="btn btn-info" ng-click="Items.updateItem(item._id, item.item_name)" aria-label="Edit">Edit Item</button>
-                        </span>
-
-                        <!-- Remove items button -->
-                        <span class="input-group-btn">
-                          <button class="btn btn-danger" ng-click="Items.removeItem(item._id)" aria-label="Remove">X</button>
-                        </span>
                       </div>
-                    </div> <!-- closes the items controller -->
-                    <!-- ***Testing segmented buttons*** -->
+                      <!-- ***Testing segmented buttons*** -->
+                    </form>
 
-                    <div class="list-buttons">
+                    <!-- Create items input -->
+                    <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
+                      <div class="row">
+                        <div class="input-group input-group-sm">
+                          <input type="text"  class="form-control" placeholder="Add an item...">
+                          <span class="input-group-btn">
+                            <input type="submit" class="btn btn-primary" value="Add New Item">
+                          </span>
+                        </div>
+                      </div>
+                    </form>
+
+                    <!-- iterating through items -->
+                    <div class='list-items input-group' ng-repeat="item in Items.items">
+
+                      <!-- items list -->
+                      <input type="text" ng-model="item.item_name" class="form control">
+
+                      <!-- Edit items button -->
                       <span class="input-group-btn">
-                        <!-- Edit list button -->
-                        <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit List</button>
-                        <!-- Remove list button -->
-                        <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
+                        <button class="btn btn-info" ng-click="Items.updateItem(item._id, item.item_name)" aria-label="Edit">Edit Item</button>
+                      </span>
+
+                      <!-- Remove items button -->
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" ng-click="Items.removeItem(item._id)" aria-label="Remove">X</button>
                       </span>
                     </div>
+                  </div> <!-- closes the items controller -->
+                  <!-- ***Testing segmented buttons*** -->
+
+                  <div class="list-buttons">
+                    <span class="input-group-btn">
+                      <!-- Edit list button -->
+                      <button class="btn btn-info" ng-click="ListController.updateList(list._id, list.list_name)" aria-label="Edit">Edit List</button>
+                      <!-- Remove list button -->
+                      <button class="btn btn-danger" ng-click="ListController.removeList(list._id)" aria-label="Remove">X</button>
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
-      </div>
-
-      <!-- Panel for creating a new list -->
-      <div class="row">
-        <div class="col-sm-4">
-          <form role="form" ng-submit="ListController.createList(ListController.formData)">
-            <div class="row">
-              <div class="input-group input-group-lg">
-                <input type="text" ng-model="ListController.formData.list_name" class="form-control" placeholder="Add a list...">
-                <span class="input-group-btn">
-                  <!-- 'Add list' button -->
-                  <button type="submit" class="btn btn-primary">Add</button>
-                </span>
-              </div>
-            </div>
-          </form>
         </div>
+      </div><!-- /.col-sm-4 -->
+    </div>
 
+    <!-- Panel for creating a new list -->
+    <div class="row">
+      <div class="col-sm-4">
+        <form role="form" ng-submit="ListController.createList(ListController.formData)">
+          <div class="row">
+            <div class="input-group input-group-lg">
+              <input type="text" ng-model="ListController.formData.list_name" class="form-control" placeholder="Add a list...">
+              <span class="input-group-btn">
+                <!-- 'Add list' button -->
+                <button type="submit" class="btn btn-primary">Add</button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
