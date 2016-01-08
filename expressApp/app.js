@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
 
-
 // Controllers
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
