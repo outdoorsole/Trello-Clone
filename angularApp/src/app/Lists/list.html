@@ -17,16 +17,11 @@
                   <h3 class="panel-title" ng-model="list.list_name">{{list.list_name}}
                   </h3>
                   <!-- ***Dropdown testing, single button with keyboard navigation*** -->
-                  <div class="btn-group" uib-dropdown uib-keyboard-nav>
-                    <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">This is a button <span class="caret"></span>
-                    </button>
-                    <ul class="uib-dropdown-menu dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                      <!-- Edit list -->
-                      <li role="menuitem" ng-click="ListController.updateList(list._id, list.list_name)" ><a href="#">Edit</a></li>
-                      <!-- Remove list -->
-                      <li role="menuitem" ng-click="ListController.removeList(list._id)"><a href="#">Delete</a></li>
-                    </ul>
-                  </div> <!-- /close btn group -->
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default glyphicon glyphicon-plus-sign"> Add</button>
+                    <button type="button" class="btn btn-default glyphicon glyphicon-pencil"> Edit</button>
+                    <button type="button" class="btn btn-default glyphicon glyphicon-minus-sign"> Remove</button>
+                  </div>
                 </div> <!-- /close panel heading -->
 
                 <div class="panel-body">

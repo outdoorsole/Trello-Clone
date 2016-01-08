@@ -19,26 +19,6 @@ angular.module('mytodo')
     // Get the board name from the route params
     vm.boardName = $routeParams.board_name;
 
-    // List dropdown items
-    vm.listDropdownItems = [
-      'Edit List',
-      'Delete List'
-    ];
-
-    vm.status = {
-      isopen: false
-    };
-
-    vm.toggled = function(open) {
-      $log.log('Dropdown is now: ', open);
-    };
-
-    vm.toggleDropdown = function($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      vm.status.isopen = !vm.status.isopen;
-    }
-
     // when landing on the page, get all lists and show them
     ListService.getLists(vm.boardId)
     .then(function(boardLists) {
