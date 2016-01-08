@@ -25,22 +25,27 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <nav class="navbar nav-bar-inverse">
-      <div class="container">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+      <div class="container header-container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" id="navbar-title" href="/users">Trello Clone</a>
+          <a class="navbar-brand navbar-links" href="/users">Trello Clone</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
+            <li><a class="navbar-links" href="/Users">Users</a></li>
+            <li><a  class="navbar-links" href="#">Boards</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </nav>
+
     <div ng-view></div>
 
     <!-- build:js(src) scripts/vendor.js -->
