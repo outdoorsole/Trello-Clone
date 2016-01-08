@@ -7,7 +7,7 @@
     <div class="container">
       <!-- refer to something in the list controller, need to use the alias -->
       <h2 class="title" ng-model="title">{{ListController.title}}</h2>
-        <!-- Panel for list -->
+      <!-- Panel for list -->
       <div class="row">
         <div ui-sortable ng-model="ListController.list">
           <div ng-repeat="list in ListController.lists">
@@ -18,9 +18,9 @@
                   </h3>
                   <!-- ***Dropdown testing, single button with keyboard navigation*** -->
                   <div class="btn-group" uib-dropdown uib-keyboard-nav>
-                    <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary glyphicon glyphicon-collapse-down" uib-dropdown-toggle>
+                    <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">This is a button <span class="caret"></span>
                     </button>
-                    <ul class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                    <ul class="uib-dropdown-menu dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
                       <!-- Edit list -->
                       <li role="menuitem" ng-click="ListController.updateList(list._id, list.list_name)" ><a href="#">Edit</a></li>
                       <!-- Remove list -->
@@ -74,10 +74,9 @@
                       </div>
                     </form>
                   </div> <!-- closes the items controller -->
-                    <!-- ***Testing segmented buttons*** -->
                 </div> <!-- /panel body -->
               </div> <!-- /close panel -->
-            </div>
+            </div> <!-- /col-sm-4 -->
           </div> <!-- ng-repeat lists -->
 
           <!-- Panel for creating a new list -->
