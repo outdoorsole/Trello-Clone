@@ -69,6 +69,19 @@ app.route('/login')
     res.send('processing the login form!');
   });
 
+//--------------------------------------------------------------
+// Route to show a random message (GET http://localhost:3000/api/)
+app.get('/', function(req, res) {
+  res.json({ message: 'Welcome to the coolest API on earth!' });
+});
+
+// Route to return all users (GET http://localhost:3000/api/users)
+app.get('/users', function(req, res) {
+  User.find({}, function(err, users) {
+    res.json(users);
+  });
+});
+
 
 //--------------------------------------------------------------
 // Basic route
