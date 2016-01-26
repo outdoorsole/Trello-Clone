@@ -12,6 +12,9 @@ var User = require('./app/models/user');
 // Database
 var mongoose = require('mongoose');
 
+// Database configuration (secret for tokens, & database)
+app.set('superSecret', 'thy3jbfv6dqwe9rtypoi1uy')
+
 // body-parser middleware for handling request variables (forms)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
