@@ -1,13 +1,12 @@
-// Node Modules
 var express = require('express');
-var app = require('../app');
-var bcrypt = require('bcrypt-nodejs');
+var app = express();
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
 
-// Used to create, sign, and verify tokens
-var jwt = require('jsonwebtoken');
-
-// Models
-var User = require('./app/models/user');
+var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var config = require('./config'); // get our config file
+var User = require('./app/models/user'); // get our mongoose mod
 
 // Route middleware to verify a token
 app.use(function (req, res, next) {
