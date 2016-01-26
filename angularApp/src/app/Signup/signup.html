@@ -2,29 +2,29 @@
 <h2 class="description">Sign Up To Join To-do-ulate</h2>
 
 <div class="form-container">
-  <form>
+  <form class="signin-form" ng-controller="SignupController as signup">
     <div class="form-group row">
-      <label for="userLoginName" class="col-sm-2 form-control-label">Name</label>
+      <label for="userLoginName" class="col-sm-2 form-control-label" class="sr-only">Name</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="userLoginName" placeholder="Name">
+        <input type="text" class="form-control" id="userLoginName" ng-model="signup.user.name" placeholder="Name">
       </div>
     </div>
     <div class="form-group row">
-      <label for="userLoginuserName" class="col-sm-2 form-control-label">Desired Username</label>
+      <label for="userLoginuserName" class="col-sm-2 form-control-label" class="sr-only">Desired Username</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="userLoginUsername" placeholder="username">
+        <input type="text" class="form-control" id="userLoginUsername" ng-model="signup.user.username" placeholder="username">
       </div>
     </div>
     <div class="form-group row">
-      <label for="userLoginEmail" class="col-sm-2 form-control-label">Email Address</label>
+      <label for="userLoginEmail" class="col-sm-2 form-control-label" class="sr-only">Email Address</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="userLoginEmail" placeholder="Email Address">
+        <input type="text" class="form-control" id="userLoginEmail" ng-model="signup.user.email" placeholder="Email Address">
       </div>
     </div>
     <div class="form-group row">
-      <label for="userLoginPassword" class="col-sm-2 form-control-label">Password</label>
+      <label for="userLoginPassword" class="col-sm-2 form-control-label" class="sr-only">Password</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="userLoginPassword" placeholder="Password">
+        <input type="password" class="form-control" id="userLoginPassword" ng-model="signup.user.password" placeholder="Password">
       </div>
       <div class="col-sm-7">
         <button type="button" class="btn btn-warning btn-lg btn-block">Sign Up</button>
