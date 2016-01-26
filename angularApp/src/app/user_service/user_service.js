@@ -23,7 +23,7 @@
           return deferred.promise;
         }
 
-      function createUser(formData) {
+      function createNewUser(formData) {
         var deferred = $q.defer();
         $http.post('/api/user/signup', formData)
           .success(function(createdUser) {
