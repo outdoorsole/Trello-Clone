@@ -7,7 +7,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 
 // Models
-var User = require('./app/models/user');
+var User = require('../../app/models/user');
 
 // Route middleware to verify a token
 exports.isUserAuthenticated = function (req, res, next) {
