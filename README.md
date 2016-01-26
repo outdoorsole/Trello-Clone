@@ -8,6 +8,16 @@ This is an application that allows people to organize lists and tasks.
 ## How to Install:
 
 ### Step 1
+Install Nodejs for your particular operating system:
+https://nodejs.org/en/download/
+
+
+```
+npm install
+bower install
+```
+
+
 Clone this repository with the following link
 * Using SSH: git@github.com:outdoorsole/Trello-Clone.git
 * Using HTTPS: https://github.com/outdoorsole/Trello-Clone.git
