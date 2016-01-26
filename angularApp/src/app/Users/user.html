@@ -8,7 +8,7 @@
       <!-- This page will render the list of full list of current users stored in the database -->
 
       <!-- refer to something in the list controller, need to use the alias -->
-      <h2 ng-model="title">{{UserController.title}}</h2>
+      <h2 class="title" ng-model="title">{{UserController.title}}</h2>
 
       <!-- Create User (form field for username) -->
       <form role="form" ng-submit="UserController.createUser(UserController.formData)">

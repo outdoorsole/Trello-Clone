@@ -19,7 +19,6 @@ angular.module('mytodo')
     // Get the board name from the route params
     vm.boardName = $routeParams.board_name;
 
-
     // when landing on the page, get all lists and show them
     ListService.getLists(vm.boardId)
     .then(function(boardLists) {
