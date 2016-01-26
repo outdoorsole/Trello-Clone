@@ -59,6 +59,20 @@ var BoardsController = require('./app/controllers/boards');
 //   next();
 // });
 
+
+//--------------------------------------------------------------
+// Base route
+app.get('/', function(req, res) {
+  res.send('The API is at http://localhost:' + port + '/api');
+});
+
+//--------------------------------------------------------------
+// Sign up route
+app.get('/signup', function(req, res) {
+  res.send('This is the signup route!');
+})
+
+
 //--------------------------------------------------------------
 // Login routes
 app.route('/login')
@@ -122,11 +136,7 @@ app.get('/users', function(req, res) {
 });
 
 
-//--------------------------------------------------------------
-// Basic route
-app.get('/', function(req, res) {
-  res.send('Hello! The API is at http://localhost:' + port + '/api');
-});
+
 
 //--------------------------------------------------------------
 // Basic route
