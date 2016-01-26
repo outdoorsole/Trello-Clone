@@ -16,6 +16,8 @@
 body {
   padding-top: 50px;
   background-color: rgb(0, 121, 191);
+  margin: 0;
+  padding: 0;
 }
 
 .title, .navbar-links {
@@ -30,13 +32,20 @@ body {
   background-color: rgb(2, 106, 167);
 }
 
+h1.title, div.form-container, form {
+  margin: 0 auto;
+}
+
 h1.title, div.sign-up-button, h2.description {
   text-align: center;
 }
 
+h1.title {
+  padding-top: 50px;
+}
+
 .chart-icon-container {
   width: 350px;
-  margin: 0 auto;
 }
 
 .chart-icon {
