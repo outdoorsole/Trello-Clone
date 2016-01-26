@@ -37,6 +37,11 @@ var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
+// TODO: route to authenticate a user (POST http://localhost:3000/api/authenticate)
+
+// TODO: route middleware to verify a token
+
+
 // // Route middleware to validate :name
 // app.use(function(req, res, next) {
 
