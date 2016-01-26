@@ -19,6 +19,17 @@
         redirectTo: '/'
       });
 
+      .when('/signup', {
+        templateUrl: 'app/Signup/signup.html',
+        // knows to go to the main controller
+        controller: 'SignupController',
+        // alias for the controller
+        controllerAs: 'SignupController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
     $routeProvider
       .when('/items', {
         templateUrl: 'app/Items/item.html',
