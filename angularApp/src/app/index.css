@@ -29,3 +29,17 @@ body {
 .navbar-fixed-top {
   background-color: rgb(2, 106, 167);
 }
+
+h1.title, div.sign-up-button, h2.description {
+  text-align: center;
+}
+
+.chart-icon-container {
+  width: 350px;
+  margin: 0 auto;
+}
+
+.chart-icon {
+  width: 350px;
+  text-align: center;
+}
