@@ -41,7 +41,13 @@ var BoardsController = require('./app/controllers/boards');
 // Basic route
 app.get('/', function(req, res) {
   res.send('Hello! The API is at http://localhost:' + port + '/api');
-})
+});
+
+//--------------------------------------------------------------
+// Basic route
+app.get('/sample', function(req, res) {
+  res.send('This is a sample!');
+});
 
 //--------------------------------------------------------------
 // Routes for Users
@@ -115,8 +121,8 @@ app.post('/api/item/update/:id', ItemsController.updateItem);
 
 //--------------------------------------------------------------
 
-app.listen(3000);
-console.log('Connected to port 3000');
+app.listen(port);
+console.log('Connected to port ' + port);
 
 //--------------------------------------------------------------
 module.exports.app = app;
