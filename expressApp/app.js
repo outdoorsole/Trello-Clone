@@ -68,26 +68,33 @@ app.get('/', function(req, res) {
 
 //--------------------------------------------------------------
 // Sign up route
-app.get('/signup', function(req, res) {
-  res.send('This is the signup route!');
-})
+app.route('/signup')
 
-
-//--------------------------------------------------------------
-// Login routes
-app.route('/login')
-
-  // show the form (GET http://localhost:8080/login)
+  // Show the sign up page (GET http://localhost:port/signup)
   .get(function(req, res) {
-    res.send('this is the login form');
+    res.send('This is the signup route!');
   })
 
-  // process the form (POST http://localhost:8080/login)
-  .post(function(req, res) {
-    console.log('processing');
-    res.send('processing the login form!');
-  });
+  // process the form (POST http://localhost:port/signup)
+  .get(function(req, res) {
+    res.send('This is the signup route!');
+  })
 
+//--------------------------------------------------------------
+// Log in route
+app.route('/login')
+
+  // Show the log in page (GET http://localhost:port/login)
+  .get(function(req, res) {
+    res.send('This is the log in route!');
+  })
+
+  // process the form (POST http://localhost:port/login)
+  .get(function(req, res) {
+    res.send('This is the log in route!');
+  })
+
+//--------------------------------------------------------------
 // Route to authenticate a user (POST http://localhost:3000/api/authenticate)
 app.post('/authenticate', function(req, res) {
 
