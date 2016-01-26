@@ -11,12 +11,16 @@ var User = require('../../app/models/user');
 
 // Route middleware to verify a token
 exports.isUserAuthenticated = function (req, res, next) {
-
-  // Check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
+  if(req.originalUrl == '/api/login' || '/api/user/signup'){
+    next();
+    return;
+
+  // Check header or url parameters or post parameters for token
+
   // Decodes token
-  if (token) {
+  } else if (token) {
 
     // Verifies secret
     jwt.verify(token, app.get('superSecret'), function(error, decoded) {

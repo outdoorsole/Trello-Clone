@@ -32,6 +32,18 @@
       });
 
     $routeProvider
+      .when('/login', {
+        templateUrl: 'app/Login/login.html',
+        // knows to go to the main controller
+        controller: 'LoginController',
+        // alias for the controller
+        controllerAs: 'LoginController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
       .when('/items', {
         templateUrl: 'app/Items/item.html',
         // knows to go to the main controller
