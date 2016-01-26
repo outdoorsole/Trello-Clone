@@ -37,6 +37,23 @@ var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
+// Route middleware to validate :name
+app.use(function(req, res, next) {
+
+  console.log(req.method, req.url);
+
+  next();
+});
+
+// // Route middleware to validate :name
+// app.param('name', function(req, res, next, name) {
+//   console.log('doing some validations on ' + name);
+
+//   req.name = name;
+
+//   next();
+// });
+
 //--------------------------------------------------------------
 // Basic route
 app.get('/', function(req, res) {
@@ -52,7 +69,7 @@ app.get('/sample', function(req, res) {
 //--------------------------------------------------------------
 // Route with parameters (http://localhost:3000/hello/:name)
 app.get('/hello/:name', function(req, res) {
-  res.send('hello ' + req.params.name + '!');
+  res.send('hello ' + req.name + '!');
 });
 
 //--------------------------------------------------------------
