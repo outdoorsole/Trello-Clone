@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('mytodo')
-  .controller('SignupController', ['$log', function($log) {
+  .controller('SignupController', ['UserService', '$log', function(UserService, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
