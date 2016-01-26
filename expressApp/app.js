@@ -3,6 +3,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+// To log requests
+var morgan = require('morgan');
+
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
@@ -18,6 +21,9 @@ app.set('superSecret', 'thy3jbfv6dqwe9rtypoi1uy')
 // body-parser middleware for handling request variables (forms)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Use morgan to log requests to the console
+app.use(morgan('dev'));
 
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
