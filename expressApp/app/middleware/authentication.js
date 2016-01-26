@@ -1,23 +1,24 @@
+// Node Modules
 var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var mongoose = require('mongoose');
+var app = require('../app');
+var bcrypt = require('bcrypt-nodejs');
 
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var config = require('./config'); // get our config file
-var User = require('./app/models/user'); // get our mongoose mod
+// Used to create, sign, and verify tokens
+var jwt = require('jsonwebtoken');
+
+// Models
+var User = require('./app/models/user');
 
 // Route middleware to verify a token
-app.use(function (req, res, next) {
+exports.isUserAuthenticated = function (req, res, next) {
 
   // Check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-  // Decode token
+  // Decodes token
   if (token) {
 
-    // verifies secret and checks exp
+    // Verifies secret
     jwt.verify(token, app.get('superSecret'), function(error, decoded) {
       if (error) {
         return res.json({
@@ -25,7 +26,7 @@ app.use(function (req, res, next) {
           message: 'Failed to authenticate token.'
         });
       } else {
-        // If everything's good, save to request for use in other routes
+        // If secret is verified, request for use in other routes
         req.decoded = decoded;
         next();
       }
@@ -38,4 +39,4 @@ app.use(function (req, res, next) {
       message: 'No token provided.'
     });
   }
-});
+};
