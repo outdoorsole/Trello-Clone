@@ -37,13 +37,13 @@ var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
-// Route middleware to validate :name
-app.use(function(req, res, next) {
+// // Route middleware to validate :name
+// app.use(function(req, res, next) {
 
-  console.log(req.method, req.url);
+//   console.log(req.method, req.url);
 
-  next();
-});
+//   next();
+// });
 
 // // Route middleware to validate :name
 // app.param('name', function(req, res, next, name) {
@@ -53,6 +53,22 @@ app.use(function(req, res, next) {
 
 //   next();
 // });
+
+//--------------------------------------------------------------
+// Login routes
+app.route('/login')
+
+  // show the form (GET http://localhost:8080/login)
+  .get(function(req, res) {
+    res.send('this is the login form');
+  })
+
+  // process the form (POST http://localhost:8080/login)
+  .post(function(req, res) {
+    console.log('processing');
+    res.send('processing the login form!');
+  });
+
 
 //--------------------------------------------------------------
 // Basic route
