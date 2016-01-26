@@ -3,33 +3,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-// To log requests
-var morgan = require('morgan');
-
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
 var Board = require('./app/models/board');
 var User = require('./app/models/user');
-
-// Database
-var mongoose = require('mongoose');
-
-// Database configuration (secret for tokens, & database)
-app.set('superSecret', 'thy3jbfv6dqwe9rtypoi1uy')
-
-// body-parser middleware for handling request variables (forms)
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-// Use morgan to log requests to the console
-app.use(morgan('dev'));
-
-// Set port - used to create, sign, and verify tokens
-var port = process.env.PORT || 3000;
-
-// Connect to a MongoDB (either local or hosted):
-mongoose.connect('mongodb://localhost/angulartodo');
 
 // Controllers
 var ItemsController = require('./app/controllers/items');
@@ -37,10 +15,34 @@ var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
+// Middleware
+var AuthenticationMiddleware = require('./app/middleware/authentication');
+
+// Database
+var mongoose = require('mongoose');
+
+// Connect to a MongoDB (either local or hosted):
+mongoose.connect('mongodb://localhost/angulartodo');
+
+// Database configuration (secret for tokens, & database)
+app.set('superSecret', 'thy3jbfv6dqwe9rtypoi1uy')
+
+// Set port - used to create, sign, and verify tokens
+var port = process.env.PORT || 3000;
+
+// To log requests
+var morgan = require('morgan');
+
+// Use morgan to log requests to the console
+app.use(morgan('dev'));
+
+// body-parser middleware for handling request variables (forms)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 // TODO: route to authenticate a user (POST http://localhost:3000/api/authenticate)
 
 // TODO: route middleware to verify a token
-
 
 // // Route middleware to validate :name
 // app.use(function(req, res, next) {
@@ -141,9 +143,6 @@ app.get('/users', function(req, res) {
     res.json(users);
   });
 });
-
-
-
 
 //--------------------------------------------------------------
 // Basic route
