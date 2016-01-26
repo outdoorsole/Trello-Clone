@@ -10,13 +10,14 @@ var Board = require('./app/models/board');
 var User = require('./app/models/user');
 
 // Controllers
+var AuthController = require('./app/auth/authentication');
 var ItemsController = require('./app/controllers/items');
 var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
 // Middleware
-var AuthenticationMiddleware = require('./app/middleware/authentication');
+var AuthMiddleware = require('./app/auth/auth_middleware');
 
 // Database
 var mongoose = require('mongoose');
@@ -44,7 +45,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // TODO: route middleware to verify a token
 
-// // Route middleware to validate :name
+// Route middleware to validate :name
 // app.use(function(req, res, next) {
 
 //   console.log(req.method, req.url);
@@ -52,7 +53,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //   next();
 // });
 
-// // Route middleware to validate :name
+// Route middleware to validate :name
 // app.param('name', function(req, res, next, name) {
 //   console.log('doing some validations on ' + name);
 
@@ -98,37 +99,7 @@ app.route('/login')
 
 //--------------------------------------------------------------
 // Route to authenticate a user (POST http://localhost:3000/api/authenticate)
-app.post('/authenticate', function(req, res) {
-
-  // find the User
-  User.findOne({ name: req.body.name }, function (req, res) {
-    if (error) {
-      throw error;
-    }
-    if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
-    } else if (user) {
-
-      // check if password matches
-      if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-      } else {
-
-        // if user is found and password is right create a token
-        var token = jwt.sign(user, app.get('superSecret'), {
-          expiresInMinutes: 1440 // expires in 24 hours
-        });
-
-        // return the information including token as JSON
-        res.json({
-          success: true,
-          message: 'Enjoy your token!',
-          token: token
-        });
-      }
-    }
-  });
-});
+app.post('/authenticate', AuthController.isUserAuthenticated);
 
 
 //--------------------------------------------------------------
