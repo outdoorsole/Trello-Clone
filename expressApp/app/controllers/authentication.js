@@ -10,7 +10,7 @@ var jwt = require('jsonwebtoken');
 var User = require('./app/models/user');
 
 // Route middleware to verify a token
-app.use(function (req, res, next) {
+exports.isUserAuthenticated = function (req, res, next) {
 
   // Check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -39,4 +39,4 @@ app.use(function (req, res, next) {
       message: 'No token provided.'
     });
   }
-});
+};
