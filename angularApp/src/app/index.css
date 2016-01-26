@@ -32,7 +32,7 @@ body {
   background-color: rgb(2, 106, 167);
 }
 
-h1.title, div.form-container, form {
+h1.title, div.form-container, .form-group, .chart-icon-container {
   margin: 0 auto;
 }
 
