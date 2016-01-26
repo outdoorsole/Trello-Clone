@@ -50,6 +50,12 @@ app.get('/sample', function(req, res) {
 });
 
 //--------------------------------------------------------------
+// Route with parameters (http://localhost:3000/hello/:name)
+app.get('/hello/:name', function(req, res) {
+  res.send('hello ' + req.params.name + '!');
+});
+
+//--------------------------------------------------------------
 // Routes for Users
 
 // show users
