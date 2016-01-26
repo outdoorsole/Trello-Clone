@@ -1,6 +1,6 @@
 // Node Modules
 var express = require('express');
-var app = require('../app');
+var app = require('../../app');
 var bcrypt = require('bcrypt-nodejs');
 
 // Used to create, sign, and verify tokens

@@ -1,7 +1,13 @@
+// Node Modules
+var express = require('express');
 var app = require('../../app');
-var jwt = require('jsonwebtoken');
-var User = require('../models/user.js');
 var bcrypt = require('bcrypt-nodejs');
+
+// Used to create, sign, and verify tokens
+var jwt = require('jsonwebtoken');
+
+// Models
+var User = require('./app/models/user');
 
 exports.isUserAuthenticated = function(req, res) {
 
