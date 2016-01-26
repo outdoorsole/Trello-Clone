@@ -1,3 +1,8 @@
+var app = require('../../app');
+var jwt = require('jsonwebtoken');
+var User = require('../models/user.js');
+var bcrypt = require('bcrypt-nodejs');
+
 exports.isUserAuthenticated = function(req, res) {
 
   // find the User
