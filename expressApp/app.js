@@ -25,6 +25,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Use morgan to log requests to the console
 app.use(morgan('dev'));
 
+// Set port - used to create, sign, and verify tokens
+var port = process.env.PORT || 3000;
+
 // Connect to a MongoDB (either local or hosted):
 mongoose.connect('mongodb://localhost/angulartodo');
 
@@ -34,6 +37,11 @@ var ListsController = require('./app/controllers/lists');
 var UsersController = require('./app/controllers/users');
 var BoardsController = require('./app/controllers/boards');
 
+//--------------------------------------------------------------
+// Basic route
+app.get('/', function(req, res) {
+  res.send('Hello! The API is at http://localhost:' + port + '/api');
+})
 
 //--------------------------------------------------------------
 // Routes for Users
