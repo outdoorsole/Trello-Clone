@@ -2,9 +2,10 @@
   'use strict';
 
   angular.module('mytodo')
-  .controller('SignupController', ['UserService', '$log', function(UserService, $log) {
+  .controller('SignupController', ['$log', 'UserService', function($log, UserService) {
     // All of this is happening on load (until methods below)
     var vm = this;
+    $log.log('This is vm: ', vm);
 
     // This variable stores the form data coming through the front-end
     vm.formData = {};
@@ -13,14 +14,15 @@
     vm.user = {};
 
     // Sign up a new user from the form data
-    vm.signupUser = function() {
+    vm.signupUser = function () {
+      $log.log('This is vm.formData in signupUser in the SignupController (client): ', vm.formData);
       UserService.createNewUser(vm.formData)
       .then(function(newUser) {
         vm.user = newUser;
-        $log('This is vm.user:', vm.user);
+        $log.log('This is vm.user:', vm.user);
       })
       .catch(function(error){
-        $log('error: ', error);
+        $log.log('error: ', error);
       })
     }
   }])
