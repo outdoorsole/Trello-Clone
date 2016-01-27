@@ -5,7 +5,7 @@
     .factory('UserService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
         getUsers: getUsers,
-        createUser: createUser,
+        createNewUser: createNewUser,
         removeUser: removeUser,
         updateUser: updateUser
       }
