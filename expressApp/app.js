@@ -37,11 +37,9 @@ var morgan = require('morgan');
 // Use morgan to log requests to the console
 app.use(morgan('dev'));
 
-// body-parser middleware for handling request variables (forms)
+// Body-parser middleware for handling request variables (forms)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-// TODO: route to authenticate a user (POST http://localhost:3000/api/authenticate)
 
 // TODO: route middleware to verify a token
 
@@ -78,8 +76,8 @@ app.route('/signup')
     res.send('This is the signup route!');
   })
 
-  // process the form (POST http://localhost:port/signup)
-  .get(function(req, res) {
+  // Process the form (POST http://localhost:port/signup)
+  .post(function(req, res) {
     res.send('This is the signup route!');
   })
 
@@ -92,13 +90,13 @@ app.route('/login')
     res.send('This is the log in route!');
   })
 
-  // process the form (POST http://localhost:port/login)
-  .get(function(req, res) {
+  // Process the form (POST http://localhost:port/login)
+  .post(function(req, res) {
     res.send('This is the log in route!');
   })
 
 //--------------------------------------------------------------
-// Route to authenticate a user (POST http://localhost:3000/api/authenticate)
+// Route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
 app.post('/authenticate', AuthController.isUserAuthenticated);
 
 
