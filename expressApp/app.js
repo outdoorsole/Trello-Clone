@@ -81,9 +81,6 @@ app.post('/api/login', AuthController.isUserAuthenticated);
 //--------------------------------------------------------------
 // Routes for Users
 
-// // show users
-// app.get('/api/users', UsersController.showMultipleUsers);
-
 // show one user
 app.get('/api/user/:user_id', UsersController.showOneUser);
 
