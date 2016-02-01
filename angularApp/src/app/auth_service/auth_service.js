@@ -5,8 +5,8 @@
       .module('mytodo')
       .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout'];
-  function AuthenticationService($http, $cookieStore, $rootScope, $timeout) {
+  AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$log'];
+  function AuthenticationService($http, $cookieStore, $rootScope, $timeout, $log) {
     var service = {};
 
     service.login = login;
