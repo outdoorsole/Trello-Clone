@@ -41,26 +41,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// TODO: route middleware to verify a token
-
-// Route middleware to validate :name
-// app.use(function(req, res, next) {
-
-//   console.log(req.method, req.url);
-
-//   next();
-// });
-
-// Route middleware to validate :name
-// app.param('name', function(req, res, next, name) {
-//   console.log('doing some validations on ' + name);
-
-//   req.name = name;
-
-//   next();
-// });
-
-
+// Route middleware to verify a token when the route begins with '/api'
+app.use('/api', AuthMiddleware.isUserAuthenticated);
 //--------------------------------------------------------------
 // Base route
 app.get('/', function(req, res) {
@@ -69,7 +51,7 @@ app.get('/', function(req, res) {
 
 //--------------------------------------------------------------
 // Sign up route
-app.route('/signup')
+app.route('/api/signup')
 
   // Show the sign up page (GET http://localhost:port/signup)
   .get(function(req, res) {
@@ -83,21 +65,21 @@ app.route('/signup')
 
 //--------------------------------------------------------------
 // Log in route
-app.route('/login')
+// app.route('/login')
 
-  // Show the log in page (GET http://localhost:port/login)
-  .get(function(req, res) {
-    res.send('This is the log in route!');
-  })
+//   // Show the log in page (GET http://localhost:port/login)
+//   .get(function(req, res) {
+//     res.send('This is the log in route!');
+//   })
 
-  // Process the form (POST http://localhost:port/login)
-  .post(function(req, res) {
-    res.send('This is the log in route!');
-  })
+//   // Process the form (POST http://localhost:port/login)
+//   .post(function(req, res) {
+//     res.send('This is the log in route!');
+//   })
 
 //--------------------------------------------------------------
 // Route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
-app.post('/authenticate', AuthController.isUserAuthenticated);
+app.post('/api/authenticate', AuthController.isUserAuthenticated);
 
 
 //--------------------------------------------------------------
@@ -107,7 +89,7 @@ app.post('/authenticate', AuthController.isUserAuthenticated);
 // });
 
 // Route to return all users (GET http://localhost:3000/api/users)
-app.get('/users', function(req, res) {
+app.get('/api/users', function(req, res) {
   User.find({}, function(err, users) {
     res.json(users);
   });
@@ -115,13 +97,13 @@ app.get('/users', function(req, res) {
 
 //--------------------------------------------------------------
 // Basic route
-app.get('/sample', function(req, res) {
+app.get('/api/sample', function(req, res) {
   res.send('This is a sample!');
 });
 
 //--------------------------------------------------------------
 // Route with parameters (http://localhost:3000/hello/:name)
-app.get('/hello/:name', function(req, res) {
+app.get('/api/hello/:name', function(req, res) {
   res.send('hello ' + req.name + '!');
 });
 
