@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('mytodo')
-  .controller('SignupController', ['$log', 'UserService', function($log, UserService) {
+  .controller('SignupController', ['UserService', '$location', '$log', function(UserService, $location, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -17,6 +17,7 @@
       UserService.createUser(vm.formData)
       .then(function(newUser) {
         vm.user = newUser;
+        $location.path('/login');
       })
       .catch(function(error){
         $log.log('error: ', error);

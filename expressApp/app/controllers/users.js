@@ -6,16 +6,7 @@ var User = require('../models/user');
 
 //------------------------------------------------------//
 
-exports.showMultipleUsers = function (req, res) {
-  User.find({}, function(error, users) {
-    if (users) {
-      res.json(users);
-    } else if (error) {
-      console.error(error.stack);
-    }
-  });
-}
-
+// Show one user
 exports.showOneUser = function (req, res) {
   User.findOne({ _id: req.params.user_id }, function(error, foundUser) {
     if (foundUser) {
