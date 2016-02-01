@@ -64,7 +64,7 @@ app.route('/api/signup')
   })
 
 //--------------------------------------------------------------
-Log in route
+// Log in route
 app.route('/api/login')
 
   // Show the log in page (GET http://localhost:port/login)

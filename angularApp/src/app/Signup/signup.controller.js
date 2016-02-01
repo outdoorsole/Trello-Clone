@@ -16,7 +16,7 @@
     // Sign up a new user from the form data
     vm.signupUser = function () {
       $log.log('This is vm.formData in signupUser in the SignupController (client): ', vm.formData);
-      UserService.createNewUser(vm.formData)
+      UserService.createUser(vm.formData)
       .then(function(newUser) {
         vm.user = newUser;
         $log.log('This is vm.user:', vm.user);

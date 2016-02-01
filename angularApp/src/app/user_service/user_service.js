@@ -5,7 +5,7 @@
     .factory('UserService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
         getUsers: getUsers,
-        createNewUser: createNewUser,
+        createUser: createUser,
         removeUser: removeUser,
         updateUser: updateUser
       }
@@ -23,7 +23,7 @@
           return deferred.promise;
         }
 
-      function createNewUser(formData) {
+      function createUser(formData) {
         var deferred = $q.defer();
         $http.post('/api/user/create', formData)
           .success(function(createdUser) {
