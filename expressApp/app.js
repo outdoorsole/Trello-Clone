@@ -81,32 +81,6 @@ app.route('/api/signup')
 // Route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
 app.post('/api/authenticate', AuthController.isUserAuthenticated);
 
-
-//--------------------------------------------------------------
-// Route to show a random message (GET http://localhost:3000/api/)
-// app.get('/', function(req, res) {
-//   res.json({ message: 'Welcome to the coolest API on earth!' });
-// });
-
-// Route to return all users (GET http://localhost:3000/api/users)
-app.get('/api/users', function(req, res) {
-  User.find({}, function(err, users) {
-    res.json(users);
-  });
-});
-
-//--------------------------------------------------------------
-// Basic route
-app.get('/api/sample', function(req, res) {
-  res.send('This is a sample!');
-});
-
-//--------------------------------------------------------------
-// Route with parameters (http://localhost:3000/hello/:name)
-app.get('/api/hello/:name', function(req, res) {
-  res.send('hello ' + req.name + '!');
-});
-
 //--------------------------------------------------------------
 // Routes for Users
 
