@@ -64,28 +64,25 @@ app.route('/api/signup')
   })
 
 //--------------------------------------------------------------
-// Log in route
-app.route('/api/login')
+// // Log in route
+// app.route('/api/login')
 
-  // Show the log in page (GET http://localhost:port/login)
-  .get(function(req, res) {
-    res.send('This is the log in route!');
-  })
+//   // Show the log in page (GET http://localhost:port/login)
+//   .get(function(AuthController.isUserAuthenticated))
 
-  // Process the form (POST http://localhost:port/login)
-  .post(function(req, res) {
-    res.send('This is the log in route!');
-  })
+//   // Process the form (POST http://localhost:port/login)
+//   .post(function(AuthController.isUserAuthenticated))
+
 
 //--------------------------------------------------------------
 // Route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
-app.post('/api/authenticate', AuthController.isUserAuthenticated);
+app.post('/api/login', AuthController.isUserAuthenticated);
 
 //--------------------------------------------------------------
 // Routes for Users
 
-// show users
-app.get('/api/users', UsersController.showMultipleUsers);
+// // show users
+// app.get('/api/users', UsersController.showMultipleUsers);
 
 // show one user
 app.get('/api/user/:user_id', UsersController.showOneUser);

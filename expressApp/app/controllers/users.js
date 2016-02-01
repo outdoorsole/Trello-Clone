@@ -28,19 +28,27 @@ exports.showOneUser = function (req, res) {
 
 exports.createUser = function (req, res) {
   console.log('We are now in the server createUser: ');
+  console.log('------------------');
   var user = new User({
-    user_name: req.body.user_name
+    name: req.body.name,
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
   })
   console.log('This is user: ', user);
-  user.save(function(err, savedUser) {
+  user.save(function(error, savedUser) {
+    console.log('This is savedUser: ', savedUser);
+    console.log('This is error: ', error);
     if (savedUser) {
       User.findOne({ user_name: req.body.user_name}, function(error, returnedUser) {
         if (returnedUser) {
           res.json(returnedUser)
-        } else if (err) {
-          console.log('Failed to save: ' + err);
+        } else if (error) {
+          console.log('Failed to save: ', error);
         }
       })
+    } else {
+      console.log('Failed to save: ', error);
     }
   })
 }
