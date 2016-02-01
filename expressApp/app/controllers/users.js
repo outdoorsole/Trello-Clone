@@ -27,18 +27,14 @@ exports.showOneUser = function (req, res) {
 }
 
 exports.createUser = function (req, res) {
-  console.log('We are now in the server createUser: ');
-  console.log('------------------');
   var user = new User({
     name: req.body.name,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password
   })
-  console.log('This is user: ', user);
+
   user.save(function(error, savedUser) {
-    console.log('This is savedUser: ', savedUser);
-    console.log('This is error: ', error);
     if (savedUser) {
       User.findOne({ user_name: req.body.user_name}, function(error, returnedUser) {
         if (returnedUser) {
