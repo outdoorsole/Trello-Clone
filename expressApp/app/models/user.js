@@ -1,14 +1,19 @@
+// To create an instance of mongoose and mongoose.Schema
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// create a schema
+// User Schema
 var userSchema = new Schema({
-  user_name: { type: String, required: true },
+  name: { type: String, required: true },
+  username: { type: String, required: true, unique: true }, // username is unique
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   created_at: Date,
-  updated_at: Date,
-  _boards: [{type: mongoose.Schema.Types.ObjectId, ref: 'Board'}]
+  updated_at: Date
 });
 
+// To set up a mongoose model
 var User = mongoose.model('User', userSchema);
 
+// Pass the model using module.exports
 module.exports = User;

@@ -2,16 +2,14 @@ var bodyParser = require('body-parser');
 //------------------------------------------------------------------------------------//
 // Models
 var Item = require('../models/item');
+var List = require('../models/list');
 
 //------------------------------------------------------------------------------------//
 
-// need to update to take parameters
-// add them to the angular app
 exports.showItems = function (req, res) {
-  Item.find({}, function(error, items) {
-    // console.log('Here are the items: ', items);
-    if (items) {
-      res.json(items);
+  Item.find({ _list: req.params.list_id}, function(error, foundItems) {
+    if (foundItems) {
+      res.json(foundItems);
     } else if (error) {
       console.error(error.stack);
       res.json({status: 400, message: error.message});
@@ -24,14 +22,9 @@ exports.createItem = function (req, res) {
   var item = new Item({
     item_name: req.body.item_name,
     description: req.body.description,
-    _list: req.body._list
+    _list: req.params.list_id
   });
-  console.log('We are inside the createItem action in server: ');
-  console.log('This is the item: ', item);
   item.save(function(err, savedItem) {
-    console.log('This is after the item is saved: ');
-    console.log('This is an the err: ', err);
-    console.log('this is the savedItem: ', savedItem);
     if (savedItem) {
       res.json(savedItem)
     } else if (err) {
@@ -42,33 +35,30 @@ exports.createItem = function (req, res) {
 
 
 exports.removeItem = function (req, res) {
-  var item = new Item ({ _id: req.params.id})
-  item.remove(function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        if (item) {
-          res.json(item)
+  Item.findById({ _id: req.params.id}, function (err, foundItem) {
+    if (foundItem) {
+      foundItem.remove(function (error, deletedItem) {
+        if (deletedItem) {
+          res.json(deletedItem);
         } else if (error) {
-          console.log(error.stack);
-          res.redirect('/error');
+          console.log('Failed to remove item: ', err);
         }
-      })
+      });
+    } else if (err) {
+      console.log('Failed to find queried item: ', err);
     }
-  })
+  });
 }
 
+
 exports.updateItem = function (req, res) {
-  var item = { _id: req.params.id};
-  console.log('this is req.query.item_name: ', req.query.item_name);
-  Item.update(item, {item_name: req.query.item_name}, function (error, item) {
-    if (item) {
-      Item.find({}, function (error, item) {
-        res.json(item)
-      })
-    } else if (error) {
-      console.log(error.stack);
-      //*Update this later**//
-      res.redirect('/error');
+  Item.findOne({ _id: req.params.id }, function (err, foundItem) {
+    if (foundItem) {
+      foundItem.item_name = req.query.item_name;
+      foundItem.save();
+      res.json(foundItem);
+    } else if (err) {
+      console.log('Failed to find and update item: ', err);
     }
-  })
+  });
 }

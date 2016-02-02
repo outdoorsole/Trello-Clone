@@ -2,19 +2,19 @@
   'use strict';
 
   angular.module('mytodo')
-    .factory('ItemService', ['$http', '$q', '$log', function($http, $q, $log) {
+    .factory('ListService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
-        getItems: getItems,
-        createItem: createItem,
-        removeItem: removeItem,
-        updateItem: updateItem
+        getLists: getLists,
+        createList: createList,
+        removeList: removeList,
+        updateList: updateList
       };
 
-    function getItems (listId) {
+    function getLists (boardId) {
       var deferred = $q.defer();
-      $http.get('api/items/' + listId)
-        .success(function (returnedItems){
-          deferred.resolve(returnedItems);
+      $http.get('api/lists/' + boardId)
+        .success(function (returnedLists){
+          deferred.resolve(returnedLists);
         })
         .error(function (data){
           deferred.reject('Error: ', data);
@@ -23,11 +23,11 @@
         return deferred.promise;
     }
 
-    function createItem(listId, formData) {
+    function createList(boardId, formData) {
       var deferred = $q.defer();
-      $http.post('/api/item/create/' + listId, formData)
-        .success(function(createdItem) {
-          deferred.resolve(createdItem);
+      $http.post('/api/lists/create/' + boardId, formData)
+        .success(function(createdList) {
+          deferred.resolve(createdList);
         })
         .error(function (data){
           deferred.reject('Error: ', data);
@@ -36,9 +36,9 @@
         return deferred.promise;
     }
 
-    function removeItem (itemId) {
+    function removeList (listId) {
       var deferred = $q.defer();
-      $http.post('/api/item/delete/' + itemId)
+      $http.post('/api/lists/delete/' + listId)
         .success(function(data) {
           deferred.resolve(data);
         })
@@ -48,9 +48,9 @@
         return deferred.promise;
     }
 
-    function updateItem (itemId, itemName) {
+    function updateList (listId, listName) {
       var deferred = $q.defer();
-      $http.post('/api/item/update/' + itemId + '?item_name=' + itemName)
+      $http.post('/api/lists/update/' + listId + '?list_name=' + listName)
         .success(function(data) {
           deferred.resolve(data);
         })
@@ -63,4 +63,3 @@
     return service;
   }]);
 })();
-

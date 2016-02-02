@@ -3,12 +3,26 @@ var app = require('../../app').app;
 
 // Models
 var Item = require('../../app/models/item');
+var List = require('../../app/models/list');
 
 // Test 1 - checks the database to see if there are no items in the database
 describe('ItemsController', function() {
   describe('with no data', function() {
+    var testList;
+
+    beforeAll(function(done) {
+      List.create({ list_name: 'new List' }, function(err, newList) {
+        if (err) {
+          done.fail(err);
+        } else {
+          testList = newList;
+          done();
+        }
+      });
+    });
+
     it('should return an empty list of items', function(done) {
-      request(app).get('/api/items')
+      request(app).get('/api/items/' + testList._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
@@ -20,25 +34,36 @@ describe('ItemsController', function() {
         }
       });
     });
-  });
 
-//.end triggers the function for you
-// if there is not an error
-// expect the body to be an empty string
-// the response is just json
-// can test what the data should look like
-// can test the data that is coming back from any of our api calls
-
-
-  describe('with data', function() {
-    var testItem;
-
-    beforeEach(function(done) {
-      Item.create({ item_name: 'test item' }, function(err, newItem) {
+    afterAll(function(done) {
+      testList.remove(function(err, removedList) {
         if (err) {
           done.fail(err);
         } else {
-          testItem = newItem;
+          done();
+        }
+      });
+    });
+  });
+
+  describe('with data', function() {
+    var testItem;
+    var testList;
+
+    beforeAll(function(done) {
+      List.create({ list_name: 'new List' }, function(err, newList) {
+        if (err) {
+          done.fail(err);
+        } else {
+          testList = newList;
+
+          Item.create({ item_name: 'test item', _list: testList._id }, function(err, newItem) {
+            if (err) {
+              done.fail(err);
+            } else {
+              testItem = newItem;
+            }
+          });
           done();
         }
       });
@@ -46,7 +71,7 @@ describe('ItemsController', function() {
 
     // Test 2 - check if showItems returns data when there is information in the database
     it('should return an item', function(done) {
-      request(app).get('/api/items')
+      request(app).get('/api/items/' + testList._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
@@ -62,15 +87,15 @@ describe('ItemsController', function() {
       });
     });
 
+
     // Test 3 - check if createItem can create an entry in the database
     it('should create an item', function(done) {
       var createItem = {item_name: 'test 3 item', description: 'Test 3 create action'};
-      request(app).post('/api/items/create')
+      request(app).post('/api/item/create/' + testList._id)
       .send(createItem)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res){
-        console.log('This is res.body: ', res.body);
         if (err) {
           done.fail(err);
         } else {
@@ -78,18 +103,12 @@ describe('ItemsController', function() {
 
           var returnedItem = res.body;
           expect(returnedItem).toBeDefined();
-          console.log('This is the returnedItem: ', returnedItem);
-
-          expect(returnedItem.item_name).toEqual('test 3 item')
-          console.log('This is the returnedItemId: ', returnedItem._id)
-
-          console.log('This is res.body._id: ', res.body._id);
+          expect(returnedItem.item_name).toEqual('test 3 item');
 
           Item.find({_id: returnedItem._id}, function (err, foundItem) {
-            console.log('This is err inside of createItem: ', err);
             if (foundItem) {
-              console.log('This is the foundItem: ', foundItem);
-              expect(foundItem[0]).toEqual(returnedItem);
+              expect(foundItem[0]).toEqual(jasmine.objectContaining({item_name: returnedItem.item_name}));
+              expect(foundItem[0]).toEqual(jasmine.objectContaining({description: returnedItem.description}));
 
               Item.remove({_id: returnedItem._id} , function (err) {
                 if (err) {
@@ -101,47 +120,63 @@ describe('ItemsController', function() {
               done.fail(err);
             }
           })
-          console.log('This is outside of the database query');
         }
       });
     });
 
-    afterEach(function(done) {
+
+    // Test 4 - check if updateItem can update an entry for an item in the database
+    it('should update an item', function(done) {
+      request(app).post('/api/item/update/' + testItem._id + '?item_name=updated item name')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        Item.findOne({_id: testItem._id}, function (err, foundItem) {
+          expect(foundItem.item_name).toEqual('updated item name');
+          done();
+        })
+        if (err) {
+          console.log('Failed to update item: ', err);
+          done();
+        }
+      })
+    });
+
+    // Test 5 - check if removeItem can remove an entry for an item in the database
+    it('should remove an item', function(done) {
+      request(app).post('/api/item/delete/' + testItem._id)
+
+
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res){
+        Item.findOne({_id: testItem._id}, function (err, foundItem) {
+          expect(foundItem === null)
+          if (!foundItem) {
+            done();
+          } else if(err) {
+            console.log('Failed to remove item: ', err);
+            done.fail(err);
+          }
+        })
+      });
+    });
+
+
+    afterAll(function(done) {
       testItem.remove(function(err, removedItem) {
         if (err) {
           done.fail(err);
         } else {
-          done();
+          testList.remove(function(err, removedList) {
+            if (err) {
+              done.fail(err);
+            } else {
+              done();
+            }
+          });
         }
       });
     });
   });
 });
-
-
-// Checks the database to see if there are no items
-// describe('Items', function() {
-//   describe('with no data', function() {
-//     it('should create an item and assign it to a list', function(done) {
-//       console.log('In the items test');
-//       request(app).post('/api/items/create')
-//       .send({item_name: 'mac book pro', description: 'computer', _list: '5642300a4e7bd69d9102d39a'})
-//       .expect('Content-Type', /json/)
-//       .end(function(err, res) {
-//         console.log('In the end callback');
-//         if (err) {
-//           done.fail(err);
-//         } else {
-//           console.log('This is res.body: ', res.body);
-//           expect(res.body.item_name).toEqual('mac book pro');
-//           expect(res.body.description).toEqual('computer');
-//           expect(res.body._list).toEqual('5642300a4e7bd69d9102d39a');
-//           Item.remove({ _id: res.body._id }, function(err, numAffected) {
-//             done();
-//           })
-//         }
-//       });
-//     });
-//   });
-// })
-

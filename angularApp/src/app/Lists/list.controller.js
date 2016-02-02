@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mytodo')
-  .controller('ListController', function ($routeParams, $http, $log) {
+  .controller('ListController', ['$log', 'ListService', '$routeParams', function ($log, ListService, $routeParams) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -13,51 +13,58 @@ angular.module('mytodo')
     // This variable stores the items list from the database
     vm.lists = [];
 
-    // This will capture the information from a list
-    // $scope.listId = $routeParams.list_id;
-    // $scope.list_name = $routeParams.list_name;
+    // Get the board id from the route params
+    vm.boardId = $routeParams.board_id;
 
-    // when landing on the page, get all todos and show them
+    // Get the board name from the route params
+    vm.boardName = $routeParams.board_name;
 
-    $http.get('/api/lists/')
-    .success(function(data) {
-      vm.title = "List of Todo Lists";
-      vm.lists = data;
-      $log.log('This is data for show lists: ', data);
+    // when landing on the page, get all lists and show them
+    ListService.getLists(vm.boardId)
+    .then(function(boardLists) {
+      vm.title = vm.boardName;
+      for (var i = 0; i < boardLists.length; i++) {
+        vm.lists.push(boardLists[i]);
+      }
     })
 
-
-    vm.createList = function () {
-      $http.post('/api/lists/create', vm.formData)
-        .success(function(data) {
-          vm.lists = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-      });
-    };
+    // Create a new List
+    vm.createList = function (formData) {
+      ListService.createList(vm.boardId, formData)
+      .then(function (list) {
+        vm.lists.push(list);
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
     vm.removeList = function (listId) {
-      $http.post('/api/lists/delete/' + listId)
-        .success(function(data) {
-          vm.lists = data;
-          $log.log(data);
-        })
-        .error(function(data) {
-          $log.log('Error: ' + data);
-        });
-    };
+      ListService.removeList(listId)
+      .then(function(deletedList) {
+        for (var i = 0; i < vm.lists.length; i++) {
+          if (vm.lists[i]._id === deletedList._id) {
+            vm.lists.splice(i, 1);
+          }
+        }
+      })
+      .catch(function(err) {
+        $log.error('Error fetching items: ', err);
+      })
+    }
 
-    vm.updateList = function (listId, list_name) {
-      $http.post('/api/lists/update/' + listId, {list_name: list_name})
-        .success(function(data) {
-          vm.lists = data;
-          $log.log(data);
+    vm.updateList = function (listId, listName) {
+      ListService.updateList(listId, listName)
+        .then(function(data) {
+          for (var i = 0; i < vm.lists.length; i++) {
+            if (vm.lists[i].id === listId) {
+              vm.lists[i] = data;
+            }
+          }
         })
-        .error(function(data) {
+        .catch(function(data) {
           $log.log('Error: ' + data);
-        });
-    };
-  })
+        })
+      }
+  }])
 })();

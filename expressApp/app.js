@@ -1,73 +1,131 @@
+// Node Modules
 var express = require('express');
 var app = express();
-var router = express.Router();
 var bodyParser = require('body-parser');
-var path = require('path');
 
 // Models
 var Item = require('./app/models/item');
 var List = require('./app/models/list');
+var Board = require('./app/models/board');
+var User = require('./app/models/user');
+
+// Controllers
+var AuthController = require('./app/auth/authentication');
+var ItemsController = require('./app/controllers/items');
+var ListsController = require('./app/controllers/lists');
+var UsersController = require('./app/controllers/users');
+var BoardsController = require('./app/controllers/boards');
+
+// Middleware
+var AuthMiddleware = require('./app/auth/auth_middleware');
 
 // Database
 var mongoose = require('mongoose');
 
-// body-parser middleware for handling request variables (forms)
+// Connect to a MongoDB (either local or hosted):
+mongoose.connect('mongodb://localhost/angulartodo');
+
+// Database configuration (secret for tokens, & database)
+app.set('superSecret', 'thy3jbfv6dqwe9rtypoi1uy')
+
+// Set port - used to create, sign, and verify tokens
+var port = process.env.PORT || 3000;
+
+// To log requests
+var morgan = require('morgan');
+
+// Use morgan to log requests to the console
+app.use(morgan('dev'));
+
+// Body-parser middleware for handling request variables (forms)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Route middleware to verify a token when the route begins with '/api'
+app.use('/api', AuthMiddleware.isUserAuthenticated);
+//--------------------------------------------------------------
+// Base route
+app.get('/', function(req, res) {
+  res.send('The API is at http://localhost:' + port + '/api');
+});
 
-// Connect to a MongoDB (either local or hosted):
-mongoose.connect('mongodb://localhost/angulartodo');
-// app.set('superSecret', thisismySecret); //secret variable
+//--------------------------------------------------------------
+// Log in route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
+app.post('/api/login', AuthController.isUserAuthenticated);
 
-// Controllers
-var ItemsController = require('./app/controllers/items');
-var ListsController = require('./app/controllers/lists');
-var UsersController = require('./app/controllers/users');
-// var AuthenticationController
+//--------------------------------------------------------------
+// Routes for Users
+// show users
+app.get('/api/users', UsersController.showMultipleUsers);
+
+// show one user
+app.get('/api/user/:user_id', UsersController.showOneUser);
+
+// create a user
+app.post('/api/user/create', UsersController.createUser);
+
+// delete a user
+app.post('/api/user/delete/:user_id', UsersController.removeUser);
+
+// update a user
+app.post('/api/user/update/:user_id', UsersController.updateUser);
+
+
+// --------------------------------------------------------------
+//Routes for Boards
+
+// show boards
+app.get('/api/boards/:user_id', BoardsController.showMultipleBoards);
+
+// // show one board
+app.get('/api/boards/:board_id', BoardsController.showOneBoard);
+
+// // create a board
+app.post('/api/boards/create/:user_id', BoardsController.createBoard);
+
+// // delete a board
+app.post('/api/boards/delete/:board_id', BoardsController.removeBoard);
+
+// // update a board
+app.post('/api/boards/update/:board_id', BoardsController.updateBoard);
+
+
+//--------------------------------------------------------------
+//Routes for Lists
+
+// show lists
+app.get('/api/lists/:board_id', ListsController.showLists);
+
+// create a list
+app.post('/api/lists/create/:board_id', ListsController.createList);
+
+// delete a list
+app.post('/api/lists/delete/:list_id', ListsController.removeList);
+
+// update a list
+app.post('/api/lists/update/:list_id', ListsController.updateList);
+
 
 //--------------------------------------------------------------
 //Routes for Items
 
 // show items
-app.get('/api/items', ItemsController.showItems);
+app.get('/api/items/:list_id', ItemsController.showItems);
 
-// /create items
-app.post('/api/items/create', ItemsController.createItem);
+// create items
+app.post('/api/item/create/:list_id', ItemsController.createItem);
 
 // delete item
-app.post('/api/items/delete/:id', ItemsController.removeItem);
+app.post('/api/item/delete/:id', ItemsController.removeItem);
 
 // update item
-app.post('/api/items/update/:id', ItemsController.updateItem);
+app.post('/api/item/update/:id', ItemsController.updateItem);
 
 
 //--------------------------------------------------------------
-//Routes for Lists
-app.get('/api/lists', ListsController.showLists);
 
-app.post('/api/lists/create', ListsController.createList);
-
-app.post('/api/lists/delete/:list_id', ListsController.removeList);
-
-app.post('/api/lists/update/:list_id', ListsController.updateList);
-
+app.listen(port);
+console.log('Connected to port ' + port);
 
 //--------------------------------------------------------------
-//Routes for Users
-// app.get('/api/users', UsersController.showLists);
-
-// app.post('/api/users/create', UsersController.createList);
-
-// app.post('/api/users/delete/:user_id', UsersController.removeList);
-
-// app.post('/api/users/update/:user_id', UsersController.updateList);
-
-//--------------------------------------------------------------
-app.listen(3000);
-console.log('Connected to port 3000');
-
-// Changing the way we are testing
-// do not need to have the node server running this way when we export it
-//
-exports.app = app;
+module.exports.app = app;
