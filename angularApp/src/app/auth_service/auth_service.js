@@ -31,7 +31,7 @@
         $log.log('This is res within success: ', res);
         callback({
           email: email,
-          token: res.body.token
+          token: res.token
         });
       });
     }
