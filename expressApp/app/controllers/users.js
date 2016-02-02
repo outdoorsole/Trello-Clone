@@ -1,9 +1,11 @@
+// Node modules
 var bodyParser = require('body-parser');
-//------------------------------------------------------//
 
+// Bcrypt for encryption of password
+ var bcrypt = require('bcrypt-nodejs');
+//------------------------------------------------------//
 // Models
 var User = require('../models/user');
-
 //------------------------------------------------------//
 
 // Show one user
@@ -18,16 +20,20 @@ exports.showOneUser = function (req, res) {
 }
 
 exports.createUser = function (req, res) {
+  var password = req.body.password;
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(password, salt);
+  console.log('This is pw, salt, & hash: ', password, salt, hash);
   var user = new User({
     name: req.body.name,
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: hash
   })
 
   user.save(function(error, savedUser) {
     if (savedUser) {
-      User.findOne({ user_name: req.body.user_name}, function(error, returnedUser) {
+      User.findOne({ user_name: req.body.username}, function(error, returnedUser) {
         if (returnedUser) {
           res.json(returnedUser)
         } else if (error) {
