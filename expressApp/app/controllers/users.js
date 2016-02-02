@@ -19,11 +19,31 @@ exports.showOneUser = function (req, res) {
   });
 }
 
+// User Login
+exports.loginUser = function(req, res) {
+  var password = req.body.password;
+  var email = req.body.email;
+  User.findOne({ email: email })
+  .populate('boards')
+  .exec(function (error, foundUser) {
+    if (foundUser) {
+      console.log('This is password: ', password);
+      console.log('This is email: ', email);
+      console.log('This is foundUser.password: ', foundUser.password);
+      if (bcrypt.compareSync(password, foundUser.password)) {
+        res.json(foundUser);
+      }
+    } else if (error) {
+      console.error(error.stack);
+      res.json({status: 400, message: error.message});
+    }
+  })
+  };
+
 exports.createUser = function (req, res) {
   var password = req.body.password;
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
-  console.log('This is pw, salt, & hash: ', password, salt, hash);
   var user = new User({
     name: req.body.name,
     username: req.body.username,
@@ -33,7 +53,7 @@ exports.createUser = function (req, res) {
 
   user.save(function(error, savedUser) {
     if (savedUser) {
-      User.findOne({ user_name: req.body.username}, function(error, returnedUser) {
+      User.findOne({ username: req.body.username}, function(error, returnedUser) {
         if (returnedUser) {
           res.json(returnedUser)
         } else if (error) {

@@ -21,7 +21,6 @@
       $log.log('Inside the login function in auth: ');
       $log.log('This is the email: ', email);
       $log.log('This is the password: ', password);
-      $log.log('This is the callback: ', callback);
 
       $http.post('/api/login', {
         email: email,

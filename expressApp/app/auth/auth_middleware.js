@@ -11,11 +11,6 @@ var User = require('../../app/models/user');
 
 // Route middleware to verify a token
 exports.isUserAuthenticated = function (req, res, next) {
-  console.log('This is req: ', req);
-  console.log('------------------');
-  console.log('This is res: ', res);
-  console.log('------------------');
-
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   console.log('------------------');
   console.log('This is token: ', token);
