@@ -4,9 +4,23 @@
   angular.module('mytodo')
     .factory('UserService', ['$http', '$q', '$log', function($http, $q, $log) {
       var service = {
+        getUsers: getUsers,
         createUser: createUser,
         removeUser: removeUser,
         updateUser: updateUser
+      }
+
+      function getUsers() {
+        var deferred = $q.defer();
+        $http.get('api/users')
+        .success(function (returnedUsers) {
+          deferred.resolve(returnedUsers);
+        })
+        .error(function (data) {
+          deferred.reject('Error: ', data);
+          $log.log('Error: ', data);
+        });
+        return deferred.promise;
       }
 
       function createUser(formData) {

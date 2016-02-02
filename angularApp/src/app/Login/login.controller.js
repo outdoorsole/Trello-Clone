@@ -14,6 +14,7 @@
       console.log('This is vm.formData: ', vm.formData);
       AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
         $log.log('This is response in LoginController: ', response);
+        $location.path('/api/users');
       });
     }
 }])

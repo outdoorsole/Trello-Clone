@@ -50,28 +50,13 @@ app.get('/', function(req, res) {
 });
 
 //--------------------------------------------------------------
-// Sign up route
-// app.post('/api/signup', )
-
-// app.route('/api/signup')
-
-//   // Show the sign up page (GET http://localhost:port/signup)
-//   .get(function(req, res) {
-//     res.send('This is the signup route!');
-//   })
-
-//   // Process the form (POST http://localhost:port/signup)
-//   .post(function(req, res) {
-//     res.send('This is the signup route!');
-//   })
-
-
-//--------------------------------------------------------------
 // Log in route to authenticate a user on sign in (POST http://localhost:3000/api/authenticate)
 app.post('/api/login', AuthController.isUserAuthenticated);
 
 //--------------------------------------------------------------
 // Routes for Users
+// show users
+app.get('/api/users', UsersController.showMultipleUsers);
 
 // show one user
 app.get('/api/user/:user_id', UsersController.showOneUser);
