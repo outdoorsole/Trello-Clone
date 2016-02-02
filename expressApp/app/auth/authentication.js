@@ -10,10 +10,12 @@ var jwt = require('jsonwebtoken');
 var User = require('../../app/models/user');
 
 exports.isUserAuthenticated = function(req, res) {
+  console.log('Within the authentication controller');
   // find the User
   User.findOne({ email: req.body.email }, function (error, foundUser) {
     console.log('This is error: ', error);
     console.log('This is foundUser: ', foundUser);
+    console.log('This is req.body: ', req.body);
     if (error) {
       throw error;
     }
@@ -22,7 +24,7 @@ exports.isUserAuthenticated = function(req, res) {
     } else if (foundUser) {
 
       // check if password matches
-      if (foundUser.password !== req.body.password) {
+      if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
 
