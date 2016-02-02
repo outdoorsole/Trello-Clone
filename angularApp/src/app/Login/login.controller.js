@@ -13,7 +13,7 @@
     vm.loginUser = function() {
       console.log('This is vm.formData: ', vm.formData);
       AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
-        $log.log('This is the LoginController');
+        $log.log('This is response in LoginController: ', response);
       });
     }
 }])
