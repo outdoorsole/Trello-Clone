@@ -1,8 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('ListController', ['$log', 'ListService', '$routeParams', function ($log, ListService, $routeParams) {
+  var ListController = function (ListService, $routeParams, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -66,5 +65,11 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         })
       }
-  }])
+  }
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  ListController.$inject = ['ListService', '$routeParams', '$log'];
+
+  angular.module('mytodo')
+  .controller('ListController', ListController);
 })();

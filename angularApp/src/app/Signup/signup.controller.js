@@ -2,7 +2,12 @@
   'use strict';
 
   angular.module('mytodo')
-  .controller('SignupController', ['UserService', '$location', '$log', function(UserService, $location, $log) {
+  .controller('SignupController', SignupController);
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  SignupController.$inject = ['UserService', '$location', '$log'];
+
+  function SignupController(UserService, $location, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -12,8 +17,10 @@
     // Variable to store the user
     vm.user = {};
 
+    vm.signupUser = signupUser;
+
     // Sign up a new user from the form data
-    vm.signupUser = function () {
+    function signupUser() {
       UserService.createUser(vm.formData)
       .then(function(newUser) {
         vm.user = newUser;
@@ -22,6 +29,6 @@
       .catch(function(error){
         $log.log('error: ', error);
       });
-    };
-  }])
+    }
+  }
 })();

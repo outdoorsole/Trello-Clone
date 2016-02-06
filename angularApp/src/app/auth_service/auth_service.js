@@ -6,6 +6,7 @@
       .factory('AuthenticationService', AuthenticationService);
 
   AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$log'];
+
   function AuthenticationService($http, $cookieStore, $rootScope, $timeout, $log) {
     var service = {};
 

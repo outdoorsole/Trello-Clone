@@ -2,7 +2,12 @@
   'use strict';
 
   angular.module('mytodo')
-    .factory('ItemService', ['$http', '$q', '$log', function($http, $q, $log) {
+  .factory('ItemService', ItemService);
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  ItemService.$inject = ['$http', '$q', '$log'];
+
+  function ItemService($http, $q, $log) {
       var service = {
         getItems: getItems,
         createItem: createItem,
@@ -61,6 +66,6 @@
     }
 
     return service;
-  }]);
+  }
 })();
 
