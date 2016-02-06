@@ -1,8 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('ItemController', ['$log', 'ItemService', function ($log, ItemService) {
+  var ItemController = function (ItemService, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -62,5 +61,11 @@ angular.module('mytodo')
           $log.log('Error: ' + data);
         });
     };
-  }])
+  }
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  ItemController.$inject = ['ItemService', '$log'];
+
+  angular.module('mytodo')
+  .controller('ItemController', ItemController);
 })();
