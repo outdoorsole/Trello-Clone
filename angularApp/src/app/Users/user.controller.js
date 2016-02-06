@@ -7,8 +7,6 @@
   // $inject Property Annotation: an array of service names to inject to the controller.
   UserController.$inject = ['UserService', '$log'];
 
-
-
   function UserController (UserService, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
