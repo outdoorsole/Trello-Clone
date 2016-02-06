@@ -1,11 +1,9 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('UserController', ['$log', 'UserService', function ($log, UserService) {
-    var vm = this;
-
+  var UserController = function ($log, UserService) {
     // All of this is happening on load (until methods below)
+    var vm = this;
 
     // This variable stores the form data coming through the front-end
     vm.formData = {};
@@ -13,7 +11,13 @@ angular.module('mytodo')
     // This variable stores the users list from the database
     vm.users = [];
 
+    vm.getUsers = getUsers;
+    vm.createUser = createUser;
+    vm.removeUser = removeUser;
+    vm.updateUser = updateUser;
+
     // when landing on the page, get all the usernames and display them
+    function getUsers() {
     UserService.getUsers()
     .then(function(allUsers) {
       vm.title = "Registered Users";
@@ -21,10 +25,10 @@ angular.module('mytodo')
         vm.users.push(allUsers[i]);
       }
     })
-
+  }
 
     // Create a new user
-    vm.createUser = function (formData) {
+    function createUser(formData) {
       UserService.createUser(formData)
       .then(function (user) {
         vm.users.push(user);
@@ -34,7 +38,7 @@ angular.module('mytodo')
       })
     }
 
-    vm.removeUser = function (userId) {
+    function removeUser(userId) {
       UserService.removeUser(userId)
       .then(function(deletedUser) {
         for (var i = 0; i < vm.users.length; i++) {
@@ -48,7 +52,7 @@ angular.module('mytodo')
       })
     }
 
-    vm.updateUser = function (userId, userName) {
+    function updateUser(userId, userName) {
       UserService.updateUser(userId, userName)
       .then(function(data) {
         for (var i = 0; i < vm.users.length; i++) {
@@ -61,5 +65,11 @@ angular.module('mytodo')
         $log.log('Error: ', + data);
       })
     }
-  }])
+  }
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  UserController.$inject = ['$log', 'UserService'];
+
+  angular.module('mytodo')
+  .controller('UserController', UserController);
 })();

@@ -11,7 +11,7 @@
 
     // Sign up a new user from the form data
     vm.loginUser = function() {
-      console.log('This is vm.formData: ', vm.formData);
+      $log.log('This is vm.formData: ', vm.formData);
       AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
         $log.log('This is response in LoginController: ', response);
         $location.path('/users');
