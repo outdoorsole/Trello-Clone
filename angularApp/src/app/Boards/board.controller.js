@@ -1,7 +1,13 @@
 (function() {
 'use strict';
 
-  var BoardController = function (BoardService, $routeParams, $log) {
+  angular.module('mytodo')
+  .controller('BoardController', BoardController);
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  BoardController.$inject = ['BoardService', '$routeParams', '$log'];
+
+  function BoardController(BoardService, $routeParams, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -68,10 +74,4 @@
       })
     }
   }
-
-  // $inject Property Annotation: an array of service names to inject to the controller.
-  BoardController.$inject = ['BoardService', '$routeParams', '$log'];
-
-angular.module('mytodo')
-  .controller('BoardController', BoardController);
 })();
