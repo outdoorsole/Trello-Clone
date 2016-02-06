@@ -29,6 +29,6 @@
       .catch(function(error){
         $log.log('error: ', error);
       });
-    };
+    }
   }
 })();
