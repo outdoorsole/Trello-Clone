@@ -2,13 +2,17 @@
   'use strict';
 
   angular.module('mytodo')
-    .factory('ListService', ['$http', '$q', '$log', function($http, $q, $log) {
-      var service = {
-        getLists: getLists,
-        createList: createList,
-        removeList: removeList,
-        updateList: updateList
-      };
+    .factory('ListService', ListService);
+
+  ListService.$inject = ['$http', '$q', '$log'];
+
+  function ListService($http, $q, $log) {
+    var service = {
+      getLists: getLists,
+      createList: createList,
+      removeList: removeList,
+      updateList: updateList
+    };
 
     function getLists (boardId) {
       var deferred = $q.defer();
@@ -61,5 +65,5 @@
     }
 
     return service;
-  }]);
+  }
 })();
