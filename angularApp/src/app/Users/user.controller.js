@@ -1,7 +1,15 @@
 (function() {
 'use strict';
 
-  var UserController = function (UserService, $log) {
+  angular.module('mytodo')
+  .controller('UserController', UserController);
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  UserController.$inject = ['UserService', '$log'];
+
+
+
+  function UserController (UserService, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -66,10 +74,4 @@
       })
     }
   }
-
-  // $inject Property Annotation: an array of service names to inject to the controller.
-  UserController.$inject = ['UserService', '$log'];
-
-  angular.module('mytodo')
-  .controller('UserController', UserController);
 })();
