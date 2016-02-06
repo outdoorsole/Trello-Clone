@@ -1,11 +1,14 @@
+// Node modules
 var bodyParser = require('body-parser');
-//------------------------------------------------------//
 
+// Bcrypt for encryption of password
+ var bcrypt = require('bcrypt-nodejs');
+//------------------------------------------------------//
 // Models
 var User = require('../models/user');
-
 //------------------------------------------------------//
 
+// Show all users
 exports.showMultipleUsers = function (req, res) {
   User.find({}, function(error, users) {
     if (users) {
@@ -16,6 +19,7 @@ exports.showMultipleUsers = function (req, res) {
   });
 }
 
+// Show one user
 exports.showOneUser = function (req, res) {
   User.findOne({ _id: req.params.user_id }, function(error, foundUser) {
     if (foundUser) {
@@ -26,19 +30,49 @@ exports.showOneUser = function (req, res) {
   });
 }
 
-exports.createUser = function (req, res) {
-  var user = new User({
-    user_name: req.body.user_name
+// User Login
+exports.loginUser = function(req, res) {
+  var password = req.body.password;
+  var email = req.body.email;
+  User.findOne({ email: email })
+  .populate('boards')
+  .exec(function (error, foundUser) {
+    if (foundUser) {
+      console.log('This is password: ', password);
+      console.log('This is email: ', email);
+      console.log('This is foundUser.password: ', foundUser.password);
+      if (bcrypt.compareSync(password, foundUser.password)) {
+        res.json(foundUser);
+      }
+    } else if (error) {
+      console.error(error.stack);
+      res.json({status: 400, message: error.message});
+    }
   })
-  user.save(function(err, savedUser) {
+  };
+
+exports.createUser = function (req, res) {
+  var password = req.body.password;
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(password, salt);
+  var user = new User({
+    name: req.body.name,
+    username: req.body.username,
+    email: req.body.email,
+    password: hash
+  })
+
+  user.save(function(error, savedUser) {
     if (savedUser) {
-      User.findOne({ user_name: req.body.user_name}, function(error, returnedUser) {
+      User.findOne({ username: req.body.username}, function(error, returnedUser) {
         if (returnedUser) {
           res.json(returnedUser)
-        } else if (err) {
-          console.log('Failed to save: ' + err);
+        } else if (error) {
+          console.log('Failed to save: ', error);
         }
       })
+    } else {
+      console.log('Failed to save: ', error);
     }
   })
 }

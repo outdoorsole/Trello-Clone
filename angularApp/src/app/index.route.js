@@ -9,11 +9,35 @@
 
     $routeProvider
       .when('/', {
-        templateUrl: 'app/Users/user.html',
+        templateUrl: 'app/Index/index.html'
         // knows to go to the main controller
-        controller: 'UserController',
+        // controller: 'UserController',
         // alias for the controller
-        controllerAs: 'UserController'
+        // controllerAs: 'UserController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
+      .when('/signup', {
+        templateUrl: 'app/Signup/signup.html',
+        // knows to go to the main controller
+        controller: 'SignupController',
+        // alias for the controller
+        controllerAs: 'SignupController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
+      .when('/login', {
+        templateUrl: 'app/Login/login.html',
+        // knows to go to the main controller
+        controller: 'LoginController',
+        // alias for the controller
+        controllerAs: 'LoginController'
       })
       .otherwise({
         redirectTo: '/'
@@ -48,6 +72,18 @@
         // knows to go to the main controller
         controller: 'BoardController',
         controllerAs: 'BoardController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+
+    $routeProvider
+      .when('/users', {
+        templateUrl: 'app/Users/user.html',
+        // knows to go to the main controller
+        controller: 'UserController',
+        // alias for the controller
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
