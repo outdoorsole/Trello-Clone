@@ -41,6 +41,7 @@
       UserService.createUser(vm.formData)
       .then(function (newUser) {
         vm.user = newUser;
+        $log.log('This is the newUser: ', newUser);
         $location.path('/login');
       })
       .catch(function(err) {

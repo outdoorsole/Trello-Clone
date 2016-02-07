@@ -23,9 +23,9 @@
       .when('/signup', {
         templateUrl: 'app/Signup/signup.html',
         // knows to go to the main controller
-        controller: 'SignupController',
+        controller: 'UserController',
         // alias for the controller
-        controllerAs: 'SignupController'
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
