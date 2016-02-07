@@ -64,10 +64,10 @@
         .then(function (userBoards){
 
           $log.log('These are the boards for the user:', userBoards);
-          $log.log('This is the redirect path: ', '/boards/?user_name='+ response.username + '&user_id=' + response._id);
+          $log.log('This is the redirect path: ', '/#/boards/?user_name='+ response.username + '&user_id=' + response._id);
 
-          // $location.path('/users');
-          $location.path('/api/boards?user_name=' + response.username + '&user_id=' + response._id);
+          $location.path('/users');
+          // $location.path('/#/boards?user_name=' + response.username + '&user_id=' + response._id);
           // $location.path('/boards/?user_name='+ response.username + '&user_id=' + response._id);
         });
       });
