@@ -35,16 +35,14 @@
                           <!-- ***Testing segmented buttons*** -->
                           <div class="row">
                             <div class="col-lg-6">
-                              <div class="input-group">
-                                <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
-                                <div class="input-group-btn">
-                                  <!--Add item button -->
-                                  <button type="button" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
-                                  <!-- Remove item button -->
-                                  <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
-                                  <!-- Edit item button -->
-                                  <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
-                                </div>
+                              <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
+                              <div class="btn-group">
+                                <!--Add item button -->
+                                <button type="button" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
+                                <!-- Edit item button -->
+                                <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
+                                <!-- Remove item button -->
+                                <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
                               </div>
                             </div>
                           </div>
