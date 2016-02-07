@@ -5,9 +5,9 @@
   .controller('UserController', UserController);
 
   // $inject Property Annotation: an array of service names to inject to the controller.
-  UserController.$inject = ['UserService', '$location', '$log'];
+  UserController.$inject = ['UserService', 'AuthenticationService', '$location', '$log'];
 
-  function UserController (UserService, $location, $log) {
+  function UserController (UserService, AuthenticationService, $location, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -47,6 +47,15 @@
       .catch(function(err) {
         $log.error('Error creating a user: ', err);
       })
+    }
+
+    // Login a new user with the form data
+    function loginUser() {
+      $log.log('This is vm.formData: ', vm.formData);
+      AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
+        $log.log('This is response in loginUser in UserController: ', response);
+        $location.path('/users');
+      });
     }
 
     function removeUser(userId) {
