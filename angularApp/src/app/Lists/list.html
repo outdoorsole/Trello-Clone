@@ -27,24 +27,24 @@
                   <!-- Nesting for Items into Lists -->
                   <div ng-controller="ItemController as Items">
                     <div ng-init="Items.getItems(list._id)">
-
                       <!-- iterating through items -->
-                      <div class='list-items input-group' ng-repeat="item in Items.items">
+                      <div class="row">
                         <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
-                          <div class="row">
-                            <div class="input-group input-group-sm">
-                              <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
-                              <!--Add (create) item button -->
-                              <button type="submit" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
-                            </div>
+                          <div class="input-group">
+                            <input type="text" id="add-item-form" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
+                            <!--Add (create) item button -->
+                            <button type="submit" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
                           </div>
+                        </div>
 
-                            <!-- *ITEMS LIST* -->
-                            <input type="text" ng-model="item.item_name" class="form control">
-                            <!-- Edit item -->
-                            <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
-                            <!-- Remove item -->
-                            <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
+                        <!-- *ITEMS LIST* -->
+                        <div class='list-items input-group' ng-repeat="item in Items.items">
+                          <!-- Display item -->
+                          <input type="text" ng-model="item.item_name" class="form control">
+                          <!-- Edit item -->
+                          <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
+                          <!-- Remove item -->
+                          <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
                         </form>
                       </div> <!-- /iterating through items -->
                     </div> <!-- /get items -->
