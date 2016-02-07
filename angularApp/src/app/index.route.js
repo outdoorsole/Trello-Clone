@@ -9,7 +9,7 @@
 
     $routeProvider
       .when('/', {
-        templateUrl: 'app/Index/index.html'
+        templateUrl: 'app/Homepage/Homepage.html'
         // knows to go to the main controller
         // controller: 'UserController',
         // alias for the controller
@@ -23,9 +23,9 @@
       .when('/signup', {
         templateUrl: 'app/Signup/signup.html',
         // knows to go to the main controller
-        controller: 'SignupController',
+        controller: 'UserController',
         // alias for the controller
-        controllerAs: 'SignupController'
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
@@ -35,9 +35,9 @@
       .when('/login', {
         templateUrl: 'app/Login/login.html',
         // knows to go to the main controller
-        controller: 'LoginController',
+        controller: 'UserController',
         // alias for the controller
-        controllerAs: 'LoginController'
+        controllerAs: 'UserController'
       })
       .otherwise({
         redirectTo: '/'
