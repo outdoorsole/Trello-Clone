@@ -30,30 +30,24 @@
 
                       <!-- iterating through items -->
                       <div class='list-items input-group' ng-repeat="item in Items.items">
-                        <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
-                        <!--Add item button -->
-                        <button type="button" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
+                        <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
+                          <div class="row">
+                            <div class="input-group input-group-sm">
+                              <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
+                              <!--Add (create) item button -->
+                              <button type="submit" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
+                            </div>
+                          </div>
 
-                        <!-- *ITEMS LIST* -->
-                        <input type="text" ng-model="item.item_name" class="form control">
-                        <!-- Edit item -->
-                        <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
-                        <!-- Remove item -->
-                        <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
+                            <!-- *ITEMS LIST* -->
+                            <input type="text" ng-model="item.item_name" class="form control">
+                            <!-- Edit item -->
+                            <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
+                            <!-- Remove item -->
+                            <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
+                        </form>
                       </div> <!-- /iterating through items -->
                     </div> <!-- /get items -->
-
-                    <!-- Create items input -->
-                    <form role="form" ng-submit="Items.createItem(list._id, Items.formData)">
-                      <div class="row">
-                        <div class="input-group input-group-sm">
-                          <input type="text"  class="form-control" placeholder="Add an item...">
-                          <span class="input-group-btn">
-                            <input type="submit" class="btn btn-primary" value="Add New Item">
-                          </span>
-                        </div>
-                      </div>
-                    </form>
                   </div> <!-- closes the items controller -->
                 </div> <!-- /panel body -->
               </div> <!-- /close panel -->
