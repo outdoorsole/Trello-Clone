@@ -5,9 +5,9 @@
       .module('mytodo')
       .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', '$log'];
+  AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', '$log'];
 
-  function AuthenticationService($http, $cookieStore, $rootScope, $timeout, $log) {
+  function AuthenticationService($http, $cookies, $rootScope, $timeout, $log) {
     var service = {};
 
     service.login = login;
@@ -46,14 +46,14 @@
       };
 
       $http.defaults.headers.common['X-ACCESS-TOKEN'] = token;
-      $cookieStore.put('globals', $rootScope.globals);
+      $cookies.put('globals', $rootScope.globals);
     }
 
     // Cleanup the stored credentials
     function clearCredentials() {
       $log.log('clear creds');
       $rootScope.globals = {};
-      $cookieStore.remove('globals');
+      $cookies.remove('globals');
       $http.defaults.headers.common.Authorization = 'Basic';
     }
   }
