@@ -10,20 +10,6 @@
       <!-- refer to something in the list controller, need to use the alias -->
       <h2 class="title" ng-init="user.getUsers()">{{user.title}}</h2>
 
-      <!-- Create User (form field for username) -->
-      <form id="user-form" role="form" ng-submit="UserController.createUser(UserController.formData)">
-        <div class="row">
-          <div class="input-group">
-            <input type="text" ng-model="UserController.formData.user_name" placeholder="Enter your name" class="form-control">
-
-            <!-- Add button -->
-            <span class="input-group-btn">
-              <input type="submit" class="btn btn-primary" value="Create account">
-            </span>
-          </div>
-        </div>
-      </form>
-
       <!-- Current user name display and edit (form field) -->
       <div ui-sortable ng-model="UserController.user">
         <p class="input-group" ng-repeat="user in UserController.users" style="padding:5px 10px; cursor: move;">
