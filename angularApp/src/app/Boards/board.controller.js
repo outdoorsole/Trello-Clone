@@ -25,13 +25,14 @@
     vm.username = $routeParams.user_name;
 
     // when landing on the page, get all boards for a user and display
-    BoardService.getBoards(vm.userId)
-    .then(function(userBoards) {
-      vm.title = 'My Boards: ' + vm.username;
-      for (var i = 0; i < userBoards.length; i++) {
-        vm.boards.push(userBoards[i]);
-      }
-    })
+    vm.getBoards = function () {
+      BoardService.getBoards(vm.userId)
+      .then(function(userBoards) {
+        for (var i = 0; i < userBoards.length; i++) {
+          vm.boards.push(userBoards[i]);
+        }
+      })
+    }
 
     // Create a new board
     vm.createBoard = function (formData) {

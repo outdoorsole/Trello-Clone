@@ -8,7 +8,7 @@
       <!-- This page will render the list of boards stored in the database for the current user that was selected -->
 
       <!-- refer to something in the list controller, need to use the alias -->
-      <h2 class="title" ng-model="title">{{BoardController.title}}</h2>
+      <h2 class="title" ng-init="BoardController.getBoards()" ng-model="BoardController.title">My Boards: {{BoardController.username}}</h2>
 
       <!-- Create board input -->
       <form role="form" ng-submit="BoardController.createBoard(BoardController.formData)">
