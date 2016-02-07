@@ -5,9 +5,9 @@
   .controller('UserController', UserController);
 
   // $inject Property Annotation: an array of service names to inject to the controller.
-  UserController.$inject = ['UserService', 'AuthenticationService', '$location', '$log'];
+  UserController.$inject = ['UserService', 'BoardService','AuthenticationService', '$location', '$log'];
 
-  function UserController(UserService, AuthenticationService, $location, $log) {
+  function UserController(UserService, BoardService, AuthenticationService, $location, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -56,8 +56,20 @@
     function loginUser() {
       $log.log('This is vm.formData: ', vm.formData);
       AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
+
         $log.log('This is response in loginUser in UserController: ', response);
-        $location.path('/users');
+        $log.log('This is response._id: ', response._id);
+
+        BoardService.getBoards(response._id)
+        .then(function (userBoards){
+
+          $log.log('These are the boards for the user:', userBoards);
+          $log.log('This is the redirect path: ', '/#/boards/?user_name='+ response.username + '&user_id=' + response._id);
+
+          $location.path('/users');
+          // $location.path('/#/boards?user_name=' + response.username + '&user_id=' + response._id);
+          // $location.path('/boards/?user_name='+ response.username + '&user_id=' + response._id);
+        });
       });
     }
 

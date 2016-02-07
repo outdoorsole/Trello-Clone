@@ -24,17 +24,23 @@
     // Get the user name
     vm.username = $routeParams.user_name;
 
+    vm.getBoards = getBoards;
+    vm.createBoard = createBoard;
+    vm.removeBoard = removeBoard;
+    vm.updateBoard = updateBoard;
+
     // when landing on the page, get all boards for a user and display
-    BoardService.getBoards(vm.userId)
-    .then(function(userBoards) {
-      vm.title = 'My Boards: ' + vm.username;
-      for (var i = 0; i < userBoards.length; i++) {
-        vm.boards.push(userBoards[i]);
-      }
-    })
+    function getBoards() {
+      BoardService.getBoards(vm.userId)
+      .then(function(userBoards) {
+        for (var i = 0; i < userBoards.length; i++) {
+          vm.boards.push(userBoards[i]);
+        }
+      })
+    }
 
     // Create a new board
-    vm.createBoard = function (formData) {
+    function createBoard(formData) {
       BoardService.createBoard(vm.userId, formData)
       .then(function (board) {
         vm.boards.push(board);
@@ -45,7 +51,7 @@
     }
 
     // Remove a board
-    vm.removeBoard = function (boardId) {
+    function removeBoard(boardId) {
       BoardService.removeBoard(boardId)
       .then(function(deletedBoard) {
         for (var i = 0; i < vm.boards.length; i++) {
@@ -60,7 +66,7 @@
     }
 
     // Update a board
-    vm.updateBoard = function (boardId, boardName) {
+    function updateBoard(boardId, boardName) {
       BoardService.updateBoard(boardId, boardName)
       .then(function(data) {
         for (var i = 0; i < vm.boards.length; i++) {

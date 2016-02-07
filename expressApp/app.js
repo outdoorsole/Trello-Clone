@@ -58,9 +58,6 @@ app.post('/api/login', AuthController.isUserAuthenticated);
 // show users
 app.get('/api/users', UsersController.showMultipleUsers);
 
-// show one user
-app.get('/api/user/:user_id', UsersController.showOneUser);
-
 // create a user
 app.post('/api/user/create', UsersController.createUser);
 
