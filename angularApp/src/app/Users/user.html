@@ -11,7 +11,7 @@
       <h2 class="title" ng-model="title">{{UserController.title}}</h2>
 
       <!-- Create User (form field for username) -->
-      <form role="form" ng-submit="UserController.createUser(UserController.formData)">
+      <form id="user-form" role="form" ng-submit="UserController.createUser(UserController.formData)">
         <div class="row">
           <div class="input-group">
             <input type="text" ng-model="UserController.formData.user_name" placeholder="Enter your name" class="form-control">

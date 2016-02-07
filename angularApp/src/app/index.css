@@ -56,3 +56,7 @@ h1.title {
 a {
   color: white;
 }
+
+#user-form {
+  margin-top: 60px;
+}

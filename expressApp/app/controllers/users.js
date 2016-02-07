@@ -11,6 +11,7 @@ var User = require('../models/user');
 // Show all users
 exports.showMultipleUsers = function (req, res) {
   User.find({}, function(error, users) {
+    console.log('This is the list of found users in the server: ', users);
     if (users) {
       res.json(users);
     } else if (error) {
