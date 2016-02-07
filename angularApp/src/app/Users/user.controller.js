@@ -57,7 +57,8 @@
       $log.log('This is vm.formData: ', vm.formData);
       AuthenticationService.login(vm.formData.email, vm.formData.password, function (response) {
         $log.log('This is response in loginUser in UserController: ', response);
-        $location.path('/users');
+        $log.log('This is response._id: ', response._id);
+        $location.path('/boards/' + response._id);
       });
     }
 

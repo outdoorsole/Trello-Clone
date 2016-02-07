@@ -30,7 +30,10 @@
       .success(function (res) {
         $log.log('This is res within success: ', res);
         callback({
-          email: email,
+          name: res.name,
+          username: res.username,
+          _id: res._id,
+          email: res.email,
           token: res.token
         });
       });

@@ -35,6 +35,10 @@ exports.isUserAuthenticated = function(req, res) {
 
         // return the information including token as JSON
         res.json({
+          name: foundUser.name,
+          username: foundUser.username,
+          _id: foundUser._id,
+          email: foundUser.email,
           success: true,
           message: 'Enjoy your token!',
           token: token
