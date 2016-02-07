@@ -5,9 +5,9 @@
   .controller('UserController', UserController);
 
   // $inject Property Annotation: an array of service names to inject to the controller.
-  UserController.$inject = ['UserService', '$log'];
+  UserController.$inject = ['UserService', '$location', '$log'];
 
-  function UserController (UserService, $log) {
+  function UserController (UserService, $location, $log) {
     // All of this is happening on load (until methods below)
     var vm = this;
 
@@ -17,27 +17,31 @@
     // This variable stores the users list from the database
     vm.users = [];
 
+    // This variable is to store the current user
+    vm.user = {};
+
     vm.getUsers = getUsers;
-    vm.createUser = createUser;
+    vm.signupUser = signupUser;
     vm.removeUser = removeUser;
     vm.updateUser = updateUser;
 
     // when landing on the page, get all the usernames and display them
     function getUsers() {
-    UserService.getUsers()
-    .then(function(allUsers) {
-      vm.title = "Registered Users";
-      for (var i = 0; i < allUsers.length; i++) {
-        vm.users.push(allUsers[i]);
-      }
-    })
-  }
+      UserService.getUsers()
+      .then(function(allUsers) {
+        vm.title = "Registered Users";
+        for (var i = 0; i < allUsers.length; i++) {
+          vm.users.push(allUsers[i]);
+        }
+      })
+    }
 
-    // Create a new user
-    function createUser(formData) {
-      UserService.createUser(formData)
-      .then(function (user) {
-        vm.users.push(user);
+    // Create/signup a new user
+    function signupUser() {
+      UserService.createUser(vm.formData)
+      .then(function (newUser) {
+        vm.user = newUser;
+        $location.path('/login');
       })
       .catch(function(err) {
         $log.error('Error creating a user: ', err);
