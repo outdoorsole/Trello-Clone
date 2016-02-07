@@ -11,18 +11,18 @@
       <h2 class="title" ng-init="user.getUsers()">{{user.title}}</h2>
 
       <!-- Current user name display and edit (form field) -->
-      <div ui-sortable ng-model="UserController.user">
-        <p class="input-group" ng-repeat="user in UserController.users" style="padding:5px 10px; cursor: move;">
-          <input type="text" ng-model="user.user_name" class="form-control">
+      <div ui-sortable ng-model="users">
+        <p class="input-group" ng-repeat="user in user.users" style="padding:5px 10px; cursor: move;">
+          <input type="text" ng-model="user.username" class="form-control">
 
           <!-- View one user's boards -->
           <span class="input-group-btn">
-            <a href="/#/boards?user_name={{user.user_name}}&user_id={{user._id}}" class="btn btn-info" aria-label="View">View Boards</a>
+            <a href="/#/boards?user_name={{user.username}}&user_id={{user._id}}" class="btn btn-info" aria-label="View">View Boards</a>
           </span>
 
           <!-- Edit a user name -->
           <span class="input-group-btn">
-            <button class="btn btn-info" ng-click="UserController.updateUser(user._id, user.user_name)" aria-label="Edit">Edit</button>
+            <button class="btn btn-info" ng-click="UserController.updateUser(user._id, user.username)" aria-label="Edit">Edit</button>
           </span>
 
           <!-- Remove a user from the list of users -->

@@ -33,7 +33,9 @@
         vm.title = "Registered Users";
         for (var i = 0; i < allUsers.length; i++) {
           vm.users.push(allUsers[i]);
+          $log.log('This is allUsers[i]: ', allUsers[i]);
         }
+        $log.log('This is vm.users: ', vm.users);
       })
     }
 
