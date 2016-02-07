@@ -30,25 +30,16 @@
 
                       <!-- iterating through items -->
                       <div class='list-items input-group' ng-repeat="item in Items.items">
+                        <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
+                        <!--Add item button -->
+                        <button type="button" class="btn btn-secondary glyphicon glyphicon-plus-sign"></button>
 
-                        <form>
-                          <!-- ***Testing segmented buttons*** -->
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <input type="text" class="form-control" ng-model="Items.formData.item_name" placeholder="Add an item..." aria-label="Text input with segmented button dropdown">
-                              <div class="btn-group">
-                                <!-- Edit item button -->
-                                <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
-                                <!-- Remove item button -->
-                                <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- ***Testing segmented buttons*** -->
-                        </form>
-
-                        <!-- items list -->
+                        <!-- *ITEMS LIST* -->
                         <input type="text" ng-model="item.item_name" class="form control">
+                        <!-- Edit item -->
+                        <button type="button" class="btn btn-secondary glyphicon glyphicon-pencil" ng-click="Items.updateItem(item._id, item.item_name)"></button>
+                        <!-- Remove item -->
+                        <button type="button" class="btn btn-secondary glyphicon glyphicon-minus-sign" ng-click="Items.removeItem(item._id)"></button>
                       </div> <!-- /iterating through items -->
                     </div> <!-- /get items -->
 
