@@ -65,7 +65,7 @@ a {
   margin-top: 20px;
 }
 
-#add-item-form {
+#add-item-form, #list-title {
   display: inline;
   width: 80%;
 }
