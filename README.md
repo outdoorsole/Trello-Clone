@@ -25,6 +25,8 @@ Clone this repository with the following link
 ### Step 2
 * Navigate to the folder where the files are saved and run the 'npm install' command in the terminal prompt. Afterwards, use 'bower install' to download the Angular depencencies.
 
+### Board Preview
+<img src='http://i.imgur.com/PONsSUT.jpg' title='To-Do-ulate homepage' width='' alt='To-Do-ulate homepage' />
 
 =====================
 ### MIT License
