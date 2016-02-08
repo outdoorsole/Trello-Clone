@@ -44,17 +44,6 @@
       });
 
     $routeProvider
-      .when('/items', {
-        templateUrl: 'app/Items/item.html',
-        // knows to go to the main controller
-        controller: 'ItemController',
-        controllerAs: 'ItemController'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-
-    $routeProvider
       .when('/lists', {
         templateUrl: 'app/Lists/list.html',
         // knows to go to the main controller
