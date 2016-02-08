@@ -19,7 +19,6 @@
       var deferred = $q.defer();
       $http.get('/api/users')
       .success(function (returnedUsers) {
-        $log.log('This is a list of all the returnedUsers from the database: ', returnedUsers);
         deferred.resolve(returnedUsers);
       })
       .error(function (data) {

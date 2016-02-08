@@ -18,10 +18,8 @@
     vm.items = [];
 
     vm.getItems = function(listId) {
-      $log.log('This is the listId: ', listId);
       ItemService.getItems(listId)
       .then(function(listItems) {
-        $log.log('This are the listItems: ', listItems);
         for (var i = 0; i < listItems.length; i++) {
           vm.items.push(listItems[i]);
         }

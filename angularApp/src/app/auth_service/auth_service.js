@@ -19,16 +19,11 @@
 
     // Use form information (email & password) to login. The callback will receive an object with the username and token
     function login(email, password, callback) {
-      $log.log('Inside the login function in auth: ');
-      $log.log('This is the email: ', email);
-      $log.log('This is the password: ', password);
-
       $http.post('/api/login', {
         email: email,
         password: password
       })
       .success(function (res) {
-        $log.log('This is res within success: ', res);
         callback({
           name: res.name,
           username: res.username,
