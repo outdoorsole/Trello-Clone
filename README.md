@@ -25,7 +25,17 @@ Clone this repository with the following link
 ### Step 2
 * Navigate to the folder where the files are saved and run the 'npm install' command in the terminal prompt. Afterwards, use 'bower install' to download the Angular depencencies.
 
-### Board Preview
+
+## Getting Started (Running the Application)
+
+In a terminal window, navigate to the root of the project folder. Open up two new tabs (3 terminal tabs open) from this current location. You will need to keep all 3 of the following applications to run the todo app.
+Mongo: Type 'mongod' (to start the database)
+Node: Navigate into the 'expressApp' folder and type 'node app' (this will connect the server API session)
+Gulp: Navigate into the 'angularApp' folder and type 'gulp serve' (this will run the client angular session)
+
+When running Gulp, it Browsersync will automatically open up a new browser window that will launch the application. In the case that this does not occur, type in http://localhost:3001/ to view the application.
+
+## Board Preview
 <img src='http://i.imgur.com/i9Dwhsi.jpg' title='To-Do-ulate homepage' width='' alt='To-Do-ulate homepage' />
 
 =====================
