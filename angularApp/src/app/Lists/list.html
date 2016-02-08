@@ -16,11 +16,9 @@
                 <div class="panel-heading">
                   <div class="panel-title" ng-model="list.list_name">
                     <h2 id="list-title">{{list.list_name}}</h2>
+                    <input type="text" id="add-item-form" class="form-control" ng-model="Items.formData.item_name" placeholder="Edit list name" aria-label="Text input with segmented button dropdown">
+                    <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                     <!-- ***Dropdown testing, single button with keyboard navigation*** -->
-                    <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                      <button type="button" class="btn btn-default glyphicon glyphicon-minus-sign"></button>
-                    </div>
                   </div>
                 </div> <!-- /close panel heading -->
 
@@ -53,6 +51,9 @@
                     </div> <!-- /get items -->
                   </div> <!-- closes the items controller -->
                 </div> <!-- /panel body -->
+                  <hr>
+                    <a id="delete-list" href="#">Delete List</a>
+                  </div>
               </div> <!-- /close panel -->
             </div> <!-- /col-sm-4 -->
           </div> <!-- ng-repeat lists -->
