@@ -19,13 +19,15 @@
     vm.boardName = $routeParams.board_name;
 
     // when landing on the page, get all lists and show them
-    ListService.getLists(vm.boardId)
-    .then(function(boardLists) {
-      vm.title = vm.boardName;
-      for (var i = 0; i < boardLists.length; i++) {
-        vm.lists.push(boardLists[i]);
-      }
-    })
+    vm.getLists = function() {
+      ListService.getLists(vm.boardId)
+      .then(function(boardLists) {
+        vm.title = vm.boardName;
+        for (var i = 0; i < boardLists.length; i++) {
+          vm.lists.push(boardLists[i]);
+        }
+      })
+    }
 
     // Create a new List
     vm.createList = function (formData) {
@@ -35,6 +37,20 @@
       })
       .catch(function(err) {
         $log.error('Error fetching items: ', err);
+      })
+    }
+
+    vm.updateList = function (listId, listName) {
+      ListService.updateList(listId, listName)
+      .then(function(data) {
+        for (var i = 0; i < vm.lists.length; i++) {
+          if (vm.lists[i].id === listId) {
+            vm.lists[i] = data;
+          }
+        }
+      })
+      .catch(function(data) {
+        $log.log('Error: ' + data);
       })
     }
 
@@ -51,20 +67,6 @@
         $log.error('Error fetching items: ', err);
       })
     }
-
-    vm.updateList = function (listId, listName) {
-      ListService.updateList(listId, listName)
-        .then(function(data) {
-          for (var i = 0; i < vm.lists.length; i++) {
-            if (vm.lists[i].id === listId) {
-              vm.lists[i] = data;
-            }
-          }
-        })
-        .catch(function(data) {
-          $log.log('Error: ' + data);
-        })
-      }
   }
 
   // $inject Property Annotation: an array of service names to inject to the controller.
