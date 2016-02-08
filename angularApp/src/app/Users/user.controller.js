@@ -1,11 +1,15 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('UserController', ['$log', 'UserService', function ($log, UserService) {
-    var vm = this;
+  angular.module('mytodo')
+  .controller('UserController', UserController);
 
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  UserController.$inject = ['UserService', 'BoardService','AuthenticationService', '$location', '$log'];
+
+  function UserController(UserService, BoardService, AuthenticationService, $location, $log) {
     // All of this is happening on load (until methods below)
+    var vm = this;
 
     // This variable stores the form data coming through the front-end
     vm.formData = {};
@@ -13,28 +17,62 @@ angular.module('mytodo')
     // This variable stores the users list from the database
     vm.users = [];
 
+    // This variable is to store the current user
+    vm.user = {};
+
+    vm.getUsers = getUsers;
+    vm.signupUser = signupUser;
+    vm.loginUser = loginUser;
+    vm.removeUser = removeUser;
+    vm.updateUser = updateUser;
+
     // when landing on the page, get all the usernames and display them
-    UserService.getUsers()
-    .then(function(allUsers) {
-      vm.title = "Registered Users";
-      for (var i = 0; i < allUsers.length; i++) {
-        vm.users.push(allUsers[i]);
-      }
-    })
+    function getUsers() {
+      UserService.getUsers()
+      .then(function(allUsers) {
+        vm.title = "Registered Users";
+        for (var i = 0; i < allUsers.length; i++) {
+          vm.users.push(allUsers[i]);
+          $log.log('This is allUsers[i]: ', allUsers[i]);
+        }
+        $log.log('This is vm.users: ', vm.users);
+      })
+    }
 
-
-    // Create a new user
-    vm.createUser = function (formData) {
-      UserService.createUser(formData)
-      .then(function (user) {
-        vm.users.push(user);
+    // Create/signup a new user
+    function signupUser() {
+      UserService.createUser(vm.formData)
+      .then(function (newUser) {
+        vm.user = newUser;
+        $log.log('This is the newUser: ', newUser);
+        $location.path('/login');
       })
       .catch(function(err) {
         $log.error('Error creating a user: ', err);
       })
     }
 
-    vm.removeUser = function (userId) {
+    // Login a new user with the form data
+    function loginUser() {
+      $log.log('This is vm.formData: ', vm.formData);
+      AuthenticationService.login(vm.formData.email, vm.formData.password, function (authenticatedUser) {
+
+        $log.log('This is authenticatedUser in loginUser in UserController: ', authenticatedUser);
+        $log.log('This is authenticatedUser._id: ', authenticatedUser._id);
+
+        BoardService.getBoards(authenticatedUser._id)
+        .then(function (userBoards){
+
+          $log.log('These are the boards for the user:', userBoards);
+          $log.log('This is the redirect path: ', 'boards/?user_name='+ authenticatedUser.username + '&user_id=' + authenticatedUser._id);
+
+          $location.path('/users');
+          // $location.path('/#/boards?user_name=' + authenticatedUser.username + '&user_id=' + authenticatedUser._id);
+        });
+      });
+    }
+
+    function removeUser(userId) {
       UserService.removeUser(userId)
       .then(function(deletedUser) {
         for (var i = 0; i < vm.users.length; i++) {
@@ -48,7 +86,7 @@ angular.module('mytodo')
       })
     }
 
-    vm.updateUser = function (userId, userName) {
+    function updateUser(userId, userName) {
       UserService.updateUser(userId, userName)
       .then(function(data) {
         for (var i = 0; i < vm.users.length; i++) {
@@ -61,5 +99,5 @@ angular.module('mytodo')
         $log.log('Error: ', + data);
       })
     }
-  }])
+  }
 })();

@@ -1,8 +1,7 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('ListController', ['$log', 'ListService', '$routeParams', function ($log, ListService, $routeParams) {
+  var ListController = function (ListService, $routeParams, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -20,13 +19,15 @@ angular.module('mytodo')
     vm.boardName = $routeParams.board_name;
 
     // when landing on the page, get all lists and show them
-    ListService.getLists(vm.boardId)
-    .then(function(boardLists) {
-      vm.title = vm.boardName;
-      for (var i = 0; i < boardLists.length; i++) {
-        vm.lists.push(boardLists[i]);
-      }
-    })
+    vm.getLists = function() {
+      ListService.getLists(vm.boardId)
+      .then(function(boardLists) {
+        vm.title = vm.boardName;
+        for (var i = 0; i < boardLists.length; i++) {
+          vm.lists.push(boardLists[i]);
+        }
+      })
+    }
 
     // Create a new List
     vm.createList = function (formData) {
@@ -36,6 +37,24 @@ angular.module('mytodo')
       })
       .catch(function(err) {
         $log.error('Error fetching items: ', err);
+      })
+    }
+
+    vm.updateList = function (listId, listName) {
+      $log.log('This is vm.formData: ', vm.formData);
+      $log.log('This is vm.lists: ', vm.lists);
+      $log.log('This is listId in the list controller: ', listId);
+      $log.log('This is listName in the list controller: ', listName);
+      ListService.updateList(listId, listName)
+      .then(function(data) {
+        for (var i = 0; i < vm.lists.length; i++) {
+          if (vm.lists[i].id === listId) {
+            vm.lists[i] = data;
+          }
+        }
+      })
+      .catch(function(data) {
+        $log.log('Error: ' + data);
       })
     }
 
@@ -52,19 +71,11 @@ angular.module('mytodo')
         $log.error('Error fetching items: ', err);
       })
     }
+  }
 
-    vm.updateList = function (listId, listName) {
-      ListService.updateList(listId, listName)
-        .then(function(data) {
-          for (var i = 0; i < vm.lists.length; i++) {
-            if (vm.lists[i].id === listId) {
-              vm.lists[i] = data;
-            }
-          }
-        })
-        .catch(function(data) {
-          $log.log('Error: ' + data);
-        })
-      }
-  }])
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  ListController.$inject = ['ListService', '$routeParams', '$log'];
+
+  angular.module('mytodo')
+  .controller('ListController', ListController);
 })();

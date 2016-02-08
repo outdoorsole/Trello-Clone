@@ -10,28 +10,35 @@ var jwt = require('jsonwebtoken');
 var User = require('../../app/models/user');
 
 exports.isUserAuthenticated = function(req, res) {
-
+  console.log('Within the authentication controller');
   // find the User
-  User.findOne({ name: req.body.name }, function (req, res) {
+  User.findOne({ email: req.body.email }, function (error, foundUser) {
+    console.log('This is error: ', error);
+    console.log('This is foundUser: ', foundUser);
+    console.log('This is req.body: ', req.body);
     if (error) {
       throw error;
     }
-    if (!user) {
+    if (!foundUser) {
       res.json({ success: false, message: 'Authentication failed. User not found.' });
-    } else if (user) {
+    } else if (foundUser) {
 
       // check if password matches
-      if (user.password != req.body.password) {
+      if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
 
         // if user is found and password is right create a token
-        var token = jwt.sign(user, app.get('superSecret'), {
+        var token = jwt.sign(foundUser, app.app.settings.superSecret, {
           expiresInMinutes: 1440 // expires in 24 hours
         });
 
         // return the information including token as JSON
         res.json({
+          name: foundUser.name,
+          username: foundUser.username,
+          _id: foundUser._id,
+          email: foundUser.email,
           success: true,
           message: 'Enjoy your token!',
           token: token

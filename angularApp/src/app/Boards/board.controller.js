@@ -1,8 +1,13 @@
 (function() {
 'use strict';
 
-angular.module('mytodo')
-  .controller('BoardController', ['$log', 'BoardService', '$routeParams', function ($log, BoardService, $routeParams) {
+  angular.module('mytodo')
+  .controller('BoardController', BoardController);
+
+  // $inject Property Annotation: an array of service names to inject to the controller.
+  BoardController.$inject = ['BoardService', '$routeParams', '$log'];
+
+  function BoardController(BoardService, $routeParams, $log) {
     var vm = this;
 
     // All of this is happening on load (until methods below)
@@ -19,17 +24,23 @@ angular.module('mytodo')
     // Get the user name
     vm.username = $routeParams.user_name;
 
+    vm.getBoards = getBoards;
+    vm.createBoard = createBoard;
+    vm.removeBoard = removeBoard;
+    vm.updateBoard = updateBoard;
+
     // when landing on the page, get all boards for a user and display
-    BoardService.getBoards(vm.userId)
-    .then(function(userBoards) {
-      vm.title = 'My Boards: ' + vm.username;
-      for (var i = 0; i < userBoards.length; i++) {
-        vm.boards.push(userBoards[i]);
-      }
-    })
+    function getBoards() {
+      BoardService.getBoards(vm.userId)
+      .then(function(userBoards) {
+        for (var i = 0; i < userBoards.length; i++) {
+          vm.boards.push(userBoards[i]);
+        }
+      })
+    }
 
     // Create a new board
-    vm.createBoard = function (formData) {
+    function createBoard(formData) {
       BoardService.createBoard(vm.userId, formData)
       .then(function (board) {
         vm.boards.push(board);
@@ -40,7 +51,7 @@ angular.module('mytodo')
     }
 
     // Remove a board
-    vm.removeBoard = function (boardId) {
+    function removeBoard(boardId) {
       BoardService.removeBoard(boardId)
       .then(function(deletedBoard) {
         for (var i = 0; i < vm.boards.length; i++) {
@@ -55,7 +66,7 @@ angular.module('mytodo')
     }
 
     // Update a board
-    vm.updateBoard = function (boardId, boardName) {
+    function updateBoard(boardId, boardName) {
       BoardService.updateBoard(boardId, boardName)
       .then(function(data) {
         for (var i = 0; i < vm.boards.length; i++) {
@@ -68,5 +79,5 @@ angular.module('mytodo')
         $log.log('Error: ', + data);
       })
     }
-  }])
+  }
 })();

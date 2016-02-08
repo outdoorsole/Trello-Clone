@@ -2,13 +2,17 @@
   'use strict';
 
   angular.module('mytodo')
-    .factory('ListService', ['$http', '$q', '$log', function($http, $q, $log) {
-      var service = {
-        getLists: getLists,
-        createList: createList,
-        removeList: removeList,
-        updateList: updateList
-      };
+    .factory('ListService', ListService);
+
+  ListService.$inject = ['$http', '$q', '$log'];
+
+  function ListService($http, $q, $log) {
+    var service = {
+      getLists: getLists,
+      createList: createList,
+      removeList: removeList,
+      updateList: updateList
+    };
 
     function getLists (boardId) {
       var deferred = $q.defer();
@@ -50,8 +54,11 @@
 
     function updateList (listId, listName) {
       var deferred = $q.defer();
+      $log.log('This is listId: ', listId);
+      $log.log('This is listName: ', listName);
       $http.post('/api/lists/update/' + listId + '?list_name=' + listName)
         .success(function(data) {
+          $log.log('This is data: ', data);
           deferred.resolve(data);
         })
         .error(function(data) {
@@ -61,5 +68,5 @@
     }
 
     return service;
-  }]);
+  }
 })();
