@@ -1,4 +1,5 @@
 #To-Do-ulate ('Trello' clone using MEAN Framework)
+[Imgur](http://i.imgur.com/5d8R7PS.jpg)
 
 ## Original Source:
 https://trello.com/
