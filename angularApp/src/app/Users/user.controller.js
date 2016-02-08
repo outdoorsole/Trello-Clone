@@ -64,9 +64,9 @@
         .then(function (userBoards){
 
           $log.log('These are the boards for the user:', userBoards);
-          $log.log('This is the redirect path: ', '/#/boards/?user_name='+ authenticatedUser.username + '&user_id=' + authenticatedUser._id);
+          $log.log('This is the redirect path: ', 'boards/?user_name='+ authenticatedUser.username + '&user_id=' + authenticatedUser._id);
 
-          $location.path('/boards');
+          $location.path('/users');
           // $location.path('/#/boards?user_name=' + authenticatedUser.username + '&user_id=' + authenticatedUser._id);
         });
       });
