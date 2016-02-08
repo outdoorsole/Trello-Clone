@@ -5,9 +5,15 @@
 https://trello.com/
 
 ## Overview
-To-Do-ulate (word play on "Tabulate") was created as a learning project based on Trello, an existing free web application created by Avram Joel Spolsky to be used as a product management tool. Trello allows individuals and groups to organize projects, lists and tasks in a visual way, using a kanban model to display and set up the process.
+To-Do-ulate (word play on "Tabulate") was created as a learning project based on Trello, an existing free web product management tool created by Avram Joel Spolsky. Trello allows individuals and groups to organize projects, lists and tasks in a visual way, using a kanban model to display and set up the process.
 
 
+This project was built using MEAN (a fullstack JavaScript framework), which includes several pre-packaged bundled modules for building applications.
+
+## Required Technologies
+Please download and install the following applications:
+NodeJS https://nodejs.org/en/
+MongoDB https://www.mongodb.org/downloads#production
 
 ## How to Install:
 
