@@ -60,14 +60,14 @@
         $log.log('This is authenticatedUser in loginUser in UserController: ', authenticatedUser);
         $log.log('This is authenticatedUser._id: ', authenticatedUser._id);
 
-        BoardService.getBoards(response._id)
+        BoardService.getBoards(authenticatedUser._id)
         .then(function (userBoards){
 
           $log.log('These are the boards for the user:', userBoards);
-          $log.log('This is the redirect path: ', '/#/boards/?user_name='+ authenticatedUser.username + '&user_id=' + response._id);
+          $log.log('This is the redirect path: ', '/#/boards/?user_name='+ authenticatedUser.username + '&user_id=' + authenticatedUser._id);
 
           $location.path('/users');
-          // $location.path('/#/boards?user_name=' + response.username + '&user_id=' + response._id);
+          // $location.path('/#/boards?user_name=' + authenticatedUser.username + '&user_id=' + authenticatedUser._id);
         });
       });
     }

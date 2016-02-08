@@ -6,21 +6,25 @@
   <body>
     <div class="container">
       <!-- refer to something in the list controller, need to use the alias -->
-      <h1 class="title" ng-model="title">{{ListController.title}}</h1>
+      <h1 class="title" ng-model="boardName">{{ListController.boardName}}</h1>
       <!-- Panel for list -->
-      <div class="row">
+      <div class="row" ng-init="ListController.getLists()">
         <div ui-sortable ng-model="ListController.list">
           <div ng-repeat="list in ListController.lists">
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <div class="panel-title" ng-model="list.list_name">
+                    <!-- display list name -->
                     <h2 id="list-title">{{list.list_name}}</h2>
-                    <!-- ***Dropdown testing, single button with keyboard navigation*** -->
-                    <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                      <button type="button" class="btn btn-default glyphicon glyphicon-minus-sign"></button>
-                    </div>
+
+                    <!-- edit list name -->
+                    <form role="form" ng-submit="ListController.updateList(list._id, list.list_name)">
+                      <div class="input-group">
+                        <input type="text" id="update-list-form" class="form-control" ng-model="list.list_name" placeholder="Edit list name" aria-label="update list input field">
+                        <button type="submit" class="btn btn-default glyphicon glyphicon-pencil"></button>
+                      </div>
+                    </form>
                   </div>
                 </div> <!-- /close panel heading -->
 
@@ -53,6 +57,10 @@
                     </div> <!-- /get items -->
                   </div> <!-- closes the items controller -->
                 </div> <!-- /panel body -->
+                <hr>
+                <div>
+                  <a id="delete-list" ng-click="ListController.removeList(list._id)">Delete List</a>
+                </div>
               </div> <!-- /close panel -->
             </div> <!-- /col-sm-4 -->
           </div> <!-- ng-repeat lists -->

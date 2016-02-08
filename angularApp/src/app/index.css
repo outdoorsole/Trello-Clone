@@ -65,7 +65,11 @@ a {
   margin-top: 20px;
 }
 
-#add-item-form, #list-title {
-  display: inline;
+#add-item-form, #list-title, #update-list-form {
+  display: inline-block;
   width: 80%;
+}
+
+#delete-list {
+  color: rgb(2, 106, 167);
 }
