@@ -51,7 +51,7 @@
 
     // Login a new user with the form data
     function loginUser() {
-      AuthenticationService.login(vm.formData.email, vm.formData.password, function (authenticatedUser) {
+      AuthenticationService.login(vm.formData.email, vm.formData.password, function () {
         $location.path('/users');
       });
     }
