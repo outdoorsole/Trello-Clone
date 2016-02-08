@@ -1,9 +1,12 @@
-#Trello Clone
+#To-Do-ulate ('Trello' clone using MEAN Framework)
 
 ## Original Source:
-https://trello.com/home
+https://trello.com/
 
-This is an application that allows people to organize lists and tasks.
+## Overview
+To-Do-ulate (word play on "Tabulate") was created as a learning project based on Trello, an existing free web application created by Avram Joel Spolsky to be used as a product management tool. Trello allows individuals and groups to organize projects, lists and tasks in a visual way, using a kanban model to display and set up the process.
+
+
 
 ## How to Install:
 
