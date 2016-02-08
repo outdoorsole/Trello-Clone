@@ -10,12 +10,8 @@ var jwt = require('jsonwebtoken');
 var User = require('../../app/models/user');
 
 exports.isUserAuthenticated = function(req, res) {
-  console.log('Within the authentication controller');
   // find the User
   User.findOne({ email: req.body.email }, function (error, foundUser) {
-    console.log('This is error: ', error);
-    console.log('This is foundUser: ', foundUser);
-    console.log('This is req.body: ', req.body);
     if (error) {
       throw error;
     }
