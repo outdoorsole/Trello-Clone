@@ -15,12 +15,16 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <div class="panel-title" ng-model="list.list_name">
+                    <!-- display list name -->
                     <h2 id="list-title">{{list.list_name}}</h2>
 
-                    <input type="text" id="add-item-form" class="form-control" ng-model="Items.formData.item_name" placeholder="Edit list name" aria-label="Text input with segmented button dropdown">
-
-                    <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                    <!-- ***Dropdown testing, single button with keyboard navigation*** -->
+                    <!-- edit list name -->
+                    <form role="form" ng-submit="ListController.updateList(list._id, list.list_name)">
+                      <div class="input-group">
+                        <input type="text" id="update-list-form" class="form-control" ng-model="list.list_name" placeholder="Edit list name" aria-label="update list input field">
+                        <button type="submit" class="btn btn-default glyphicon glyphicon-pencil"></button>
+                      </div>
+                    </form>
                   </div>
                 </div> <!-- /close panel heading -->
 

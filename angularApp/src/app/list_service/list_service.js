@@ -54,8 +54,11 @@
 
     function updateList (listId, listName) {
       var deferred = $q.defer();
+      $log.log('This is listId: ', listId);
+      $log.log('This is listName: ', listName);
       $http.post('/api/lists/update/' + listId + '?list_name=' + listName)
         .success(function(data) {
+          $log.log('This is data: ', data);
           deferred.resolve(data);
         })
         .error(function(data) {

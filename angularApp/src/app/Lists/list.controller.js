@@ -41,6 +41,10 @@
     }
 
     vm.updateList = function (listId, listName) {
+      $log.log('This is vm.formData: ', vm.formData);
+      $log.log('This is vm.lists: ', vm.lists);
+      $log.log('This is listId in the list controller: ', listId);
+      $log.log('This is listName in the list controller: ', listName);
       ListService.updateList(listId, listName)
       .then(function(data) {
         for (var i = 0; i < vm.lists.length; i++) {
