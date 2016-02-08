@@ -1,5 +1,5 @@
 #To-Do-ulate ('Trello' clone using MEAN Framework)
-<img src='http://i.imgur.com/5d8R7PS.jpg' title='To-Do-ulate homepage' width='' alt='To-Do-ulate homepage' />
+<img src='http://i.imgur.com/dmtGa2P.jpg' title='To-Do-ulate homepage' width='' alt='To-Do-ulate homepage' />
 
 ## Original Source:
 https://trello.com/
